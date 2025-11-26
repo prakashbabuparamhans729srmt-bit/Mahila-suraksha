@@ -19,6 +19,36 @@ const GlobalMonitoringIcon = () => (
   </svg>
 );
 
+const ImplementationTrackerIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M24.5 38.0001C32.5081 38.0001 39 31.5082 39 23.5001C39 15.4919 32.5081 9.00006 24.5 9.00006C16.4919 9.00006 10 15.4919 10 23.5001C10 31.5082 16.4919 38.0001 24.5 38.0001Z" fill="#2F88FF" stroke="#FFF" strokeWidth="2"/>
+    <path d="M21.5 25.5001L24.5 22.5001L27.5 25.5001" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M24.5 22.5V30.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M24.2812 10.5C24.2812 10.5 20.2422 13.5 17.5312 17C14.8202 20.5 13.2812 24.5 13.2812 24.5" stroke="#FFF" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M24.5 9C24.5 9 28.5 12 31.5 15.5C34.5 19 35.5 23 35.5 23" stroke="#FFF" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+
+const FundingTrackerIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M24 4C18.4772 4 14 8.47715 14 14V42C14 43.1046 14.8954 44 16 44H32C33.1046 44 34 43.1046 34 42V14C34 8.47715 29.5228 4 24 4Z" fill="#FFC107" stroke="#000" strokeWidth="2" strokeLinejoin="round"/>
+    <path d="M24 27C25.6569 27 27 25.6569 27 24C27 22.3431 25.6569 21 24 21C22.3431 21 21 22.3431 21 24C21 25.6569 22.3431 27 24 27Z" stroke="black" strokeWidth="2"/>
+    <path d="M24 21V18" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M24 33V27" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M21.1714 29.8284L19.0498 31.95" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M26.8286 29.8284L28.9502 31.95" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+);
+
+const SuccessIndicatorIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4Z" fill="#F44336" stroke="#000" strokeWidth="2"/>
+    <path d="M24 14C18.4772 14 14 18.4772 14 24C14 29.5228 18.4772 34 24 34C29.5228 34 34 29.5228 34 24C34 18.4772 29.5228 14 24 14Z" fill="#FFF"/>
+    <path d="M24 20C21.7909 20 20 21.7909 20 24C20 26.2091 21.7909 28 24 28C26.2091 28 28 26.2091 28 24C28 21.7909 26.2091 20 24 20Z" fill="#F44336"/>
+    </svg>
+);
+
 
 export default function DashboardPage() {
   return (
@@ -95,6 +125,48 @@ export default function DashboardPage() {
         
         <div className="space-y-4">
             <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <ImplementationTrackerIcon />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">कार्यान्वयन ट्रैकर</h3>
+                    <p className="text-sm text-muted-foreground">गैंट चार्ट के साथ हमारी प्रमुख वैश्विक पहलों की प्रगति की निगरानी करें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <FundingTrackerIcon />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">फंडिंग ट्रैकर</h3>
+                    <p className="text-sm text-muted-foreground">देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <SuccessIndicatorIcon />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">सफलता संकेतक</h3>
+                    <p className="text-sm text-muted-foreground">प्रमुख प्रदर्शन संकेतकों (KPIs) के साथ हमारी सामूहिक सफलता को मापें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">

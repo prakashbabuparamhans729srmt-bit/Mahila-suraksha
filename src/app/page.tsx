@@ -654,20 +654,22 @@ export default function DashboardPage() {
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />
               </CardContent>
             </Card>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <Building2 className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">सुरक्षित शहर</h3>
-                    <p className="text-sm text-muted-foreground">स्थानीय सुरक्षा पहल, सहायता केंद्र खोजें और ऑडिट करें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/safe-cities" className="block">
+                <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                        <Building2 className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">सुरक्षित शहर</h3>
+                        <p className="text-sm text-muted-foreground">स्थानीय सुरक्षा पहल, सहायता केंद्र खोजें और ऑडिट करें।</p>
+                    </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+                </Card>
+            </Link>
             <Link href="/community-empowerment" className="block">
                 <Card className="bg-secondary/50 border-border">
                 <CardContent className="flex items-center justify-between p-4">

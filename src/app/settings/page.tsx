@@ -54,14 +54,16 @@ export default function SettingsPage() {
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">सामग्री और भाषा</h2>
           <Card className="bg-secondary/50 border-border divide-y divide-border">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold">भाषा</h3>
-                <p className="text-sm text-muted-foreground">ऐप की प्रदर्शन भाषा बदलें</p>
-              </div>
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            <CardContent className="p-4">
+              <Link href="/language-settings" className="flex items-center justify-between w-full">
+                <div>
+                  <h3 className="font-semibold">भाषा</h3>
+                  <p className="text-sm text-muted-foreground">ऐप की प्रदर्शन भाषा बदलें</p>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+              </Link>
             </CardContent>
-            <CardContent className="p-4 flex items-center justify-between">
+            <CardContent className="p-4">
               <Link href="/location-settings" className="flex items-center justify-between w-full">
                 <div>
                   <h3 className="font-semibold">स्थान</h3>

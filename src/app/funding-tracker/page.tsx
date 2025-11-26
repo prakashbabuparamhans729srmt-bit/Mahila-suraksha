@@ -1,0 +1,152 @@
+
+'use client';
+
+import Link from 'next/link';
+import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Pie, PieChart, Cell } from 'recharts';
+import React from 'react';
+
+const chartData = [
+  { source: 'सरकारी अनुदान', amount: 3000000, percentage: 40, fill: '#8884d8' },
+  { source: 'कॉर्पोरेट प्रायोजन', amount: 2475000, percentage: 33, fill: '#82ca9d' },
+  { source: 'सार्वजनिक दान', amount: 1500000, percentage: 20, fill: '#ff8042' },
+  { source: 'अन्य', amount: 525000, percentage: 7, fill: '#ffc658' },
+];
+
+const chartConfig = {
+  amount: {
+    label: 'Amount',
+  },
+  'सरकारी अनुदान': {
+    label: 'सरकारी अनुदान',
+    color: 'hsl(var(--chart-1))',
+  },
+  'कॉर्पोरेट प्रायोजन': {
+    label: 'कॉर्पोरेट प्रायोजन',
+    color: 'hsl(var(--chart-2))',
+  },
+  'सार्वजनिक दान': {
+    label: 'सार्वजनिक दान',
+    color: 'hsl(var(--chart-3))',
+  },
+  'अन्य': {
+    label: 'अन्य',
+    color: 'hsl(var(--chart-4))',
+  },
+};
+
+export default function FundingTrackerPage() {
+  const totalAmount = React.useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.amount, 0);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+      <header className="flex items-center p-4">
+        <Link href="/" className="mr-4">
+          <ArrowLeft className="h-6 w-6" />
+        </Link>
+        <h1 className="text-xl font-bold">फंडिंग ट्रैकर</h1>
+      </header>
+
+      <main className="flex-grow p-4 space-y-6">
+        <Card className="bg-secondary/50 border-border">
+          <CardContent className="p-6 space-y-4">
+            <h2 className="text-center font-semibold text-muted-foreground">धन उगाहने की प्रगति</h2>
+            <p className="text-center text-5xl font-bold">$7.5M</p>
+            <div className="space-y-2">
+              <Progress value={75} className="h-3 bg-background [&>div]:bg-gradient-to-r [&>div]:from-cyan-400 [&>div]:to-blue-500" />
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>0%</span>
+                <span>लक्ष्य: $10M</span>
+                <span>100%</span>
+              </div>
+            </div>
+            <Button className="w-full bg-green-600 hover:bg-green-700 text-lg h-12">अभी दान करें</Button>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-secondary/50 border-border">
+          <CardContent className="p-6 space-y-4">
+            <h2 className="font-bold text-lg">वित्त पोषण के स्रोत</h2>
+            <div className="h-[250px] w-full">
+              <ChartContainer config={chartConfig} className="mx-auto aspect-square h-full">
+                <PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <Pie
+                    data={chartData}
+                    dataKey="amount"
+                    nameKey="source"
+                    innerRadius={60}
+                    strokeWidth={5}
+                  >
+                     <Cell key="cell-0" fill="var(--color-सरकारी अनुदान)" />
+                     <Cell key="cell-1" fill="var(--color-कॉर्पोरेट प्रायोजन)" />
+                     <Cell key="cell-2" fill="var(--color-सार्वजनिक दान)" />
+                     <Cell key="cell-3" fill="var(--color-अन्य)" />
+                  </Pie>
+                </PieChart>
+              </ChartContainer>
+            </div>
+             <div
+              className="flex items-center justify-center text-center text-lg font-bold capitalize leading-none"
+            >
+              Total
+              <p className="ml-2 text-foreground">
+                ${(totalAmount / 1000000).toFixed(1)}M
+              </p>
+            </div>
+            <ul className="space-y-2 text-sm">
+              {chartData.map((item) => (
+                <li key={item.source} className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: item.fill }}></span>
+                    <span>{item.source}:</span>
+                  </div>
+                  <span className="font-semibold">{item.percentage}%</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </main>
+
+      <footer className="fixed bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-sm border-t border-border">
+        <div className="flex justify-around items-center p-2 relative">
+          <Link href="/" className="flex flex-col items-center text-primary">
+            <Home className="h-6 w-6" />
+            <span className="text-xs">होम</span>
+          </Link>
+          <div className="flex flex-col items-center text-muted-foreground">
+            <BarChart2 className="h-6 w-6" />
+            <span className="text-xs">डेटा</span>
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 -top-6">
+            <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-14 w-14 shadow-lg">
+              <Plus className="h-8 w-8 text-white" />
+            </Button>
+          </div>
+          <div className="flex flex-col items-center text-muted-foreground">
+            <RefreshCw className="h-6 w-6" />
+            <span className="text-xs">अपडेट्स</span>
+          </div>
+          <Link href="/settings" className="flex flex-col items-center text-muted-foreground">
+            <Settings className="h-6 w-6" />
+            <span className="text-xs">सेटिंग्स</span>
+          </Link>
+        </div>
+      </footer>
+      {/* Spacer for bottom nav */}
+      <div className="h-24"></div>
+    </div>
+  );
+}
+
+    

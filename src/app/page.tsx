@@ -211,6 +211,9 @@ export default function DashboardPage() {
     { name: 'उत्तर प्रदेश', score: 60, trend: 'down' },
     { name: 'उत्तराखंड', score: 74, trend: 'up' },
     { name: 'पश्चिम बंगाल', score: 71, trend: 'down' },
+  ];
+
+  const unionTerritoriesData = [
     { name: 'अंडमान और निकोबार द्वीप समूह', score: 76, trend: 'up' },
     { name: 'चंडीगढ़', score: 80, trend: 'up' },
     { name: 'दादरा और नगर हवेली और दमन और दीव', score: 72, trend: 'down' },
@@ -219,7 +222,7 @@ export default function DashboardPage() {
     { name: 'लद्दाख', score: 78, trend: 'up' },
     { name: 'लक्षद्वीप', score: 85, trend: 'up' },
     { name: 'पुडुचेरी', score: 79, trend: 'up' }
-  ];
+  ]
 
 
   return (
@@ -587,6 +590,34 @@ export default function DashboardPage() {
                         </Accordion>
                     </div>
 
+                    <div className="space-y-4">
+                        <h4 className="font-semibold mb-2">केंद्र शासित प्रदेश (भारत)</h4>
+                        <Accordion type="single" collapsible className="w-full">
+                        {unionTerritoriesData.map((state, index) => (
+                            <AccordionItem value={`item-ut-${index}`} key={index} className="border-none">
+                                <AccordionTrigger className="p-0 hover:no-underline [&[data-state=open]>div>svg.lucide-chevron-down]:hidden [&[data-state=closed]>div>svg.lucide-chevron-down]:hidden">
+                                  <Card className='w-full bg-secondary/50 border-border mb-2'>
+                                    <div className="p-4 flex justify-between w-full items-center">
+                                        <span>{state.name}</span>
+                                        <div className="flex items-center">
+                                            <span className={`font-bold mr-4 ${state.score < 60 ? 'text-red-500' : state.score < 70 ? 'text-yellow-500' : 'text-green-500'}`}>{state.score}/100</span>
+                                            {state.trend === 'up' ? <ArrowUp className="h-5 w-5 text-green-500" /> : <ArrowDown className="h-5 w-5 text-red-500" />}
+                                        </div>
+                                    </div>
+                                  </Card>
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    <Card className='bg-secondary/50 border-border mb-2 -mt-2'>
+                                        <div className="p-4 text-muted-foreground space-y-4">
+                                            <p className="text-sm">इस केंद्र शासित प्रदेश के लिए कोई विस्तृत डेटा उपलब्ध नहीं है।</p>
+                                        </div>
+                                    </Card>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                        </Accordion>
+                    </div>
+
                 </div>
                 </ScrollArea>
                 <DialogClose asChild>
@@ -629,19 +660,21 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
             </Link>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <FundingTrackerIcon />
+            <Link href="/funding-tracker" className="block">
+              <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                      <FundingTrackerIcon />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">फंडिंग ट्रैकर</h3>
+                      <p className="text-sm text-muted-foreground">देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।</p>                  </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">फंडिंग ट्रैकर</h3>
-                    <p className="text-sm text-muted-foreground">देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।</p>                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">
@@ -889,3 +922,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

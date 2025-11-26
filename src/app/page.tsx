@@ -212,6 +212,14 @@ export default function DashboardPage() {
     { name: 'उत्तर प्रदेश', score: 60, trend: 'down' },
     { name: 'उत्तराखंड', score: 74, trend: 'up' },
     { name: 'पश्चिम बंगाल', score: 71, trend: 'down' },
+    { name: 'अंडमान और निकोबार द्वीप समूह', score: 76, trend: 'up' },
+    { name: 'चंडीगढ़', score: 80, trend: 'up' },
+    { name: 'दादरा और नगर हवेली और दमन और दीव', score: 72, trend: 'down' },
+    { name: 'दिल्ली', score: 68, trend: 'down' },
+    { name: 'जम्मू और कश्मीर', score: 60, trend: 'down' },
+    { name: 'लद्दाख', score: 78, trend: 'up' },
+    { name: 'लक्षद्वीप', score: 85, trend: 'up' },
+    { name: 'पुडुचेरी', score: 79, trend: 'up' }
   ];
 
 

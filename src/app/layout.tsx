@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'User dashboard',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({

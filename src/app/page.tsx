@@ -1,5 +1,6 @@
 
 
+'use client';
 import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import React, { useState } from 'react';
 
 
 const CommunityIcon = () => (
@@ -61,40 +63,53 @@ const SuccessIndicatorIcon = () => (
   );
 
 const PoliceIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-blue-500">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-    <path d="m12 18-3-3 3-3 3 3-3 3z" />
-    <path d="M12 6v6" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-blue-500">
+        <path d="M10.5 8.5h3" />
+        <path d="M12 7v3" />
+        <path d="m13 18-6-6 3-3 6 6-3 3z" />
+        <path d="M10 21v-3.5a1.5 1.5 0 0 1 3 0V21" />
+        <path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z" />
+    </svg>
 );
 
 const AmbulanceIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-red-500">
-    <path d="M10.5 8.5h3" />
-    <path d="M12 7v3" />
-    <path d="M18 18h-2a4 4 0 0 1-4-4V5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v9a4 4 0 0 0 4 4h2" />
-    <path d="M8 14h.01" />
-    <path d="M16 14h.01" />
-    <path d="M22 12h-4" />
-    <path d="M20 10v4" />
-    <path d="M2 12h4" />
-    <path d="M4 10v4" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-red-500">
+        <path d="M10.5 8.5h3" />
+        <path d="M12 7v3" />
+        <path d="M18 18h-2a4 4 0 0 1-4-4V5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v9a4 4 0 0 0 4 4h2" />
+        <path d="M8 14h.01" />
+        <path d="M16 14h.01" />
+        <path d="M22 12h-4" />
+        <path d="M20 10v4" />
+        <path d="M2 12h4" />
+        <path d="M4 10v4" />
+    </svg>
 );
 
 const FireTruckIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-orange-500">
-    <path d="M5 19h14" />
-    <path d="M2 13h1.4c.3 0 .7-.3.7-.7V11c0-1.7 1.3-3 3-3h10c1.7 0 3 1.3 3 3v1.3c0 .4.3.7.7.7H22" />
-    <path d="M18 8V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2" />
-    <path d="M9 13h6" />
-    <path d="M17.5 19a1.5 1.5 0 0 1-3 0" />
-    <path d="M9.5 19a1.5 1.5 0 0 1-3 0" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-orange-500">
+        <path d="M5 19h14" />
+        <path d="M2 13h1.4c.3 0 .7-.3.7-.7V11c0-1.7 1.3-3 3-3h10c1.7 0 3 1.3 3 3v1.3c0 .4.3.7.7.7H22" />
+        <path d="M18 8V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2" />
+        <path d="M9 13h6" />
+        <path d="M17.5 19a1.5 1.5 0 0 1-3 0" />
+        <path d="M9.5 19a1.5 1.5 0 0 1-3 0" />
+    </svg>
+);
+
+const AlertIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500">
+        <path d="M12 2c.6 0 1.2.3 1.5.8l7.8 14.3c.3.5.3 1.1 0 1.6s-.9.8-1.5.8H4.2c-.6 0-1.2-.3-1.5-.8s-.3-1.1 0-1.6L10.5 2.8c.3-.5.9-.8 1.5-.8z" fill="#F44336" stroke-width="0"/>
+        <path d="M12 18v.01" />
+        <path d="M12 14v-4" stroke="#FFF" />
+    </svg>
 );
 
 
 export default function DashboardPage() {
+  const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
+  const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
+
   const filterCategories = [
     { id: 'global-data', label: 'वैश्विक डेटा' },
     { id: 'education', label: 'शिक्षा' },
@@ -121,6 +136,42 @@ export default function DashboardPage() {
     { id: 'last-week', label: 'पिछला सप्ताह' },
     { id: 'last-month', label: 'पिछला महीना' },
   ];
+
+  const handleConfirm = (service: 'police' | 'ambulance' | 'firetruck') => {
+      // For now, we assume no number is saved.
+      // In a real app, you would check localStorage or some state management.
+      setSelectedService(service);
+      setShowNoNumberDialog(true);
+  };
+  
+  const getServiceContent = () => {
+    switch (selectedService) {
+        case 'police':
+            return {
+                title: 'पुलिस अलर्ट भेजा गया!',
+                description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
+                number: 'कोई नंबर सहेजा नहीं गया',
+                icon: <AlertIcon />
+            };
+        case 'ambulance':
+            return {
+                title: 'एम्बुलेंस अलर्ट भेजा गया!',
+                description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
+                number: 'कोई नंबर सहेजा नहीं गया',
+                icon: <AlertIcon />
+            };
+        case 'firetruck':
+            return {
+                title: 'दमकल अलर्ट भेजा गया!',
+                description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
+                number: 'कोई नंबर सहेजा नहीं गया',
+                icon: <AlertIcon />
+            };
+        default:
+            return { title: '', description: '', number: '', icon: null };
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -266,7 +317,7 @@ export default function DashboardPage() {
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-red-600 hover:bg-red-700">हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogAction className="bg-red-600 hover:bg-red-700" onClick={() => handleConfirm('police')}>हाँ, पुष्टि करें</AlertDialogAction>
                               <AlertDialogCancel>रद्द करें</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
@@ -299,7 +350,7 @@ export default function DashboardPage() {
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-red-600 hover:bg-red-700">हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogAction className="bg-red-600 hover:bg-red-700" onClick={() => handleConfirm('ambulance')}>हाँ, पुष्टि करें</AlertDialogAction>
                               <AlertDialogCancel>रद्द करें</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
@@ -332,7 +383,7 @@ export default function DashboardPage() {
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-red-600 hover:bg-red-700">हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogAction className="bg-red-600 hover:bg-red-700" onClick={() => handleConfirm('firetruck')}>हाँ, पुष्टि करें</AlertDialogAction>
                               <AlertDialogCancel>रद्द करें</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
@@ -340,6 +391,26 @@ export default function DashboardPage() {
                 </div>
             </SheetContent>
         </Sheet>
+        
+        <AlertDialog open={showNoNumberDialog} onOpenChange={setShowNoNumberDialog}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <div className="flex justify-center">
+                        {getServiceContent().icon}
+                    </div>
+                    <AlertDialogTitle className="text-center">{getServiceContent().title}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">
+                        {getServiceContent().description}
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <div className="p-4 bg-secondary/50 rounded-md text-center font-semibold">
+                    {getServiceContent().number}
+                </div>
+                <AlertDialogFooter>
+                    <AlertDialogAction className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setShowNoNumberDialog(false)}>ठीक है</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
 
 
         <Card className="bg-secondary/50 border-border">

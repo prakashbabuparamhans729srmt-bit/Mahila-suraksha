@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 
 const CommunityIcon = () => (
@@ -203,42 +204,99 @@ export default function DashboardPage() {
                     </div>
                 </SheetHeader>
                 <div className="p-4 space-y-4">
-                    <Card className="bg-secondary/50 border-border">
-                        <CardContent className="p-4 flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                                <img src="https://openui.fly.dev/openui/24x24.svg?text=🚨" alt="police icon" className="h-8 w-8"/>
-                                <div>
-                                    <h3 className="font-semibold">पुलिस</h3>
-                                    <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Card className="bg-secondary/50 border-border cursor-pointer">
+                            <CardContent className="p-4 flex items-center justify-between">
+                                <div className="flex items-center space-x-4">
+                                    <img src="https://openui.fly.dev/openui/24x24.svg?text=🚨" alt="police icon" className="h-8 w-8"/>
+                                    <div>
+                                        <h3 className="font-semibold">पुलिस</h3>
+                                        <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                        </CardContent>
-                    </Card>
-                    <Card className="bg-secondary/50 border-border">
-                        <CardContent className="p-4 flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                                <img src="https://openui.fly.dev/openui/24x24.svg?text=🚑" alt="ambulance icon" className="h-8 w-8"/>
-                                <div>
-                                    <h3 className="font-semibold">एम्बुलेंस</h3>
-                                    <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                            </CardContent>
+                        </Card>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                          <AlertDialogHeader>
+                              <div className="flex justify-center">
+                                <img src="https://openui.fly.dev/openui/48x48.svg?text=🚨" alt="alert icon" className="h-12 w-12"/>
+                              </div>
+                              <AlertDialogTitle className="text-center">पुलिस से संपर्क करें?</AlertDialogTitle>
+                              <AlertDialogDescription className="text-center">
+                              यह पुलिस के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
+                              </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
+                              <AlertDialogAction className="bg-red-600 hover:bg-red-700">हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                          </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Card className="bg-secondary/50 border-border cursor-pointer">
+                            <CardContent className="p-4 flex items-center justify-between">
+                                <div className="flex items-center space-x-4">
+                                    <img src="https://openui.fly.dev/openui/24x24.svg?text=🚑" alt="ambulance icon" className="h-8 w-8"/>
+                                    <div>
+                                        <h3 className="font-semibold">एम्बुलेंस</h3>
+                                        <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                        </CardContent>
-                    </Card>
-                    <Card className="bg-secondary/50 border-border">
-                        <CardContent className="p-4 flex items-center justify-between">
-                             <div className="flex items-center space-x-4">
-                                <img src="https://openui.fly.dev/openui/24x24.svg?text=🚒" alt="fire truck icon" className="h-8 w-8"/>
-                                <div>
-                                    <h3 className="font-semibold">दमकल</h3>
-                                    <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                            </CardContent>
+                        </Card>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                          <AlertDialogHeader>
+                              <div className="flex justify-center">
+                                <img src="https://openui.fly.dev/openui/48x48.svg?text=🚑" alt="alert icon" className="h-12 w-12"/>
+                              </div>
+                              <AlertDialogTitle className="text-center">एम्बुलेंस से संपर्क करें?</AlertDialogTitle>
+                              <AlertDialogDescription className="text-center">
+                              यह एम्बुलेंस के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
+                              </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
+                              <AlertDialogAction className="bg-red-600 hover:bg-red-700">हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                          </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Card className="bg-secondary/50 border-border cursor-pointer">
+                            <CardContent className="p-4 flex items-center justify-between">
+                                 <div className="flex items-center space-x-4">
+                                    <img src="https://openui.fly.dev/openui/24x24.svg?text=🚒" alt="fire truck icon" className="h-8 w-8"/>
+                                    <div>
+                                        <h3 className="font-semibold">दमकल</h3>
+                                        <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                        </CardContent>
-                    </Card>
+                                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                            </CardContent>
+                        </Card>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                          <AlertDialogHeader>
+                              <div className="flex justify-center">
+                                <img src="https://openui.fly.dev/openui/48x48.svg?text=🚒" alt="alert icon" className="h-12 w-12"/>
+                              </div>
+                              <AlertDialogTitle className="text-center">दमकल से संपर्क करें?</AlertDialogTitle>
+                              <AlertDialogDescription className="text-center">
+                              यह दमकल के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
+                              </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
+                              <AlertDialogAction className="bg-red-600 hover:bg-red-700">हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                          </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                 </div>
             </SheetContent>
         </Sheet>
@@ -293,8 +351,7 @@ export default function DashboardPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold">फंडिंग ट्रैकर</h3>
-                    <p className="text-sm text-muted-foreground">देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।</p>
-                  </div>
+                    <p className="text-sm text-muted-foreground">देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।</p>                  </div>
                 </div>
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />
               </CardContent>
@@ -418,7 +475,7 @@ export default function DashboardPage() {
                     <Shield className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">स्मार्ट सुरक्षा</h3>
+                    <h3 className="fontsemibold">स्मार्ट सुरक्षा</h3>
                     <p className="text-sm text-muted-foreground">व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।</p>
                   </div>
                 </div>

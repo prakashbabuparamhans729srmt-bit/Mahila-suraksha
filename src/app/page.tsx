@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -49,12 +50,12 @@ const FundingTrackerIcon = () => (
 );
 
 const SuccessIndicatorIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4Z" fill="#F44336" stroke="#000" strokeWidth="2"/>
-    <path d="M24 14C18.4772 14 14 18.4772 14 24C14 29.5228 18.4772 34 24 34C29.5228 34 34 29.5228 34 24C34 18.4772 29.5228 14 24 14Z" fill="#FFF"/>
-    <path d="M24 20C21.7909 20 20 21.7909 20 24C20 26.2091 21.7909 28 24 28C26.2091 28 28 26.2091 28 24C28 21.7909 26.2091 20 24 20Z" fill="#F44336"/>
-  </svg>
-);
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4Z" fill="#F44336" stroke="#000" strokeWidth="2"/>
+      <path d="M24 14C18.4772 14 14 18.4772 14 24C14 29.5228 18.4772 34 24 34C29.5228 34 34 29.5228 34 24C34 18.4772 29.5228 14 24 14Z" fill="#FFF"/>
+      <path d="M24 20C21.7909 20 20 21.7909 20 24C20 26.2091 21.7909 28 24 28C26.2091 28 28 26.2091 28 24C28 21.7909 26.2091 20 24 20Z" fill="#F44336"/>
+    </svg>
+  );
 
 export default function DashboardPage() {
   const filterCategories = [
@@ -105,7 +106,9 @@ export default function DashboardPage() {
                 <p className="font-semibold">Patna Junction, Patna</p>
               </div>
             </div>
-            <Button variant="link" className="text-primary">बदलें</Button>
+            <Link href="/location-settings">
+              <Button variant="link" className="text-primary">बदलें</Button>
+            </Link>
           </CardContent>
         </Card>
 
@@ -442,10 +445,10 @@ export default function DashboardPage() {
 
       <footer className="fixed bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-sm border-t border-border">
         <div className="flex justify-around items-center p-2 relative">
-          <div className="flex flex-col items-center text-primary">
+          <Link href="/" className="flex flex-col items-center text-primary">
             <Home className="h-6 w-6" />
             <span className="text-xs">होम</span>
-          </div>
+          </Link>
           <div className="flex flex-col items-center text-muted-foreground">
             <BarChart2 className="h-6 w-6" />
             <span className="text-xs">डेटा</span>

@@ -1,8 +1,13 @@
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2 } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
 
 const CommunityIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
@@ -51,6 +56,27 @@ const SuccessIndicatorIcon = () => (
 );
 
 export default function DashboardPage() {
+  const filterCategories = [
+    { id: 'global-data', label: 'वैश्विक डेटा' },
+    { id: 'education', label: 'शिक्षा' },
+    { id: 'legal-reform', label: 'कानूनी सुधार' },
+    { id: 'male-engagement', label: 'पुरुष सहभागिता' },
+    { id: 'smart-safety', label: 'स्मार्ट सुरक्षा' },
+    { id: 'safe-cities', label: 'सुरक्षित शहर' },
+    { id: 'community-empowerment', label: 'सामुदायिक सशक्तिकरण' },
+    { id: 'global-monitoring', label: 'वैश्विक निगरानी' },
+    { id: 'implementation-tracker', label: 'कार्यान्वयन ट्रैकर' },
+    { id: 'funding-tracker', label: 'फंडिंग ट्रैकर' },
+    { id: 'success-indicators', label: 'सफलता संकेतक' },
+    { id: 'updates-feed', label: 'अपडेट्स फ़ीड' },
+  ];
+
+  const severityLevels = [
+    { id: 'positive', label: 'सकारात्मक' },
+    { id: 'neutral', label: 'तटस्थ' },
+    { id: 'negative', label: 'नकारात्मक' },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
@@ -84,9 +110,53 @@ export default function DashboardPage() {
               className="pl-10 bg-secondary/50 border-border"
             />
           </div>
-          <Button variant="outline" size="icon" className="bg-secondary/50 border-border">
-            <SlidersHorizontal className="h-5 w-5" />
-          </Button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon" className="bg-secondary/50 border-border">
+                <SlidersHorizontal className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="bg-background rounded-t-lg">
+              <SheetHeader className="text-left">
+                <SheetTitle className="text-xl font-bold mb-4">उन्नत फ़िल्टर</SheetTitle>
+              </SheetHeader>
+              <ScrollArea className="h-[60vh]">
+                <div className="p-1">
+                  <h3 className="text-lg font-semibold mb-3">श्रेणी</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {filterCategories.map((category) => (
+                      <div key={category.id} className="flex items-center space-x-2">
+                        <Checkbox id={category.id} />
+                        <Label htmlFor={category.id} className="font-normal">{category.label}</Label>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Separator className="my-6" />
+
+                  <h3 className="text-lg font-semibold mb-3">गंभीरता स्तर</h3>
+                  <div className="space-y-4">
+                    {severityLevels.map((level) => (
+                      <div key={level.id} className="flex items-center space-x-2">
+                        <Checkbox id={level.id} />
+                        <Label htmlFor={level.id} className="font-normal">{level.label}</Label>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Separator className="my-6" />
+
+                  <h3 className="text-lg font-semibold mb-3">तिथि सीमा</h3>
+                   {/* Date range inputs can be added here */}
+
+                </div>
+              </ScrollArea>
+              <div className="flex justify-between p-4 absolute bottom-0 left-0 right-0 bg-background">
+                <Button variant="outline" className="w-1/2 mr-2">रीसेट करें</Button>
+                <Button className="w-1/2 ml-2 bg-blue-600 hover:bg-blue-700">फ़िल्टर लागू करें</Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
 
         <Card className="bg-red-600">

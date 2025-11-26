@@ -16,6 +16,13 @@ const languages = [
     { en: 'Marathi', local: 'मराठी' },
     { en: 'Tamil', local: 'தமிழ்' },
     { en: 'Gujarati', local: 'ગુજરાતી' },
+    { en: 'Kannada', local: 'ಕನ್ನಡ' },
+    { en: 'Malayalam', local: 'മലയാളം' },
+    { en: 'Odia', local: 'ଓଡ଼ିଆ' },
+    { en: 'Punjabi', local: 'ਪੰਜਾਬੀ' },
+    { en: 'Assamese', local: 'অসমীয়া' },
+    { en: 'Maithili', local: 'मैथिली' },
+    { en: 'Santhali', local: 'संथाली' },
 ];
 
 export default function LanguageSettingsPage() {

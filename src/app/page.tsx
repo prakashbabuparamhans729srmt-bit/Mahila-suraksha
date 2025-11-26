@@ -712,20 +712,22 @@ export default function DashboardPage() {
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />
               </CardContent>
             </Card>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">शिक्षा</h3>
-                    <p className="text-sm text-muted-foreground">जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/education" className="block">
+                <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                        <GraduationCap className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">शिक्षा</h3>
+                        <p className="text-sm text-muted-foreground">जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।</p>
+                    </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+                </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">

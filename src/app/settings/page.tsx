@@ -10,8 +10,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import React from 'react';
+import { useTheme } from 'next-themes';
 
 export default function SettingsPage() {
+  const { theme, setTheme } = useTheme();
   const [personalContacts, setPersonalContacts] = React.useState([
     { id: 1, name: '', phone: '' },
   ]);
@@ -177,7 +179,10 @@ export default function SettingsPage() {
                   <h3 className="font-semibold">ऐप थीम</h3>
                   <p className="text-sm text-muted-foreground">लाइट और डार्क मोड के बीच स्विच करें</p>
                 </div>
-                <Switch defaultChecked={true} />
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                />
               </div>
               <div>
                 <h3 className="font-semibold">टेक्स्ट का आकार</h3>

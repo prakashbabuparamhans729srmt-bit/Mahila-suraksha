@@ -179,7 +179,9 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold">डैशबोर्ड</h1>
         <div className="flex items-center space-x-4">
           <Bell className="h-6 w-6" />
-          <User className="h-6 w-6" />
+          <Link href="/login">
+            <User className="h-6 w-6" />
+          </Link>
           <Link href="/settings">
             <Settings className="h-6 w-6" />
           </Link>

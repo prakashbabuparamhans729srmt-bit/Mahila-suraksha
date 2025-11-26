@@ -751,20 +751,22 @@ export default function DashboardPage() {
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />
               </CardContent>
             </Card>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <Shield className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="fontsemibold">स्मार्ट सुरक्षा</h3>
-                    <p className="text-sm text-muted-foreground">व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/smart-safety" className="block">
+                <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                        <Shield className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">स्मार्ट सुरक्षा</h3>
+                        <p className="text-sm text-muted-foreground">व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।</p>
+                    </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+                </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">
@@ -872,5 +874,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

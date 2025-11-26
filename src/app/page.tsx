@@ -1,4 +1,4 @@
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -101,6 +101,48 @@ export default function DashboardPage() {
                   <div>
                     <h3 className="font-semibold">शिक्षा</h3>
                     <p className="text-sm text-muted-foreground">जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <Scale className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">कानूनी सुधार</h3>
+                    <p className="text-sm text-muted-foreground">देश के अनुसार कानूनी सुधारों और नीतिगत परिवर्तनों की प्रगति को ट्रैक करें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <Handshake className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">पुरुष सहभागिता</h3>
+                    <p className="text-sm text-muted-foreground">पुरुषों को सहयोगी के रूप में शामिल करने के लिए पहल और संसाधन खोजें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <Shield className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">स्मार्ट सुरक्षा</h3>
+                    <p className="text-sm text-muted-foreground">व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।</p>
                   </div>
                 </div>
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />

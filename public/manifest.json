@@ -1,12 +1,12 @@
 {
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#09090b",
+  "background_color": "#09090b",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Suraksha",
-  "short_name": "Suraksha",
-  "description": "Women's Safety Dashboard",
+  "name": "UASV",
+  "short_name": "UASV",
+  "description": "United Against Sexual Violence",
   "icons": [
     {
       "src": "/icon-192x192.png",

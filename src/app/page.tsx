@@ -1,5 +1,3 @@
-
-
 'use client';
 import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
@@ -228,7 +226,9 @@ export default function DashboardPage() {
       <header className="flex items-center justify-between p-4">
         <h1 className="text-2xl font-bold">डैशबोर्ड</h1>
         <div className="flex items-center space-x-4">
-          <Bell className="h-6 w-6" />
+          <Link href="/notifications">
+            <Bell className="h-6 w-6" />
+          </Link>
           <Link href="/login">
             <User className="h-6 w-6" />
           </Link>

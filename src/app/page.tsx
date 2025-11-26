@@ -1,7 +1,8 @@
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2 } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 const CommunityIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
@@ -42,13 +43,12 @@ const FundingTrackerIcon = () => (
 );
 
 const SuccessIndicatorIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4Z" fill="#F44336" stroke="#000" strokeWidth="2"/>
     <path d="M24 14C18.4772 14 14 18.4772 14 24C14 29.5228 18.4772 34 24 34C29.5228 34 34 29.5228 34 24C34 18.4772 29.5228 14 24 14Z" fill="#FFF"/>
     <path d="M24 20C21.7909 20 20 21.7909 20 24C20 26.2091 21.7909 28 24 28C26.2091 28 28 26.2091 28 24C28 21.7909 26.2091 20 24 20Z" fill="#F44336"/>
-    </svg>
+  </svg>
 );
-
 
 export default function DashboardPage() {
   return (
@@ -279,7 +279,54 @@ export default function DashboardPage() {
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />
               </CardContent>
             </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <RefreshCw className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">अपडेट्स फ़ीड</h3>
+                    <p className="text-sm text-muted-foreground">नवीनतम समाचार, अपडेट और उपयोगकर्ता-प्रस्तुत रिपोर्टों से सूचित रहें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
         </div>
+
+        <div className="space-y-4">
+            <h2 className="text-xl font-bold">हाल के अपडेट</h2>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex justify-between items-start">
+                  <h3 className="font-semibold text-primary">अर्जेंटीना में नया कानून पारित</h3>
+                  <p className="text-xs text-muted-foreground">2 दिन पहले</p>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।
+                </p>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>1253 Likes</span>
+                    <span>2 Comments</span>
+                </div>
+                <Separator />
+                <div className="flex justify-around">
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <ThumbsUp className="h-4 w-4" /> लाइक
+                    </Button>
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4" /> कमेंट
+                    </Button>
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <Share2 className="h-4 w-4" /> साझा करें
+                    </Button>
+                </div>
+
+              </CardContent>
+            </Card>
+        </div>
+
 
       </main>
 

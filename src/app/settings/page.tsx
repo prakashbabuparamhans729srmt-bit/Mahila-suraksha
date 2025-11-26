@@ -228,10 +228,30 @@ export default function SettingsPage() {
               </DialogContent>
             </Dialog>
 
-            <CardContent className="p-4 flex items-center justify-between">
-              <h3 className="font-semibold">सेवा की शर्तें</h3>
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </CardContent>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <CardContent className="p-4 flex items-center justify-between cursor-pointer">
+                        <h3 className="font-semibold">सेवा की शर्तें</h3>
+                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    </CardContent>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>सेवा की शर्तें</DialogTitle>
+                    </DialogHeader>
+                    <ScrollArea className="max-h-[60vh] p-4">
+                        <div className="space-y-4 text-sm text-muted-foreground">
+                            <p><strong>सेवा की शर्तें</strong> अंतिम अपडेट: 24 जुलाई 2024</p>
+                            <p>इन सेवा की शर्तों ("शर्तें") को ध्यान से पढ़ें। यूनाइटेड अगेंस्ट सेक्सुअल वायलेंस एप्लिकेशन ("ऐप") का उपयोग करके, आप इन शर्तों से बंधे होने के लिए सहमत हैं।</p>
+                            <p><strong>ऐप का उपयोग</strong> आप इस ऐप का उपयोग केवल कानूनी और इच्छित उद्देश्यों के लिए करने के लिए सहमत हैं। आप आपातकालीन SOS सुविधा का दुरुपयोग नहीं करने के लिए सहमत हैं, जिसका उपयोग केवल वास्तविक और तत्काल खतरे की स्थितियों में किया जाना चाहिए। ऐप का उपयोग 13 वर्ष से कम उम्र के बच्चों के लिए नहीं है।</p>
+                            <p><strong>उपयोगकर्ता सामग्री</strong> यदि आप कोई सामग्री, जैसे कि रिपोर्ट या फीडबैक सबमिट करते हैं, तो आप हमें उस सामग्री का उपयोग, पुनरुत्पादन और प्रदर्शन करने के लिए एक विश्वव्यापी, रॉयल्टी-मुक्त लाइसेंस प्रदान करते हैं, जो हमारी गोपनीयता नीति के अधीन है। आप किसी भी ऐसी सामग्री को पोस्ट नहीं करने के लिए सहमत हैं जो अवैध, अपमानजनक या हानिकारक हो।</p>
+                        </div>
+                    </ScrollArea>
+                    <DialogClose asChild>
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                    </DialogClose>
+                </DialogContent>
+            </Dialog>
             <CardContent className="p-4 flex items-center justify-between">
               <h3 className="font-semibold">प्रतिक्रिया भेजें</h3>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -273,5 +293,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    

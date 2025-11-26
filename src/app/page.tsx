@@ -816,20 +816,22 @@ export default function DashboardPage() {
                 </CardContent>
                 </Card>
             </Link>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <RefreshCw className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">अपडेट्स फ़ीड</h3>
-                    <p className="text-sm text-muted-foreground">नवीनतम समाचार, अपडेट और उपयोगकर्ता-प्रस्तुत रिपोर्टों से सूचित रहें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/updates-feed" className="block">
+                <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                        <RefreshCw className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">अपडेट्स फ़ीड</h3>
+                        <p className="text-sm text-muted-foreground">नवीनतम समाचार, अपडेट और उपयोगकर्ता-प्रस्तुत रिपोर्टों से सूचित रहें।</p>
+                    </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+                </Card>
+            </Link>
         </div>
 
         <div className="space-y-4">
@@ -923,3 +925,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

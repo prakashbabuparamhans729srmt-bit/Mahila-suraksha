@@ -1,7 +1,24 @@
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+
+const CommunityIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const GlobalMonitoringIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
+    <path d="M3 3v18h18" />
+    <path d="m19 9-5 5-4-4-3 3" />
+  </svg>
+);
+
 
 export default function DashboardPage() {
   return (
@@ -78,6 +95,48 @@ export default function DashboardPage() {
         
         <div className="space-y-4">
             <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <Building2 className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">सुरक्षित शहर</h3>
+                    <p className="text-sm text-muted-foreground">स्थानीय सुरक्षा पहल, सहायता केंद्र खोजें और ऑडिट करें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <CommunityIcon />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">सामुदायिक सशक्तिकरण</h3>
+                    <p className="text-sm text-muted-foreground">सहायता समूहों, कार्यक्रमों और सशक्तिकरण कार्यक्रमों से जुड़ें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <GlobalMonitoringIcon />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">वैश्विक निगरानी</h3>
+                    <p className="text-sm text-muted-foreground">सुरक्षा स्कोर और देश-विशिष्ट डेटा का वैश्विक हीटमैप देखें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">

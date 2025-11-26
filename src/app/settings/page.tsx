@@ -11,6 +11,9 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import React from 'react';
 import { useTheme } from 'next-themes';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
@@ -200,10 +203,31 @@ export default function SettingsPage() {
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">के बारे में</h2>
           <Card className="bg-secondary/50 border-border divide-y divide-border">
-            <CardContent className="p-4 flex items-center justify-between">
-              <h3 className="font-semibold">गोपनीयता नीति</h3>
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </CardContent>
+            <Dialog>
+              <DialogTrigger asChild>
+                <CardContent className="p-4 flex items-center justify-between cursor-pointer">
+                  <h3 className="font-semibold">गोपनीयता नीति</h3>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>गोपनीयता नीति</DialogTitle>
+                </DialogHeader>
+                <ScrollArea className="max-h-[60vh] p-4">
+                  <div className="space-y-4 text-sm text-muted-foreground">
+                    <p><strong>गोपनीयता नीति</strong> अंतिम अपडेट: 24 जुलाई 2024</p>
+                    <p>यूनाइटेड अगेंस्ट सेक्सुअल वायलेंस ("हम", "हमारा") आपकी गोपनीयता का सम्मान करता है। यह गोपनीयता नीति बताती है कि जब आप हमारी मोबाइल एप्लिकेशन का उपयोग करते हैं तो हम आपकी जानकारी कैसे एकत्र, उपयोग, प्रकट और सुरक्षित करते हैं।</p>
+                    <p><strong>जानकारी का संग्रह</strong> हम आपसे सीधे जानकारी एकत्र कर सकते हैं, जैसे कि जब आप एक खाता बनाते हैं, किसी घटना की रिपोर्ट करते हैं (यदि आप अनाम रूप से रिपोर्ट नहीं करना चुनते हैं), या हमसे संपर्क करते हैं। इसमें आपका नाम, ईमेल पता और स्थान डेटा शामिल हो सकता है (आपकी अनुमति से)।</p>
+                    <p><strong>जानकारी का उपयोग</strong> आपकी जानकारी का उपयोग आपको हमारी सेवाएं प्रदान करने, ऐप को बेहतर बनाने, आपके साथ संवाद करने और सुरक्षा अलर्ट भेजने के लिए किया जाता है। हम समग्र, अनाम डेटा का उपयोग अनुसंधान और विश्लेषण के लिए कर सकते हैं।</p>
+                  </div>
+                </ScrollArea>
+                <DialogClose asChild>
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
+
             <CardContent className="p-4 flex items-center justify-between">
               <h3 className="font-semibold">सेवा की शर्तें</h3>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />

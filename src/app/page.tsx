@@ -516,39 +516,41 @@ export default function DashboardPage() {
                     </div>
                     
                     <div className="space-y-4">
-                        <h4 className="font-semibold">राज्य-वार डेटा (भारत)</h4>
+                        <h4 className="font-semibold mb-2">राज्य-वार डेटा (भारत)</h4>
                         <Accordion type="single" collapsible className="w-full">
                         {stateData.map((state, index) => (
-                            <AccordionItem value={`item-${index}`} key={index} className="border-b-0">
-                                <Card className='bg-secondary/50 border-border mb-2'>
-                                    <AccordionTrigger className="p-4 hover:no-underline">
-                                        <div className="flex justify-between w-full items-center">
-                                            <span>{state.name}</span>
-                                            <div className="flex items-center">
-                                                <span className={`font-bold mr-4 ${state.score < 60 ? 'text-red-500' : state.score < 70 ? 'text-yellow-500' : 'text-green-500'}`}>{state.score}/100</span>
-                                                {state.trend === 'up' ? <ArrowUp className="h-5 w-5 text-green-500" /> : <ArrowDown className="h-5 w-5 text-red-500" />}
-                                            </div>
+                            <AccordionItem value={`item-${index}`} key={index} className="border-none">
+                                <AccordionTrigger className="p-0 hover:no-underline [&[data-state=open]>div>svg.lucide-chevron-down]:hidden [&[data-state=closed]>div>svg.lucide-chevron-down]:hidden">
+                                  <Card className='w-full bg-secondary/50 border-border mb-2'>
+                                    <div className="p-4 flex justify-between w-full items-center">
+                                        <span>{state.name}</span>
+                                        <div className="flex items-center">
+                                            <span className={`font-bold mr-4 ${state.score < 60 ? 'text-red-500' : state.score < 70 ? 'text-yellow-500' : 'text-green-500'}`}>{state.score}/100</span>
+                                            {state.trend === 'up' ? <ArrowUp className="h-5 w-5 text-green-500" /> : <ArrowDown className="h-5 w-5 text-red-500" />}
                                         </div>
-                                    </AccordionTrigger>
-                                </Card>
-                                <AccordionContent>
-                                    <div className="px-4 pb-4 text-muted-foreground space-y-4">
-                                        {state.details ? (
-                                            <>
-                                                <ul className="list-disc pl-5 space-y-2">
-                                                    {state.details.map((detail, i) => (
-                                                        <li key={i}>{detail}</li>
-                                                    ))}
-                                                </ul>
-                                                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                                                    <Share2 className="mr-2 h-4 w-4" />
-                                                    साझा करें
-                                                </Button>
-                                            </>
-                                        ) : (
-                                            <p>इस राज्य के लिए कोई विस्तृत डेटा उपलब्ध नहीं है।</p>
-                                        )}
                                     </div>
+                                  </Card>
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    <Card className='bg-secondary/50 border-border mb-2 -mt-2'>
+                                        <div className="p-4 text-muted-foreground space-y-4">
+                                            {state.details ? (
+                                                <>
+                                                    <ul className="list-disc pl-5 space-y-2 text-sm">
+                                                        {state.details.map((detail, i) => (
+                                                            <li key={i}>{detail}</li>
+                                                        ))}
+                                                    </ul>
+                                                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700 h-8">
+                                                        <Share2 className="mr-2 h-4 w-4" />
+                                                        साझा करें
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <p className="text-sm">इस राज्य के लिए कोई विस्तृत डेटा उपलब्ध नहीं है।</p>
+                                            )}
+                                        </div>
+                                    </Card>
                                 </AccordionContent>
                             </AccordionItem>
                         ))}

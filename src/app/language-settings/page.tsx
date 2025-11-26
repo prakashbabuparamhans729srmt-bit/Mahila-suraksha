@@ -23,6 +23,13 @@ const languages = [
     { en: 'Assamese', local: 'অসমীয়া' },
     { en: 'Maithili', local: 'मैथिली' },
     { en: 'Santhali', local: 'संथाली' },
+    { en: 'Kashmiri', local: 'कश्मीरी / كأشر' },
+    { en: 'Sindhi', local: 'सिंधी / سندي' },
+    { en: 'Dogri', local: 'डोगरी' },
+    { en: 'Konkani', local: 'कोंकणी' },
+    { en: 'Manipuri', local: 'मणिपुरी / মণিপুরী' },
+    { en: 'Nepali', local: 'नेपाली' },
+    { en: 'Bodo', local: 'बोडो' },
 ];
 
 export default function LanguageSettingsPage() {

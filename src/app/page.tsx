@@ -60,6 +60,40 @@ const SuccessIndicatorIcon = () => (
     </svg>
   );
 
+const PoliceIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-blue-500">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+    <path d="m12 18-3-3 3-3 3 3-3 3z" />
+    <path d="M12 6v6" />
+  </svg>
+);
+
+const AmbulanceIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-red-500">
+    <path d="M10.5 8.5h3" />
+    <path d="M12 7v3" />
+    <path d="M18 18h-2a4 4 0 0 1-4-4V5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v9a4 4 0 0 0 4 4h2" />
+    <path d="M8 14h.01" />
+    <path d="M16 14h.01" />
+    <path d="M22 12h-4" />
+    <path d="M20 10v4" />
+    <path d="M2 12h4" />
+    <path d="M4 10v4" />
+  </svg>
+);
+
+const FireTruckIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-orange-500">
+    <path d="M5 19h14" />
+    <path d="M2 13h1.4c.3 0 .7-.3.7-.7V11c0-1.7 1.3-3 3-3h10c1.7 0 3 1.3 3 3v1.3c0 .4.3.7.7.7H22" />
+    <path d="M18 8V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2" />
+    <path d="M9 13h6" />
+    <path d="M17.5 19a1.5 1.5 0 0 1-3 0" />
+    <path d="M9.5 19a1.5 1.5 0 0 1-3 0" />
+  </svg>
+);
+
+
 export default function DashboardPage() {
   const filterCategories = [
     { id: 'global-data', label: 'वैश्विक डेटा' },
@@ -209,7 +243,7 @@ export default function DashboardPage() {
                         <Card className="bg-secondary/50 border-border cursor-pointer">
                             <CardContent className="p-4 flex items-center justify-between">
                                 <div className="flex items-center space-x-4">
-                                    <img src="https://openui.fly.dev/openui/24x24.svg?text=🚨" alt="police icon" className="h-8 w-8"/>
+                                    <PoliceIcon />
                                     <div>
                                         <h3 className="font-semibold">पुलिस</h3>
                                         <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
@@ -222,7 +256,9 @@ export default function DashboardPage() {
                       <AlertDialogContent>
                           <AlertDialogHeader>
                               <div className="flex justify-center">
-                                <img src="https://openui.fly.dev/openui/48x48.svg?text=🚨" alt="alert icon" className="h-12 w-12"/>
+                                 <div className="bg-blue-100 p-3 rounded-full">
+                                    <PoliceIcon />
+                                </div>
                               </div>
                               <AlertDialogTitle className="text-center">पुलिस से संपर्क करें?</AlertDialogTitle>
                               <AlertDialogDescription className="text-center">
@@ -240,7 +276,7 @@ export default function DashboardPage() {
                         <Card className="bg-secondary/50 border-border cursor-pointer">
                             <CardContent className="p-4 flex items-center justify-between">
                                 <div className="flex items-center space-x-4">
-                                    <img src="https://openui.fly.dev/openui/24x24.svg?text=🚑" alt="ambulance icon" className="h-8 w-8"/>
+                                    <AmbulanceIcon />
                                     <div>
                                         <h3 className="font-semibold">एम्बुलेंस</h3>
                                         <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
@@ -253,7 +289,9 @@ export default function DashboardPage() {
                       <AlertDialogContent>
                           <AlertDialogHeader>
                               <div className="flex justify-center">
-                                <img src="https://openui.fly.dev/openui/48x48.svg?text=🚑" alt="alert icon" className="h-12 w-12"/>
+                                 <div className="bg-red-100 p-3 rounded-full">
+                                    <AmbulanceIcon />
+                                 </div>
                               </div>
                               <AlertDialogTitle className="text-center">एम्बुलेंस से संपर्क करें?</AlertDialogTitle>
                               <AlertDialogDescription className="text-center">
@@ -271,7 +309,7 @@ export default function DashboardPage() {
                         <Card className="bg-secondary/50 border-border cursor-pointer">
                             <CardContent className="p-4 flex items-center justify-between">
                                  <div className="flex items-center space-x-4">
-                                    <img src="https://openui.fly.dev/openui/24x24.svg?text=🚒" alt="fire truck icon" className="h-8 w-8"/>
+                                    <FireTruckIcon />
                                     <div>
                                         <h3 className="font-semibold">दमकल</h3>
                                         <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
@@ -284,7 +322,9 @@ export default function DashboardPage() {
                       <AlertDialogContent>
                           <AlertDialogHeader>
                               <div className="flex justify-center">
-                                <img src="https://openui.fly.dev/openui/48x48.svg?text=🚒" alt="alert icon" className="h-12 w-12"/>
+                                <div className="bg-orange-100 p-3 rounded-full">
+                                    <FireTruckIcon />
+                                 </div>
                               </div>
                               <AlertDialogTitle className="text-center">दमकल से संपर्क करें?</AlertDialogTitle>
                               <AlertDialogDescription className="text-center">

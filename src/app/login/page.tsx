@@ -48,7 +48,7 @@ export default function LoginPage() {
             
             <div className="text-center text-sm">
               <span className="text-muted-foreground">खाता नहीं है? </span>
-              <Link href="#" className="text-blue-500 hover:underline">
+              <Link href="/signup" className="text-blue-500 hover:underline">
                 साइन अप करें
               </Link>
             </div>

@@ -13,6 +13,7 @@ import React from 'react';
 import { useTheme } from 'next-themes';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Textarea } from '@/components/ui/textarea';
 
 
 export default function SettingsPage() {
@@ -252,10 +253,33 @@ export default function SettingsPage() {
                     </DialogClose>
                 </DialogContent>
             </Dialog>
-            <CardContent className="p-4 flex items-center justify-between">
-              <h3 className="font-semibold">प्रतिक्रिया भेजें</h3>
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </CardContent>
+            <Dialog>
+              <DialogTrigger asChild>
+                <CardContent className="p-4 flex items-center justify-between cursor-pointer">
+                  <h3 className="font-semibold">प्रतिक्रिया भेजें</h3>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle className="flex justify-between items-center">
+                    प्रतिक्रिया भेजें
+                    <DialogClose asChild>
+                      <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
+                    </DialogClose>
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="p-1 space-y-4">
+                  <Textarea placeholder="हमें बताएं कि हम कैसे सुधार कर सकते हैं..." className="min-h-[120px] bg-secondary/50 border-border" />
+                  <div className="flex justify-end space-x-2">
+                    <DialogClose asChild>
+                      <Button variant="outline">रद्द करें</Button>
+                    </DialogClose>
+                    <Button className="bg-blue-600 hover:bg-blue-700">सबमिट करें</Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </Card>
         </div>
 
@@ -293,3 +317,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    

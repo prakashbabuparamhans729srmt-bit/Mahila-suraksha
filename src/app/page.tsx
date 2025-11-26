@@ -2,7 +2,7 @@
 
 'use client';
 import Link from 'next/link';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -176,10 +176,21 @@ export default function DashboardPage() {
   };
 
   const stateData = [
-    { name: 'आंध्र प्रदेश', score: 75 },
-    { name: 'अरुणाचल प्रदेश', score: 68 },
-    { name: 'असम', score: 65 },
-    { name: 'बिहार', score: 55 },
+    { 
+      name: 'आंध्र प्रदेश', 
+      score: 75,
+      trend: 'up',
+      details: [
+        "महिलाओं की सुरक्षा के लिए 'दिशा' पहल परिणाम दिखा रही है।",
+        "सार्वजनिक परिवहन में सुरक्षा सुधार पर ध्यान केंद्रित है।"
+      ]
+    },
+    { name: 'अरुणाचल प्रदेश', score: 68, trend: 'down' },
+    { name: 'असम', score: 65, trend: 'down' },
+    { name: 'बिहार', score: 55, trend: 'down' },
+    { name: 'छत्तीसगढ़', score: 62, trend: 'down' },
+    { name: 'गोवा', score: 85, trend: 'down' },
+    { name: 'गुजरात', score: 78, trend: 'down' },
   ];
 
 
@@ -515,14 +526,28 @@ export default function DashboardPage() {
                                             <span>{state.name}</span>
                                             <div className="flex items-center">
                                                 <span className={`font-bold mr-4 ${state.score < 60 ? 'text-red-500' : state.score < 70 ? 'text-yellow-500' : 'text-green-500'}`}>{state.score}/100</span>
-                                                <ChevronDown className="h-5 w-5 transition-transform duration-200" />
+                                                {state.trend === 'up' ? <ArrowUp className="h-5 w-5 text-green-500" /> : <ArrowDown className="h-5 w-5 text-red-500" />}
                                             </div>
                                         </div>
                                     </AccordionTrigger>
                                 </Card>
                                 <AccordionContent>
-                                    <div className="px-4 pb-4 text-muted-foreground">
-                                        यहाँ {state.name} के लिए विस्तृत डेटा होगा।
+                                    <div className="px-4 pb-4 text-muted-foreground space-y-4">
+                                        {state.details ? (
+                                            <>
+                                                <ul className="list-disc pl-5 space-y-2">
+                                                    {state.details.map((detail, i) => (
+                                                        <li key={i}>{detail}</li>
+                                                    ))}
+                                                </ul>
+                                                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                                                    <Share2 className="mr-2 h-4 w-4" />
+                                                    साझा करें
+                                                </Button>
+                                            </>
+                                        ) : (
+                                            <p>इस राज्य के लिए कोई विस्तृत डेटा उपलब्ध नहीं है।</p>
+                                        )}
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
@@ -816,3 +841,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

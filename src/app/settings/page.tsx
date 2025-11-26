@@ -2,15 +2,30 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X } from 'lucide-react';
+import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X, Trash2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import React from 'react';
 
 export default function SettingsPage() {
+  const [personalContacts, setPersonalContacts] = React.useState([
+    { id: 1, name: '', phone: '' },
+  ]);
+
+  const addContact = () => {
+    const newId = personalContacts.length > 0 ? Math.max(...personalContacts.map(c => c.id)) + 1 : 1;
+    setPersonalContacts([...personalContacts, { id: newId, name: '', phone: '' }]);
+  };
+
+  const removeContact = (id: number) => {
+    setPersonalContacts(personalContacts.filter(contact => contact.id !== id));
+  };
+
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
@@ -75,8 +90,24 @@ export default function SettingsPage() {
                   <Card className="bg-secondary/50 border-border">
                     <CardContent className="p-4 space-y-4">
                       <h3 className="font-semibold text-lg">व्यक्तिगत संपर्क</h3>
-                      {/* Personal contact fields will go here */}
-                      <div className="border-t border-dashed border-border my-4"></div>
+                      {personalContacts.map((contact, index) => (
+                        <div key={contact.id} className="space-y-3">
+                           <div className="flex justify-between items-center">
+                             <label className="text-sm font-medium">संपर्क {index + 1}</label>
+                             <Button variant="ghost" size="icon" onClick={() => removeContact(contact.id)} className="text-muted-foreground hover:text-destructive">
+                               <Trash2 className="h-5 w-5" />
+                             </Button>
+                           </div>
+                          <Input className="bg-background border-border" placeholder="संपर्क का नाम" />
+                          <Input className="bg-background border-border" placeholder="संपर्क का फ़ोन नंबर" type="tel" />
+                          {index < personalContacts.length -1 && <Separator className="my-4" />}
+                        </div>
+                      ))}
+                      
+                      <Button variant="outline" className="w-full" onClick={addContact}>
+                        <Plus className="mr-2 h-4 w-4" />
+                        एक और संपर्क जोड़ें
+                      </Button>
 
                     </CardContent>
                   </Card>

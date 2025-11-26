@@ -9,7 +9,7 @@ export default function LocationSettingsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
-        <Link href="/" className="mr-4">
+        <Link href="/settings" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
         <h1 className="text-xl font-bold">स्थान सेटिंग्स</h1>
@@ -91,7 +91,7 @@ export default function LocationSettingsPage() {
             <RefreshCw className="h-6 w-6" />
             <span className="text-xs">अपडेट्स</span>
           </div>
-          <Link href="/location-settings" className="flex flex-col items-center text-primary">
+          <Link href="/settings" className="flex flex-col items-center text-primary">
             <Settings className="h-6 w-6" />
             <span className="text-xs">सेटिंग्स</span>
           </Link>

@@ -93,7 +93,9 @@ export default function DashboardPage() {
         <div className="flex items-center space-x-4">
           <Bell className="h-6 w-6" />
           <User className="h-6 w-6" />
-          <Settings className="h-6 w-6" />
+          <Link href="/settings">
+            <Settings className="h-6 w-6" />
+          </Link>
         </div>
       </header>
 
@@ -463,7 +465,7 @@ export default function DashboardPage() {
             <RefreshCw className="h-6 w-6" />
             <span className="text-xs">अपडेट्स</span>
           </div>
-          <Link href="/location-settings" className="flex flex-col items-center text-muted-foreground">
+          <Link href="/settings" className="flex flex-col items-center text-muted-foreground">
             <Settings className="h-6 w-6" />
             <span className="text-xs">सेटिंग्स</span>
           </Link>

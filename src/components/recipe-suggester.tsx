@@ -6,8 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { ChefHat, WandSparkles } from 'lucide-react';
-import { useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useRef, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Loader } from './loader';
 
 const initialState: FormState = {
@@ -27,7 +27,7 @@ function SubmitButton() {
 }
 
 export function RecipeSuggester() {
-  const [state, formAction] = useFormState(getRecipeSuggestions, initialState);
+  const [state, formAction] = useActionState(getRecipeSuggestions, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
@@ -51,7 +51,7 @@ export function RecipeSuggester() {
             AI Banana Chef
           </CardTitle>
           <CardDescription className="text-lg">
-            Tell me what you have or what you like, and I&apos;ll suggest some banana recipes!
+            Tell me what you have or what you like, and I'll suggest some banana recipes!
           </CardDescription>
         </CardHeader>
         <CardContent>

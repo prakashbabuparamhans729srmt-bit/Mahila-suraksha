@@ -14,6 +14,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import React, { useState } from 'react';
+import { Progress } from '@/components/ui/progress';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 
 
 const CommunityIcon = () => (
@@ -414,16 +416,91 @@ export default function DashboardPage() {
             </AlertDialogContent>
         </AlertDialog>
 
+        <Dialog>
+            <DialogTrigger asChild>
+                <Card className="bg-secondary/50 border-border cursor-pointer">
+                <CardContent className="p-4">
+                    <h3 className="font-semibold">वापसी पर स्वागत है!</h3>
+                    <p className="text-muted-foreground">
+                    आपका वर्तमान वैश्विक सुरक्षा स्कोर है <span className="text-white font-bold">76/100</span>
+                    </p>
+                    <p className="text-green-400 text-sm">पिछले सप्ताह से 2 अंक ऊपर</p>
+                </CardContent>
+                </Card>
+            </DialogTrigger>
+            <DialogContent className="bg-background text-foreground max-w-md w-full">
+                <DialogHeader>
+                <DialogTitle className="text-xl flex justify-between items-center">
+                    वैश्विक सुरक्षा स्कोर की व्याख्या
+                    <DialogClose asChild>
+                        <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
+                    </DialogClose>
+                </DialogTitle>
+                </DialogHeader>
+                <ScrollArea className="max-h-[70vh]">
+                <div className="p-1 pr-6 space-y-6">
+                    <p className="text-muted-foreground">
+                    वैश्विक सुरक्षा स्कोर एक समग्र मीट्रिक है जो हमारे वैश्विक डेटा से प्रमुख संकेतकों के आधार पर यौन हिंसा से निपटने में प्रगति का मूल्यांकन करता है।
+                    </p>
 
-        <Card className="bg-secondary/50 border-border">
-          <CardContent className="p-4">
-            <h3 className="font-semibold">वापसी पर स्वागत है!</h3>
-            <p className="text-muted-foreground">
-              आपका वर्तमान वैश्विक सुरक्षा स्कोर है <span className="text-white font-bold">76/100</span>
-            </p>
-            <p className="text-green-400 text-sm">पिछले सप्ताह से 2 अंक ऊपर</p>
-          </CardContent>
-        </Card>
+                    <div className="flex items-center justify-around text-center">
+                    <div>
+                        <p className="text-muted-foreground">पिछला सप्ताह</p>
+                        <p className="text-4xl font-bold text-muted-foreground">74</p>
+                    </div>
+                    <ArrowRight className="h-8 w-8 text-green-500" />
+                    <div>
+                        <p className="text-muted-foreground">वर्तमान स्कोर</p>
+                        <p className="text-4xl font-bold text-green-500">76</p>
+                    </div>
+                    </div>
+
+                    <Card className="bg-secondary/50">
+                    <CardContent className="p-4">
+                        <h4 className="font-semibold">बदलाव का कारण (+2 अंक)</h4>
+                        <p className="text-sm text-muted-foreground">कानूनी सुधारों (अर्जेंटीना) में सकारात्मक प्रवृत्ति और दक्षिण एशिया से सामुदायिक सहभागिता रिपोर्टों में एक महत्वपूर्ण वृद्धि।</p>
+                    </CardContent>
+                    </Card>
+
+                    <div>
+                    <h4 className="font-semibold mb-4">स्कोर का विवरण</h4>
+                    <div className="space-y-4">
+                        <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                            <span>कानूनी और नीति सुधार</span>
+                            <span>82/100</span>
+                        </div>
+                        <Progress value={82} className="h-2 [&>div]:bg-green-500" />
+                        </div>
+                        <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                            <span>सार्वजनिक जागरूकता</span>
+                            <span>75/100</span>
+                        </div>
+                        <Progress value={75} className="h-2 [&>div]:bg-yellow-500" />
+                        </div>
+                        <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                            <span>सुरक्षा अवसंरचना</span>
+                            <span>68/100</span>
+                        </div>
+                        <Progress value={68} className="h-2 [&>div]:bg-yellow-500" />
+                        </div>
+                        <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                            <span>घटना रिपोर्टिंग दर</span>
+                            <span>79/100</span>
+                        </div>
+                        <Progress value={79} className="h-2 [&>div]:bg-green-500" />
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </ScrollArea>
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+            </DialogContent>
+        </Dialog>
+
 
         <div className="grid grid-cols-2 gap-4">
           <Card className="bg-secondary/50 border-border">
@@ -702,3 +779,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

@@ -322,7 +322,33 @@ export default function DashboardPage() {
                         <Share2 className="h-4 w-4" /> साझा करें
                     </Button>
                 </div>
-
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-yellow-400 border-2">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex justify-between items-start">
+                  <h3 className="font-semibold text-primary">वैश्विक धन उगाहने वाले की शुरूआत</h3>
+                  <p className="text-xs text-muted-foreground">5 दिन पहले</p>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।
+                </p>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>5812 Likes</span>
+                    <span>1 Comments</span>
+                </div>
+                <Separator />
+                <div className="flex justify-around">
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <ThumbsUp className="h-4 w-4" /> लाइक
+                    </Button>
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4" /> कमेंट
+                    </Button>
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <Share2 className="h-4 w-4" /> साझा करें
+                    </Button>
+                </div>
               </CardContent>
             </Card>
         </div>

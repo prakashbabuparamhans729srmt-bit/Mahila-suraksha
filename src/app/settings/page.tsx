@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -21,6 +21,10 @@ export default function SettingsPage() {
   const [personalContacts, setPersonalContacts] = React.useState([
     { id: 1, name: '', phone: '' },
   ]);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
 
   const addContact = () => {
     const newId = personalContacts.length > 0 ? Math.max(...personalContacts.map(c => c.id)) + 1 : 1;
@@ -183,10 +187,10 @@ export default function SettingsPage() {
                   <h3 className="font-semibold">ऐप थीम</h3>
                   <p className="text-sm text-muted-foreground">लाइट और डार्क मोड के बीच स्विच करें</p>
                 </div>
-                <Switch
+                {mounted && <Switch
                   checked={theme === 'dark'}
                   onCheckedChange={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                />
+                />}
               </div>
               <div>
                 <h3 className="font-semibold">टेक्स्ट का आकार</h3>

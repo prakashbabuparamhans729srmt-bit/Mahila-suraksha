@@ -613,20 +613,22 @@ export default function DashboardPage() {
         
         <div className="space-y-4">
             <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <ImplementationTrackerIcon />
+            <Link href="/implementation-tracker" className="block">
+              <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                      <ImplementationTrackerIcon />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">कार्यान्वयन ट्रैकर</h3>
+                      <p className="text-sm text-muted-foreground">गैंट चार्ट के साथ हमारी प्रमुख वैश्विक पहलों की प्रगति की निगरानी करें।</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">कार्यान्वयन ट्रैकर</h3>
-                    <p className="text-sm text-muted-foreground">गैंट चार्ट के साथ हमारी प्रमुख वैश्विक पहलों की प्रगति की निगरानी करें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">

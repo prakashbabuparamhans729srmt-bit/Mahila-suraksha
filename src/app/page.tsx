@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 
 const CommunityIcon = () => (
@@ -75,6 +76,12 @@ export default function DashboardPage() {
     { id: 'positive', label: 'सकारात्मक' },
     { id: 'neutral', label: 'तटस्थ' },
     { id: 'negative', label: 'नकारात्मक' },
+  ];
+
+  const dateRanges = [
+    { id: 'anytime', label: 'कभी भी' },
+    { id: 'last-week', label: 'पिछला सप्ताह' },
+    { id: 'last-month', label: 'पिछला महीना' },
   ];
 
   return (
@@ -147,7 +154,14 @@ export default function DashboardPage() {
                   <Separator className="my-6" />
 
                   <h3 className="text-lg font-semibold mb-3">तिथि सीमा</h3>
-                   {/* Date range inputs can be added here */}
+                  <RadioGroup defaultValue="anytime" className="space-y-4">
+                    {dateRanges.map((range) => (
+                      <div key={range.id} className="flex items-center space-x-2">
+                        <RadioGroupItem value={range.id} id={range.id} />
+                        <Label htmlFor={range.id} className="font-normal">{range.label}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
 
                 </div>
               </ScrollArea>

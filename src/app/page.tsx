@@ -1,4 +1,3 @@
-
 'use client';
 import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
@@ -675,20 +674,22 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
             </Link>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <SuccessIndicatorIcon />
+            <Link href="/success-indicators" className="block">
+              <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                      <SuccessIndicatorIcon />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">सफलता संकेतक</h3>
+                      <p className="text-sm text-muted-foreground">प्रमुख प्रदर्शन संकेतकों (KPIs) के साथ हमारी सामूहिक सफलता को मापें।</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">सफलता संकेतक</h3>
-                    <p className="text-sm text-muted-foreground">प्रमुख प्रदर्शन संकेतकों (KPIs) के साथ हमारी सामूहिक सफलता को मापें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+            </Link>
             <Link href="/safe-cities" className="block">
                 <Card className="bg-secondary/50 border-border">
                 <CardContent className="flex items-center justify-between p-4">
@@ -922,5 +923,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

@@ -1,6 +1,7 @@
 
+
 import Link from 'next/link';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -179,14 +180,69 @@ export default function DashboardPage() {
           </Sheet>
         </div>
 
-        <Card className="bg-red-600">
-          <CardContent className="flex flex-col items-center justify-center p-6 text-center text-white">
-            <div className="border-2 border-white p-2 mb-2">
-              <span className="text-lg font-bold">SOS</span>
-            </div>
-            <h2 className="text-2xl font-bold">आपातकालीन एसओएस</h2>
-          </CardContent>
-        </Card>
+        <Sheet>
+            <SheetTrigger asChild>
+                <Card className="bg-red-600 cursor-pointer">
+                    <CardContent className="flex flex-col items-center justify-center p-6 text-center text-white">
+                        <div className="border-2 border-white p-2 mb-2">
+                        <span className="text-lg font-bold">SOS</span>
+                        </div>
+                        <h2 className="text-2xl font-bold">आपातकालीन एसओएस</h2>
+                    </CardContent>
+                </Card>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="bg-background text-foreground rounded-t-lg">
+                <SheetHeader className="text-left p-4">
+                    <div className="flex justify-between items-center">
+                        <SheetTitle className="text-xl font-bold">आपातकालीन सेवा चुनें</SheetTitle>
+                        <SheetTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                                <X className="h-6 w-6" />
+                            </Button>
+                        </SheetTrigger>
+                    </div>
+                </SheetHeader>
+                <div className="p-4 space-y-4">
+                    <Card className="bg-secondary/50 border-border">
+                        <CardContent className="p-4 flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                                <img src="https://openui.fly.dev/openui/24x24.svg?text=🚨" alt="police icon" className="h-8 w-8"/>
+                                <div>
+                                    <h3 className="font-semibold">पुलिस</h3>
+                                    <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                        </CardContent>
+                    </Card>
+                    <Card className="bg-secondary/50 border-border">
+                        <CardContent className="p-4 flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                                <img src="https://openui.fly.dev/openui/24x24.svg?text=🚑" alt="ambulance icon" className="h-8 w-8"/>
+                                <div>
+                                    <h3 className="font-semibold">एम्बुलेंस</h3>
+                                    <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                        </CardContent>
+                    </Card>
+                    <Card className="bg-secondary/50 border-border">
+                        <CardContent className="p-4 flex items-center justify-between">
+                             <div className="flex items-center space-x-4">
+                                <img src="https://openui.fly.dev/openui/24x24.svg?text=🚒" alt="fire truck icon" className="h-8 w-8"/>
+                                <div>
+                                    <h3 className="font-semibold">दमकल</h3>
+                                    <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                        </CardContent>
+                    </Card>
+                </div>
+            </SheetContent>
+        </Sheet>
+
 
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-4">

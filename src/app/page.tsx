@@ -728,20 +728,22 @@ export default function DashboardPage() {
                 </CardContent>
                 </Card>
             </Link>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <Scale className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">कानूनी सुधार</h3>
-                    <p className="text-sm text-muted-foreground">देश के अनुसार कानूनी सुधारों और नीतिगत परिवर्तनों की प्रगति को ट्रैक करें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/legal-reform" className="block">
+                <Card className="bg-secondary/50 border-border">
+                  <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="bg-background p-3 rounded-lg">
+                        <Scale className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold">कानूनी सुधार</h3>
+                        <p className="text-sm text-muted-foreground">देश के अनुसार कानूनी सुधारों और नीतिगत परिवर्तनों की प्रगति को ट्रैक करें।</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">

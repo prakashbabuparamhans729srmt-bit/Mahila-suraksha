@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
@@ -667,20 +668,22 @@ export default function DashboardPage() {
                 <ArrowRight className="h-5 w-5 text-muted-foreground" />
               </CardContent>
             </Card>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <CommunityIcon />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">सामुदायिक सशक्तिकरण</h3>
-                    <p className="text-sm text-muted-foreground">सहायता समूहों, कार्यक्रमों और सशक्तिकरण कार्यक्रमों से जुड़ें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/community-empowerment" className="block">
+                <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                        <CommunityIcon />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">सामुदायिक सशक्तिकरण</h3>
+                        <p className="text-sm text-muted-foreground">सहायता समूहों, कार्यक्रमों और सशक्तिकरण कार्यक्रमों से जुड़ें।</p>
+                    </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+                </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">

@@ -2,7 +2,7 @@
 
 'use client';
 import Link from 'next/link';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import React, { useState } from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 
 const CommunityIcon = () => (
@@ -173,6 +174,13 @@ export default function DashboardPage() {
             return { title: '', description: '', number: '', icon: null };
     }
   };
+
+  const stateData = [
+    { name: 'आंध्र प्रदेश', score: 75 },
+    { name: 'अरुणाचल प्रदेश', score: 68 },
+    { name: 'असम', score: 65 },
+    { name: 'बिहार', score: 55 },
+  ];
 
 
   return (
@@ -495,9 +503,38 @@ export default function DashboardPage() {
                         </div>
                     </div>
                     </div>
+                    
+                    <div className="space-y-4">
+                        <h4 className="font-semibold">राज्य-वार डेटा (भारत)</h4>
+                        <Accordion type="single" collapsible className="w-full">
+                        {stateData.map((state, index) => (
+                            <AccordionItem value={`item-${index}`} key={index} className="border-b-0">
+                                <Card className='bg-secondary/50 border-border mb-2'>
+                                    <AccordionTrigger className="p-4 hover:no-underline">
+                                        <div className="flex justify-between w-full items-center">
+                                            <span>{state.name}</span>
+                                            <div className="flex items-center">
+                                                <span className={`font-bold mr-4 ${state.score < 60 ? 'text-red-500' : state.score < 70 ? 'text-yellow-500' : 'text-green-500'}`}>{state.score}/100</span>
+                                                <ChevronDown className="h-5 w-5 transition-transform duration-200" />
+                                            </div>
+                                        </div>
+                                    </AccordionTrigger>
+                                </Card>
+                                <AccordionContent>
+                                    <div className="px-4 pb-4 text-muted-foreground">
+                                        यहाँ {state.name} के लिए विस्तृत डेटा होगा।
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                        </Accordion>
+                    </div>
+
                 </div>
                 </ScrollArea>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                <DialogClose asChild>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                </DialogClose>
             </DialogContent>
         </Dialog>
 
@@ -779,5 +816,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

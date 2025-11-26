@@ -1,9 +1,14 @@
 
+'use client';
+
 import Link from 'next/link';
-import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight } from 'lucide-react';
+import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 export default function SettingsPage() {
   return (
@@ -18,15 +23,72 @@ export default function SettingsPage() {
       <main className="p-4 space-y-8">
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">सुरक्षा और आपातकाल</h2>
-          <Card className="bg-secondary/50 border-border">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold">आपातकालीन सेटिंग्स</h3>
-                <p className="text-sm text-muted-foreground">एसओएस संपर्क और अलर्ट प्रबंधित करें</p>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Card className="bg-secondary/50 border-border cursor-pointer">
+                <CardContent className="p-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold">आपातकालीन सेटिंग्स</h3>
+                    <p className="text-sm text-muted-foreground">एसओएस संपर्क और अलर्ट प्रबंधित करें</p>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="bg-background text-foreground rounded-t-lg h-[90vh] flex flex-col">
+              <SheetHeader className="text-left p-4">
+                <div className="flex justify-between items-center">
+                  <SheetTitle className="text-xl font-bold">आपातकालीन सेटिंग्स</SheetTitle>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <X className="h-6 w-6" />
+                    </Button>
+                  </SheetTrigger>
+                </div>
+              </SheetHeader>
+              <div className="overflow-y-auto px-4 pb-4 flex-grow">
+                <p className="text-muted-foreground mb-6">
+                  एसओएस स्थिति में उपयोग के लिए स्थानीय प्राधिकरणों और व्यक्तिगत संपर्कों के लिए आपातकालीन नंबर जोड़ें। यह जानकारी केवल आपके डिवाइस पर संग्रहीत है।
+                </p>
+
+                <div className="space-y-6">
+                  <Card className="bg-secondary/50 border-border">
+                    <CardContent className="p-4 space-y-4">
+                      <h3 className="font-semibold text-lg">स्थानीय प्राधिकरण</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium flex items-center">पुलिस 🚨</label>
+                          <Input className="mt-1 bg-background border-border" placeholder="पुलिस का नंबर दर्ज करें" />
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium flex items-center">एम्बुलेंस 🚑</label>
+                          <Input className="mt-1 bg-background border-border" placeholder="एम्बुलेंस का नंबर दर्ज करें" />
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium flex items-center">दमकल 🚒</label>
+                          <Input className="mt-1 bg-background border-border" placeholder="दमकल का नंबर दर्ज करें" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-secondary/50 border-border">
+                    <CardContent className="p-4 space-y-4">
+                      <h3 className="font-semibold text-lg">व्यक्तिगत संपर्क</h3>
+                      {/* Personal contact fields will go here */}
+                      <div className="border-t border-dashed border-border my-4"></div>
+
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </CardContent>
-          </Card>
+              <div className="p-4 mt-auto">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+                  संपर्क सहेजें
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
 
         <div>
@@ -98,7 +160,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
         </div>
-        
+
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">के बारे में</h2>
           <Card className="bg-secondary/50 border-border divide-y divide-border">
@@ -132,9 +194,9 @@ export default function SettingsPage() {
             <span className="text-xs">डेटा</span>
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 -top-6">
-             <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-14 w-14 shadow-lg">
-                <Plus className="h-8 w-8 text-white" />
-             </Button>
+            <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-14 w-14 shadow-lg">
+              <Plus className="h-8 w-8 text-white" />
+            </Button>
           </div>
           <div className="flex flex-col items-center text-muted-foreground">
             <RefreshCw className="h-6 w-6" />
@@ -146,7 +208,7 @@ export default function SettingsPage() {
           </Link>
         </div>
       </footer>
-       {/* Spacer for bottom nav */}
+      {/* Spacer for bottom nav */}
       <div className="h-24"></div>
     </div>
   );

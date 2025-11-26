@@ -72,6 +72,51 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
         </div>
+
+        <div>
+          <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">दिखावट</h2>
+          <Card className="bg-secondary/50 border-border">
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold">ऐप थीम</h3>
+                  <p className="text-sm text-muted-foreground">लाइट और डार्क मोड के बीच स्विच करें</p>
+                </div>
+                <Switch defaultChecked={true} />
+              </div>
+              <div>
+                <h3 className="font-semibold">टेक्स्ट का आकार</h3>
+                <p className="text-sm text-muted-foreground">पठनीयता के लिए टेक्स्ट का आकार समायोजित करें</p>
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  <Button variant="outline">छोटा</Button>
+                  <Button className="bg-blue-600 hover:bg-blue-700">मध्यम</Button>
+                  <Button variant="outline">बड़ा</Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        
+        <div>
+          <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">के बारे में</h2>
+          <Card className="bg-secondary/50 border-border divide-y divide-border">
+            <CardContent className="p-4 flex items-center justify-between">
+              <h3 className="font-semibold">गोपनीयता नीति</h3>
+              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            </CardContent>
+            <CardContent className="p-4 flex items-center justify-between">
+              <h3 className="font-semibold">सेवा की शर्तें</h3>
+              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            </CardContent>
+            <CardContent className="p-4 flex items-center justify-between">
+              <h3 className="font-semibold">प्रतिक्रिया भेजें</h3>
+              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            </CardContent>
+          </Card>
+        </div>
+
+        <p className="text-center text-sm text-muted-foreground">ऐप संस्करण 1.0.0</p>
+
       </main>
 
       <footer className="fixed bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-sm border-t border-border">

@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -686,20 +686,22 @@ export default function DashboardPage() {
                 </CardContent>
                 </Card>
             </Link>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <GlobalMonitoringIcon />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">वैश्विक निगरानी</h3>
-                    <p className="text-sm text-muted-foreground">सुरक्षा स्कोर और देश-विशिष्ट डेटा का वैश्विक हीटमैप देखें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+            <Link href="/global-monitoring" className="block">
+                <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                        <GlobalMonitoringIcon />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">वैश्विक निगरानी</h3>
+                        <p className="text-sm text-muted-foreground">सुरक्षा स्कोर और देश-विशिष्ट डेटा का वैश्विक हीटमैप देखें।</p>
+                    </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+                </Card>
+            </Link>
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">
@@ -885,5 +887,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

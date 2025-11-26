@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -462,10 +463,10 @@ export default function DashboardPage() {
             <RefreshCw className="h-6 w-6" />
             <span className="text-xs">अपडेट्स</span>
           </div>
-          <div className="flex flex-col items-center text-muted-foreground">
+          <Link href="/location-settings" className="flex flex-col items-center text-muted-foreground">
             <Settings className="h-6 w-6" />
             <span className="text-xs">सेटिंग्स</span>
-          </div>
+          </Link>
         </div>
       </footer>
        {/* Spacer for bottom nav */}

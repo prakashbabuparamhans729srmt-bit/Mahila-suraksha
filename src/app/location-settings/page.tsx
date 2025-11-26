@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, BarChart2, Home, MapPin, Plus, RefreshCw, Settings, LocateFixed } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function LocationSettingsPage() {
   return (
@@ -44,20 +45,36 @@ export default function LocationSettingsPage() {
         </Card>
 
         <Card className="bg-secondary/50 border-border">
-          <CardContent className="p-4 space-y-3">
+          <CardContent className="p-4 space-y-4">
             <h3 className="font-semibold">अपना स्थान अपडेट करें</h3>
             <Button className="w-full bg-blue-600 hover:bg-blue-700">
               <LocateFixed className="mr-2 h-5 w-5" />
               मेरा स्थान पता लगाएँ
             </Button>
+            
+            <div className="flex items-center space-x-2">
+              <div className="flex-grow border-t border-border"></div>
+              <span className="text-muted-foreground text-sm">या</span>
+              <div className="flex-grow border-t border-border"></div>
+            </div>
+
+            <div className="space-y-2">
+                <label htmlFor="manual-location" className="text-sm font-medium">स्थान मैन्युअल रूप से दर्ज करें</label>
+                <Input id="manual-location" placeholder="Patna Junction, Patna" defaultValue="Patna Junction, Patna" className="bg-background border-border" />
+            </div>
+
           </CardContent>
         </Card>
+
+        <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg h-12">
+            स्थान सहेजें
+        </Button>
 
       </main>
 
       <footer className="fixed bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-sm border-t border-border">
         <div className="flex justify-around items-center p-2 relative">
-          <Link href="/" className="flex flex-col items-center text-primary">
+          <Link href="/" className="flex flex-col items-center text-muted-foreground">
             <Home className="h-6 w-6" />
             <span className="text-xs">होम</span>
           </Link>
@@ -74,7 +91,7 @@ export default function LocationSettingsPage() {
             <RefreshCw className="h-6 w-6" />
             <span className="text-xs">अपडेट्स</span>
           </div>
-          <Link href="/location-settings" className="flex flex-col items-center text-muted-foreground">
+          <Link href="/location-settings" className="flex flex-col items-center text-primary">
             <Settings className="h-6 w-6" />
             <span className="text-xs">सेटिंग्स</span>
           </Link>

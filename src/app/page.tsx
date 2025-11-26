@@ -1,4 +1,4 @@
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -60,6 +60,54 @@ export default function DashboardPage() {
             <p className="text-green-400 text-sm">पिछले सप्ताह से 2 अंक ऊपर</p>
           </CardContent>
         </Card>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Card className="bg-secondary/50 border-border">
+            <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
+              <Shield className="h-8 w-8 text-primary" />
+              <span className="text-sm font-semibold">सुरक्षा उपकरण</span>
+            </CardContent>
+          </Card>
+          <Card className="bg-secondary/50 border-border">
+            <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
+              <Users className="h-8 w-8 text-primary" />
+              <span className="text-sm font-semibold">सहायता खोजें</span>
+            </CardContent>
+          </Card>
+        </div>
+        
+        <div className="space-y-4">
+            <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <BarChartBig className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">वैश्विक डेटा</h3>
+                    <p className="text-sm text-muted-foreground">इंटरैक्टिव मानचित्र, रुझान और प्रमुख वैश्विक आँकड़े देखें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex items-center justify-between p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-background p-3 rounded-lg">
+                    <GraduationCap className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">शिक्षा</h3>
+                    <p className="text-sm text-muted-foreground">जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+        </div>
+
       </main>
 
       <footer className="fixed bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-sm border-t border-border">

@@ -225,7 +225,7 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
+    <div className="min-h-screen bg-background text-foreground font-sans no-scrollbar">
       <header className="flex items-center justify-between p-4">
         <h1 className="text-2xl font-bold">डैशबोर्ड</h1>
         <div className="flex items-center space-x-4">
@@ -925,5 +925,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

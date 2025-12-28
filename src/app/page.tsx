@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
@@ -225,7 +226,7 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans no-scrollbar">
+    <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
         <h1 className="text-2xl font-bold">डैशबोर्ड</h1>
         <div className="flex items-center space-x-4">
@@ -627,18 +628,22 @@ export default function DashboardPage() {
 
 
         <div className="grid grid-cols-2 gap-4">
-          <Card className="bg-secondary/50 border-border">
-            <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
-              <Shield className="h-8 w-8 text-primary" />
-              <span className="text-sm font-semibold">सुरक्षा उपकरण</span>
-            </CardContent>
-          </Card>
-          <Card className="bg-secondary/50 border-border">
-            <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
-              <Users className="h-8 w-8 text-primary" />
-              <span className="text-sm font-semibold">सहायता खोजें</span>
-            </CardContent>
-          </Card>
+          <Link href="/smart-safety" className="block">
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
+                <Shield className="h-8 w-8 text-primary" />
+                <span className="text-sm font-semibold text-center">सुरक्षा उपकरण</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/community-empowerment" className="block">
+            <Card className="bg-secondary/50 border-border">
+              <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
+                <Users className="h-8 w-8 text-primary" />
+                <span className="text-sm font-semibold text-center">सहायता खोजें</span>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
         
         <div className="space-y-4">
@@ -738,20 +743,22 @@ export default function DashboardPage() {
                 </CardContent>
                 </Card>
             </Link>
-            <Card className="bg-secondary/50 border-border">
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-background p-3 rounded-lg">
-                    <BarChartBig className="h-6 w-6 text-primary" />
+            <Link href="/global-monitoring" className="block">
+              <Card className="bg-secondary/50 border-border">
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-background p-3 rounded-lg">
+                      <BarChartBig className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">वैश्विक डेटा</h3>
+                      <p className="text-sm text-muted-foreground">इंटरैक्टिव मानचित्र, रुझान और प्रमुख वैश्विक आँकड़े देखें।</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">वैश्विक डेटा</h3>
-                    <p className="text-sm text-muted-foreground">इंटरैक्टिव मानचित्र, रुझान और प्रमुख वैश्विक आँकड़े देखें।</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+            </Link>
             <Link href="/education" className="block">
                 <Card className="bg-secondary/50 border-border">
                 <CardContent className="flex items-center justify-between p-4">
@@ -901,27 +908,29 @@ export default function DashboardPage() {
             <Home className="h-6 w-6" />
             <span className="text-xs">होम</span>
           </Link>
-          <div className="flex flex-col items-center text-muted-foreground">
+          <Link href="/global-monitoring" className="flex flex-col items-center text-muted-foreground">
             <BarChart2 className="h-6 w-6" />
             <span className="text-xs">डेटा</span>
-          </div>
+          </Link>
           <div className="absolute left-1/2 -translate-x-1/2 -top-6">
              <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-14 w-14 shadow-lg">
                 <Plus className="h-8 w-8 text-white" />
              </Button>
           </div>
-          <div className="flex flex-col items-center text-muted-foreground">
+          <Link href="/updates-feed" className="flex flex-col items-center text-muted-foreground">
             <RefreshCw className="h-6 w-6" />
             <span className="text-xs">अपडेट्स</span>
-          </div>
+          </Link>
           <Link href="/settings" className="flex flex-col items-center text-muted-foreground">
             <Settings className="h-6 w-6" />
             <span className="text-xs">सेटिंग्स</span>
           </Link>
         </div>
       </footer>
-       {/* Spacer for bottom nav */}
+      {/* Spacer for bottom nav */}
       <div className="h-24"></div>
     </div>
   );
 }
+
+    

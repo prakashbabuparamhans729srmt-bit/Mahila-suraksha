@@ -1,8 +1,9 @@
+
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, BarChart2, Plus, RefreshCw, Settings } from 'lucide-react';
+import { Home, BarChart2, Plus, RefreshCw, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -13,7 +14,7 @@ export function BottomNav() {
     { href: '/', icon: Home, label: 'होम' },
     { href: '/global-monitoring', icon: BarChart2, label: 'डेटा' },
     { href: '/updates-feed', icon: RefreshCw, label: 'अपडेट्स' },
-    { href: '/settings', icon: Settings, label: 'सेटिंग्स' },
+    { href: '/education', icon: GraduationCap, label: 'शिक्षा' },
   ];
 
   return (

@@ -110,7 +110,19 @@ const AlertIcon = () => (
     </svg>
 );
 
-const initialComments = [
+type CommentType = {
+    id: number;
+    user: string;
+    avatar: string;
+    comment: string;
+    timestamp: string;
+    likes: number;
+    liked: boolean;
+    unliked: boolean;
+    replies: CommentType[];
+};
+
+const initialComments: CommentType[] = [
     {
         id: 1,
         user: 'Aarav Sharma',
@@ -161,7 +173,75 @@ const initialComments = [
 const CommentSection = () => {
     const [comments, setComments] = useState(initialComments);
     const [newComment, setNewComment] = useState('');
-    const [replyingTo, setReplyingTo] = useState<number | null>(null);
+    const [replyingTo, setReplyingTo] = useState<{ parentId: number | null, commentId: number | null }>({ parentId: null, commentId: null });
+    const [replyText, setReplyText] = useState('');
+
+    const findCommentAndUpdate = (
+        comments: CommentType[], 
+        commentId: number, 
+        updateFn: (comment: CommentType) => CommentType
+    ): CommentType[] => {
+        return comments.map(comment => {
+            if (comment.id === commentId) {
+                return updateFn(comment);
+            }
+            if (comment.replies.length > 0) {
+                return { ...comment, replies: findCommentAndUpdate(comment.replies, commentId, updateFn) };
+            }
+            return comment;
+        });
+    };
+
+    const handleLike = (id: number) => {
+        setComments(prev => findCommentAndUpdate(prev, id, c => ({
+            ...c,
+            likes: c.liked ? c.likes - 1 : c.likes + 1,
+            liked: !c.liked,
+            unliked: c.liked ? c.unliked : false,
+        })));
+    };
+    
+    const handleUnlike = (id: number) => {
+        setComments(prev => findCommentAndUpdate(prev, id, c => ({
+            ...c,
+            likes: c.liked ? c.likes - 1 : (c.unliked ? c.likes : c.likes),
+            unliked: !c.unliked,
+            liked: c.unliked ? c.liked : false,
+        })));
+    };
+    
+    const handlePostReply = (parentId: number) => {
+        if (!replyText.trim()) return;
+
+        const newReply: CommentType = {
+            id: Date.now(),
+            user: 'आप',
+            avatar: 'https://picsum.photos/seed/currentUser/40/40',
+            comment: replyText,
+            timestamp: 'अभी',
+            likes: 0,
+            liked: false,
+            unliked: false,
+            replies: [],
+        };
+        
+        const addReply = (comments: CommentType[]): CommentType[] => {
+           return comments.map(comment => {
+                if (comment.id === parentId) {
+                    return { ...comment, replies: [newReply, ...comment.replies] };
+                }
+                if (comment.replies.length > 0) {
+                    return { ...comment, replies: addReply(comment.replies) };
+                }
+                return comment;
+            });
+        }
+
+        setComments(prev => addReply(prev));
+        setReplyText('');
+        setReplyingTo({ parentId: null, commentId: null });
+    };
+
 
     const handlePostComment = () => {
         if (newComment.trim()) {
@@ -181,16 +261,8 @@ const CommentSection = () => {
         }
     };
 
-    const handleLike = (id: number) => {
-        // This is a dummy handler. In a real app, you'd update the state.
-        console.log(`Liked comment ${id}`);
-    };
-    
-    const handleUnlike = (id: number) => {
-        console.log(`Unliked comment ${id}`);
-    };
 
-    const Comment = ({ comment }: { comment: (typeof initialComments)[0] }) => {
+    const Comment = ({ comment, parentId }: { comment: CommentType; parentId: number | null }) => {
         return (
             <div className="flex items-start gap-3">
                 <Avatar>
@@ -209,22 +281,31 @@ const CommentSection = () => {
                             <span className="text-xs">{comment.likes}</span>
                         </Button>
                         <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => handleUnlike(comment.id)}>
-                            <ThumbsDown className={`h-4 w-4 ${comment.unliked ? 'text-blue-500' : ''}`} />
+                            <ThumbsDown className={`h-4 w-4 ${comment.unliked ? 'text-red-500' : ''}`} />
                         </Button>
-                        <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)}>
+                        <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => {
+                            setReplyingTo(replyingTo.commentId === comment.id ? { parentId: null, commentId: null } : { parentId: parentId ?? comment.id, commentId: comment.id });
+                            setReplyText('');
+                        }}>
                             <CornerUpLeft className="h-4 w-4" />
                             <span className="text-xs">रिप्लाई</span>
                         </Button>
                     </div>
-                    {replyingTo === comment.id && (
+                    {replyingTo.commentId === comment.id && (
                         <div className="flex items-center gap-2 mt-3">
                             <Avatar className="h-8 w-8">
                                 <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
                                 <AvatarFallback>आप</AvatarFallback>
                             </Avatar>
                             <div className="relative w-full">
-                                <Input placeholder="एक रिप्लाई लिखें..." className="bg-secondary/50 border-input pr-10 h-9" />
-                                <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-blue-500">
+                                <Input 
+                                    placeholder="एक रिप्लाई लिखें..." 
+                                    className="bg-secondary/50 border-input pr-10 h-9"
+                                    value={replyText}
+                                    onChange={(e) => setReplyText(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && handlePostReply(replyingTo.parentId!)}
+                                />
+                                <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-blue-500" onClick={() => handlePostReply(replyingTo.parentId!)}>
                                     <Send className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -232,7 +313,7 @@ const CommentSection = () => {
                     )}
                     {comment.replies && comment.replies.length > 0 && (
                         <div className="mt-4 pl-8 border-l-2 border-border/50 space-y-4">
-                            {comment.replies.map(reply => <Comment key={reply.id} comment={reply} />)}
+                            {comment.replies.map(reply => <Comment key={reply.id} comment={reply} parentId={comment.id} />)}
                         </div>
                     )}
                 </div>
@@ -252,7 +333,7 @@ const CommentSection = () => {
             </DialogHeader>
             <ScrollArea className="flex-grow px-4">
                 <div className="space-y-6 py-4">
-                    {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
+                    {comments.map(comment => <Comment key={comment.id} comment={comment} parentId={null}/>)}
                 </div>
             </ScrollArea>
             <div className="mt-auto p-4 border-t border-border bg-background">

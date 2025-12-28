@@ -21,8 +21,6 @@ export default function MaleEngagementPage() {
                 console.error('Error sharing:', error);
             }
         } else {
-            console.log('Web Share API not supported.');
-            // Fallback for browsers that don't support Web Share API
             alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
         }
     };

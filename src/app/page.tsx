@@ -409,7 +409,6 @@ export default function DashboardPage() {
             console.error('Error sharing:', error);
         }
     } else {
-        console.log('Web Share API not supported.');
         alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
     }
   };
@@ -426,7 +425,7 @@ export default function DashboardPage() {
             console.error('Error sharing:', error);
         }
     } else {
-        alert('Web Share API is not supported in your browser.');
+        alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
     }
   };
 

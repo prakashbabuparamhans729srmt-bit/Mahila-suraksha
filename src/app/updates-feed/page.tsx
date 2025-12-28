@@ -197,7 +197,6 @@ export default function UpdatesFeedPage() {
                 console.error('Error sharing:', error);
             }
         } else {
-            console.log('Web Share API not supported.');
             alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
         }
     };
@@ -300,5 +299,3 @@ export default function UpdatesFeedPage() {
 }
 
     
-
-

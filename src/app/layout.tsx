@@ -26,18 +26,18 @@ export default function RootLayout({
         />
         <style>{`
           /* Hide scrollbar for Chrome, Safari and Opera */
-          .no-scrollbar::-webkit-scrollbar {
+          body::-webkit-scrollbar {
             display: none;
           }
 
           /* Hide scrollbar for IE, Edge and Firefox */
-          .no-scrollbar {
+          body {
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
           }
         `}</style>
       </head>
-      <body className="font-body antialiased no-scrollbar">
+      <body className="font-body antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

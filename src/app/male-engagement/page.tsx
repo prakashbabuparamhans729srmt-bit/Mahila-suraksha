@@ -9,6 +9,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
 
 export default function MaleEngagementPage() {
+    const handleShare = async (title: string, text: string) => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: title,
+                    text: text,
+                    url: window.location.href,
+                });
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            console.log('Web Share API not supported.');
+            // Fallback for browsers that don't support Web Share API
+            alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
@@ -39,7 +57,10 @@ export default function MaleEngagementPage() {
                                 </div>
                                 <div className="flex gap-2">
                                     <Button className="w-full bg-green-600 hover:bg-green-700">प्रतिज्ञा लें</Button>
-                                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                                    <Button 
+                                        className="w-full bg-blue-600 hover:bg-blue-700"
+                                        onClick={() => handleShare('सम्मान के लिए प्रतिज्ञा', 'मैंने महिलाओं और लड़कियों के खिलाफ हिंसा को समाप्त करने में मदद करने के लिए सम्मान की प्रतिज्ञा ली है। आप भी शामिल हों!')}
+                                    >
                                         <Share2 className="mr-2 h-4 w-4" />
                                         साझा करें
                                     </Button>

@@ -10,6 +10,23 @@ import { Separator } from '@/components/ui/separator';
 import { BottomNav } from '@/components/layout/bottom-nav';
 
 export default function UpdatesFeedPage() {
+    const handleShare = async (title: string, text: string) => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: title,
+                    text: text,
+                    url: window.location.href,
+                });
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            console.log('Web Share API not supported.');
+            alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
@@ -43,7 +60,12 @@ export default function UpdatesFeedPage() {
                                 <Button variant="ghost" size="sm" className="flex items-center gap-2">
                                     <MessageSquare className="h-4 w-4" /> कमेंट
                                 </Button>
-                                <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    className="flex items-center gap-2"
+                                    onClick={() => handleShare('अर्जेंटीना में नया कानून पारित', 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।')}
+                                >
                                     <Share2 className="h-4 w-4" /> साझा करें
                                 </Button>
                             </div>
@@ -73,7 +95,12 @@ export default function UpdatesFeedPage() {
                                 <Button variant="ghost" size="sm" className="flex items-center gap-2">
                                     <MessageSquare className="h-4 w-4" /> कमेंट
                                 </Button>
-                                <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    className="flex items-center gap-2"
+                                    onClick={() => handleShare('वैश्विक धन उगाहने वाले की शुरूआत', 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।')}
+                                >
                                     <Share2 className="h-4 w-4" /> साझा करें
                                 </Button>
                             </div>

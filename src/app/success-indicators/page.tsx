@@ -15,6 +15,24 @@ export default function SuccessIndicatorsPage() {
         { title: 'हेल्पलाइन कॉल का उत्तर दिया गया', value: '250k', progress: 50, target: '500k (लक्ष्य)' }
     ];
 
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                const shareText = indicators.map(indicator => `${indicator.title}: ${indicator.value}`).join('\n');
+                await navigator.share({
+                    title: 'सफलता संकेतक',
+                    text: `हमारी प्रगति देखें:\n${shareText}`,
+                    url: window.location.href,
+                });
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            console.log('Web Share API not supported.');
+            alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center justify-between p-4">
@@ -22,7 +40,7 @@ export default function SuccessIndicatorsPage() {
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
                 <h1 className="text-xl font-bold">सफलता संकेतक</h1>
-                <Button variant="default" size="sm" className="bg-blue-600 hover:bg-blue-700">
+                <Button variant="default" size="sm" className="bg-blue-600 hover:bg-blue-700" onClick={handleShare}>
                     <Share2 className="mr-2 h-4 w-4" />
                     साझा करें
                 </Button>

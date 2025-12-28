@@ -228,11 +228,8 @@ const CommentSection = () => {
     return (
         <DialogContent className="bg-background text-foreground max-w-md w-full h-[90vh] flex flex-col p-0">
             <DialogHeader className="p-4 border-b border-border">
-                <DialogTitle className="text-xl flex justify-between items-center">
+                <DialogTitle className="text-xl">
                     कमेंट्स
-                    <DialogClose asChild>
-                        <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
-                    </DialogClose>
                 </DialogTitle>
             </DialogHeader>
             <ScrollArea className="flex-grow px-4">

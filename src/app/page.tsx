@@ -324,11 +324,8 @@ const CommentSection = () => {
     return (
         <DialogContent className="bg-background text-foreground max-w-md w-full h-[90vh] flex flex-col p-0">
             <DialogHeader className="p-4 border-b border-border">
-                <DialogTitle className="text-xl flex justify-between items-center">
+                <DialogTitle className="text-xl">
                     कमेंट्स
-                    <DialogClose asChild>
-                        <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
-                    </DialogClose>
                 </DialogTitle>
             </DialogHeader>
             <ScrollArea className="flex-grow px-4">
@@ -768,11 +765,8 @@ export default function DashboardPage() {
             </DialogTrigger>
             <DialogContent className="bg-background text-foreground max-w-md w-full">
                 <DialogHeader>
-                <DialogTitle className="text-xl flex justify-between items-center">
+                <DialogTitle className="text-xl">
                     वैश्विक सुरक्षा स्कोर की व्याख्या
-                    <DialogClose asChild>
-                        <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
-                    </DialogClose>
                 </DialogTitle>
                 </DialogHeader>
                 <ScrollArea className="max-h-[70vh]">
@@ -1177,7 +1171,7 @@ export default function DashboardPage() {
                   <p className="text-xs text-muted-foreground">5 दिन पहले</p>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।
+                हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के لیے $10M जुटाना है।
                 </p>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>5812 Likes</span>

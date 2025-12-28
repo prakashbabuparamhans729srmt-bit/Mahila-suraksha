@@ -89,19 +89,19 @@ export default function GlobalMonitoringPage() {
                         <Home className="h-6 w-6" />
                         <span className="text-xs">होम</span>
                     </Link>
-                    <div className="flex flex-col items-center text-muted-foreground">
+                    <Link href="/global-monitoring" className="flex flex-col items-center text-muted-foreground">
                         <BarChart2 className="h-6 w-6" />
                         <span className="text-xs">डेटा</span>
-                    </div>
+                    </Link>
                     <div className="absolute left-1/2 -translate-x-1/2 -top-6">
                         <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-14 w-14 shadow-lg">
                             <Plus className="h-8 w-8 text-white" />
                         </Button>
                     </div>
-                    <div className="flex flex-col items-center text-muted-foreground">
+                    <Link href="/updates-feed" className="flex flex-col items-center text-muted-foreground">
                         <RefreshCw className="h-6 w-6" />
                         <span className="text-xs">अपडेट्स</span>
-                    </div>
+                    </Link>
                     <Link href="/settings" className="flex flex-col items-center text-muted-foreground">
                         <Settings className="h-6 w-6" />
                         <span className="text-xs">सेटिंग्स</span>

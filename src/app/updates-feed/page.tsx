@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings, ThumbsUp, MessageSquare, Share2, X, Send } from 'lucide-react';
+import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings, ThumbsUp, MessageSquare, Share2, X, Send, ThumbsDown, CornerUpLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -12,14 +12,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useState } from 'react';
 
-const dummyComments = [
+const initialComments = [
     {
         id: 1,
         user: 'Aarav Sharma',
         avatar: 'https://picsum.photos/seed/user1/40/40',
         comment: 'यह एक बहुत ही महत्वपूर्ण कदम है। कार्यस्थल पर सुरक्षा हम सभी के लिए प्राथमिकता होनी चाहिए।',
         timestamp: '2 घंटे पहले',
+        likes: 15,
+        liked: false,
+        unliked: false,
+        replies: [],
     },
     {
         id: 2,
@@ -27,6 +32,22 @@ const dummyComments = [
         avatar: 'https://picsum.photos/seed/user2/40/40',
         comment: 'शानदार खबर! उम्मीद है कि इसे सख्ती से लागू किया जाएगा।',
         timestamp: '3 घंटे पहले',
+        likes: 8,
+        liked: false,
+        unliked: false,
+        replies: [
+            {
+                id: 4,
+                user: 'Rohan Gupta',
+                avatar: 'https://picsum.photos/seed/user3/40/40',
+                comment: 'मैं सहमत हूँ, प्रवर्तन महत्वपूर्ण है।',
+                timestamp: '1 घंटे पहले',
+                likes: 2,
+                liked: false,
+                unliked: false,
+                replies: [],
+            }
+        ],
     },
      {
         id: 3,
@@ -34,54 +55,133 @@ const dummyComments = [
         avatar: 'https://picsum.photos/seed/user3/40/40',
         comment: 'जागरूकता फैलाने के लिए धन्यवाद।',
         timestamp: '5 घंटे पहले',
+        likes: 3,
+        liked: false,
+        unliked: false,
+        replies: [],
     }
 ];
 
-const CommentSection = () => (
-    <DialogContent className="bg-background text-foreground max-w-md w-full h-[80vh] flex flex-col">
-        <DialogHeader>
-            <DialogTitle className="text-xl flex justify-between items-center">
-                कमेंट्स
-                <DialogClose asChild>
-                    <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
-                </DialogClose>
-            </DialogTitle>
-        </DialogHeader>
-        <ScrollArea className="flex-grow pr-6 -mr-6">
-            <div className="space-y-6">
-                {dummyComments.map(comment => (
-                    <div key={comment.id} className="flex items-start gap-3">
-                        <Avatar>
-                            <AvatarImage src={comment.avatar} />
-                            <AvatarFallback>{comment.user.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                                <p className="font-semibold text-sm">{comment.user}</p>
-                                <p className="text-xs text-muted-foreground">{comment.timestamp}</p>
-                            </div>
-                            <p className="text-sm text-muted-foreground mt-1">{comment.comment}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </ScrollArea>
-        <div className="mt-auto pt-4 border-t border-border">
-             <div className="flex items-center gap-2">
+const CommentSection = () => {
+    const [comments, setComments] = useState(initialComments);
+    const [newComment, setNewComment] = useState('');
+    const [replyingTo, setReplyingTo] = useState<number | null>(null);
+
+    const handlePostComment = () => {
+        if (newComment.trim()) {
+            const newCommentObj = {
+                id: Date.now(),
+                user: 'आप',
+                avatar: 'https://picsum.photos/seed/currentUser/40/40',
+                comment: newComment,
+                timestamp: 'अभी',
+                likes: 0,
+                liked: false,
+                unliked: false,
+                replies: [],
+            };
+            setComments([newCommentObj, ...comments]);
+            setNewComment('');
+        }
+    };
+
+    const handleLike = (id: number) => {
+        // This is a dummy handler. In a real app, you'd update the state.
+        console.log(`Liked comment ${id}`);
+    };
+    
+    const handleUnlike = (id: number) => {
+        console.log(`Unliked comment ${id}`);
+    };
+
+    const Comment = ({ comment }: { comment: (typeof initialComments)[0] }) => {
+        return (
+            <div className="flex items-start gap-3">
                 <Avatar>
-                    <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
-                    <AvatarFallback>आप</AvatarFallback>
+                    <AvatarImage src={comment.avatar} />
+                    <AvatarFallback>{comment.user.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <div className="relative w-full">
-                    <Input placeholder="एक कमेंट लिखें..." className="bg-secondary/50 border-input pr-10" />
-                     <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-blue-500">
-                        <Send className="h-5 w-5" />
-                    </Button>
+                <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                        <p className="font-semibold text-sm">{comment.user}</p>
+                        <p className="text-xs text-muted-foreground">{comment.timestamp}</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">{comment.comment}</p>
+                    <div className="flex items-center gap-4 mt-2 text-muted-foreground">
+                        <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => handleLike(comment.id)}>
+                            <ThumbsUp className={`h-4 w-4 ${comment.liked ? 'text-blue-500' : ''}`} />
+                            <span className="text-xs">{comment.likes}</span>
+                        </Button>
+                        <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => handleUnlike(comment.id)}>
+                            <ThumbsDown className={`h-4 w-4 ${comment.unliked ? 'text-blue-500' : ''}`} />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)}>
+                            <CornerUpLeft className="h-4 w-4" />
+                            <span className="text-xs">रिप्लाई</span>
+                        </Button>
+                    </div>
+                    {replyingTo === comment.id && (
+                        <div className="flex items-center gap-2 mt-3">
+                            <Avatar className="h-8 w-8">
+                                <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
+                                <AvatarFallback>आप</AvatarFallback>
+                            </Avatar>
+                            <div className="relative w-full">
+                                <Input placeholder="एक रिप्लाई लिखें..." className="bg-secondary/50 border-input pr-10 h-9" />
+                                <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-blue-500">
+                                    <Send className="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                    {comment.replies && comment.replies.length > 0 && (
+                        <div className="mt-4 pl-8 border-l-2 border-border/50 space-y-4">
+                            {comment.replies.map(reply => <Comment key={reply.id} comment={reply} />)}
+                        </div>
+                    )}
                 </div>
             </div>
-        </div>
-    </DialogContent>
-);
+        );
+    };
+
+    return (
+        <DialogContent className="bg-background text-foreground max-w-md w-full h-[90vh] flex flex-col p-0">
+            <DialogHeader className="p-4 border-b border-border">
+                <DialogTitle className="text-xl flex justify-between items-center">
+                    कमेंट्स
+                    <DialogClose asChild>
+                        <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
+                    </DialogClose>
+                </DialogTitle>
+            </DialogHeader>
+            <ScrollArea className="flex-grow px-4">
+                <div className="space-y-6 py-4">
+                    {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
+                </div>
+            </ScrollArea>
+            <div className="mt-auto p-4 border-t border-border bg-background">
+                 <div className="flex items-center gap-2">
+                    <Avatar>
+                        <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
+                        <AvatarFallback>आप</AvatarFallback>
+                    </Avatar>
+                    <div className="relative w-full">
+                        <Input 
+                            placeholder="एक कमेंट लिखें..." 
+                            className="bg-secondary/50 border-input pr-10" 
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
+                        />
+                         <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-blue-500" onClick={handlePostComment}>
+                            <Send className="h-5 w-5" />
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </DialogContent>
+    );
+};
 
 
 export default function UpdatesFeedPage() {
@@ -200,4 +300,5 @@ export default function UpdatesFeedPage() {
 }
 
     
+
 

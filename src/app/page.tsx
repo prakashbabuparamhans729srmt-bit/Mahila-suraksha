@@ -1,7 +1,7 @@
 
 'use client';
 import Link from 'next/link';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,8 @@ import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Textarea } from '@/components/ui/textarea';
 
 
 const CommunityIcon = () => (
@@ -107,6 +109,78 @@ const AlertIcon = () => (
         <path d="M12 14v-4" stroke="#FFF" />
     </svg>
 );
+
+
+const dummyComments = [
+    {
+        id: 1,
+        user: 'Aarav Sharma',
+        avatar: 'https://picsum.photos/seed/user1/40/40',
+        comment: 'यह एक बहुत ही महत्वपूर्ण कदम है। कार्यस्थल पर सुरक्षा हम सभी के लिए प्राथमिकता होनी चाहिए।',
+        timestamp: '2 घंटे पहले',
+    },
+    {
+        id: 2,
+        user: 'Priya Singh',
+        avatar: 'https://picsum.photos/seed/user2/40/40',
+        comment: 'शानदार खबर! उम्मीद है कि इसे सख्ती से लागू किया जाएगा।',
+        timestamp: '3 घंटे पहले',
+    },
+     {
+        id: 3,
+        user: 'Rohan Gupta',
+        avatar: 'https://picsum.photos/seed/user3/40/40',
+        comment: 'जागरूकता फैलाने के लिए धन्यवाद।',
+        timestamp: '5 घंटे पहले',
+    }
+];
+
+const CommentSection = () => (
+    <DialogContent className="bg-background text-foreground max-w-md w-full h-[80vh] flex flex-col">
+        <DialogHeader>
+            <DialogTitle className="text-xl flex justify-between items-center">
+                कमेंट्स
+                <DialogClose asChild>
+                    <Button variant="ghost" size="icon"><X className="h-5 w-5" /></Button>
+                </DialogClose>
+            </DialogTitle>
+        </DialogHeader>
+        <ScrollArea className="flex-grow pr-6 -mr-6">
+            <div className="space-y-6">
+                {dummyComments.map(comment => (
+                    <div key={comment.id} className="flex items-start gap-3">
+                        <Avatar>
+                            <AvatarImage src={comment.avatar} />
+                            <AvatarFallback>{comment.user.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                                <p className="font-semibold text-sm">{comment.user}</p>
+                                <p className="text-xs text-muted-foreground">{comment.timestamp}</p>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">{comment.comment}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </ScrollArea>
+        <div className="mt-auto pt-4 border-t border-border">
+             <div className="flex items-center gap-2">
+                <Avatar>
+                    <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
+                    <AvatarFallback>आप</AvatarFallback>
+                </Avatar>
+                <div className="relative w-full">
+                    <Input placeholder="एक कमेंट लिखें..." className="bg-secondary/50 border-input pr-10" />
+                     <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-blue-500">
+                        <Send className="h-5 w-5" />
+                    </Button>
+                </div>
+            </div>
+        </div>
+    </DialogContent>
+);
+
 
 
 export default function DashboardPage() {
@@ -899,9 +973,14 @@ export default function DashboardPage() {
                     <Button variant="ghost" size="sm" className="flex items-center gap-2">
                         <ThumbsUp className="h-4 w-4" /> लाइक
                     </Button>
-                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                        <MessageSquare className="h-4 w-4" /> कमेंट
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                                <MessageSquare className="h-4 w-4" /> कमेंट
+                            </Button>
+                        </DialogTrigger>
+                        <CommentSection />
+                    </Dialog>
                     <Button 
                         variant="ghost" 
                         size="sm" 
@@ -931,9 +1010,14 @@ export default function DashboardPage() {
                     <Button variant="ghost" size="sm" className="flex items-center gap-2">
                         <ThumbsUp className="h-4 w-4" /> लाइक
                     </Button>
-                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                        <MessageSquare className="h-4 w-4" /> कमेंट
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                                <MessageSquare className="h-4 w-4" /> कमेंट
+                            </Button>
+                        </DialogTrigger>
+                        <CommentSection />
+                    </Dialog>
                     <Button 
                         variant="ghost" 
                         size="sm" 
@@ -958,4 +1042,5 @@ export default function DashboardPage() {
     
 
     
+
 

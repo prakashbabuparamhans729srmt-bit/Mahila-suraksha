@@ -96,15 +96,15 @@ export default function FundingTrackerPage() {
                 </PieChart>
               </ChartContainer>
             </div>
-             <div
-              className="flex items-center justify-center text-center text-lg font-bold capitalize leading-none"
-            >
-              Total
-              <p className="ml-2 text-foreground">
-                ${(totalAmount / 1000000).toFixed(1)}M
-              </p>
+             <div className="flex items-center justify-center -mt-8">
+                <div className="text-center text-lg font-bold">
+                    Total
+                    <p className="text-foreground">
+                        ${(totalAmount / 1000000).toFixed(1)}M
+                    </p>
+                </div>
             </div>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-sm pt-4">
               {chartData.map((item) => (
                 <li key={item.source} className="flex justify-between items-center">
                   <div className="flex items-center">
@@ -123,5 +123,3 @@ export default function FundingTrackerPage() {
     </div>
   );
 }
-
-    

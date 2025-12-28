@@ -26,12 +26,12 @@ export default function RootLayout({
         />
         <style>{`
           /* Hide scrollbar for Chrome, Safari and Opera */
-          body::-webkit-scrollbar {
+          body::-webkit-scrollbar, html::-webkit-scrollbar {
             display: none;
           }
 
           /* Hide scrollbar for IE, Edge and Firefox */
-          body {
+          body, html {
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
           }

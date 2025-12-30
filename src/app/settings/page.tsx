@@ -36,6 +36,10 @@ export default function SettingsPage() {
     setPersonalContacts(personalContacts.filter(contact => contact.id !== id));
   };
 
+  if (!mounted) {
+    return null;
+  }
+
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -188,10 +192,10 @@ export default function SettingsPage() {
                   <h3 className="font-semibold">ऐप थीम</h3>
                   <p className="text-sm text-muted-foreground">लाइट और डार्क मोड के बीच स्विच करें</p>
                 </div>
-                {mounted && <Switch
+                <Switch
                   checked={theme === 'dark'}
                   onCheckedChange={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                />}
+                />
               </div>
               <div>
                 <h3 className="font-semibold">टेक्स्ट का आकार</h3>
@@ -249,7 +253,7 @@ export default function SettingsPage() {
                         <div className="space-y-4 text-sm text-muted-foreground">
                             <p><strong>सेवा की शर्तें</strong> अंतिम अपडेट: 24 जुलाई 2024</p>
                             <p>इन सेवा की शर्तों ("शर्तें") को ध्यान से पढ़ें। यूनाइटेड अगेंस्ट सेक्सुअल वायलेंस एप्लिकेशन ("ऐप") का उपयोग करके, आप इन शर्तों से बंधे होने के लिए सहमत हैं।</p>
-                            <p><strong>ऐप का उपयोग</strong> आप इस ऐप का उपयोग केवल कानूनी और इच्छित उद्देश्यों के लिए करने के लिए सहमत हैं। आप आपातकालीन SOS सुविधा का दुरुपयोग नहीं करने के لیے सहमत हैं, जिसका उपयोग केवल वास्तविक और तत्काल खतरे की स्थितियों में किया जाना चाहिए। ऐप का उपयोग 13 वर्ष से कम उम्र के बच्चों के लिए नहीं है।</p>
+                            <p><strong>ऐप का उपयोग</strong> आप इस ऐप का उपयोग केवल कानूनी और इच्छित उद्देश्यों के लिए करने के लिए सहमत हैं। आप आपातकालीन SOS सुविधा का दुरुपयोग नहीं करने के लिए सहमत हैं, जिसका उपयोग केवल वास्तविक और तत्काल खतरे की स्थितियों में किया जाना चाहिए। ऐप का उपयोग 13 वर्ष से कम उम्र के बच्चों के लिए नहीं है।</p>
                             <p><strong>उपयोगकर्ता सामग्री</strong> यदि आप कोई सामग्री, जैसे कि रिपोर्ट या फीडबैक सबमिट करते हैं, तो आप हमें उस सामग्री का उपयोग, पुनरुत्पादन और प्रदर्शन करने के लिए एक विश्वव्यापी, रॉयल्टी-मुक्त लाइसेंस प्रदान करते हैं, जो हमारी गोपनीयता नीति के अधीन है। आप किसी भी ऐसी सामग्री को पोस्ट नहीं करने के लिए सहमत हैं जो अवैध, अपमानजनक या हानिकारक हो।</p>
                         </div>
                     </ScrollArea>

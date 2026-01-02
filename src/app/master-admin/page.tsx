@@ -1,8 +1,7 @@
-
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Users, Shield, FileText, Settings, BarChart2 } from 'lucide-react';
+import { ArrowLeft, Users, Shield, FileText, Settings, BarChart2, UserCog } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BottomNav } from '@/components/layout/bottom-nav';
 
@@ -16,38 +15,45 @@ export default function MasterAdminPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-      <header className="flex items-center p-4">
-        <Link href="/settings" className="mr-4">
-          <ArrowLeft className="h-6 w-6" />
-        </Link>
-        <h1 className="text-xl font-bold">मास्टर एडमिन पैनल</h1>
-      </header>
+       <header className="flex items-center p-4 border-b border-border">
+          <Link href="/settings" className="mr-4">
+            <ArrowLeft className="h-6 w-6" />
+          </Link>
+          <h1 className="text-xl font-bold">मास्टर एडमिन पैनल</h1>
+        </header>
+      <div className="flex flex-1">
+        <aside className="w-16 bg-secondary/50 border-r border-border flex flex-col items-center py-4 space-y-6">
+           <Link href="/master-admin/settings" className="text-muted-foreground hover:text-primary transition-colors">
+            <UserCog className="h-7 w-7" />
+           </Link>
+        </aside>
 
-      <main className="flex-grow p-4 space-y-6">
-        <p className="text-muted-foreground px-1">
-          यह मास्टर नियंत्रण कक्ष है। यहां से ऐप के प्रमुख पहलुओं को प्रबंधित करें।
-        </p>
+        <main className="flex-grow p-4 space-y-6 overflow-auto">
+          <p className="text-muted-foreground px-1">
+            यह मास्टर नियंत्रण कक्ष है। यहां से ऐप के प्रमुख पहलुओं को प्रबंधित करें।
+          </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {adminMenuItems.map((item, index) => (
-            <Link href={item.href} key={index}>
-              <Card className="bg-secondary/50 border-border hover:border-primary transition-all">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-base font-semibold">
-                    {item.title}
-                  </CardTitle>
-                  <item.icon className="h-6 w-6 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    {item.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </main>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {adminMenuItems.map((item, index) => (
+              <Link href={item.href} key={index}>
+                <Card className="bg-secondary/50 border-border hover:border-primary transition-all">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-base font-semibold">
+                      {item.title}
+                    </CardTitle>
+                    <item.icon className="h-6 w-6 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </main>
+      </div>
 
       <BottomNav />
     </div>

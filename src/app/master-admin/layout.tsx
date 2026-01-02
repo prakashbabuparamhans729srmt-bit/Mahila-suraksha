@@ -77,28 +77,36 @@ function AdminSidebar() {
             <SidebarContent className="p-2">
                 <SidebarMenu>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="/master-admin" isActive>
-                      <Home />
-                      <span>डैशबोर्ड</span>
+                    <Link href="/master-admin" passHref>
+                      <SidebarMenuButton asChild isActive>
+                        <Home />
+                        <span>डैशबोर्ड</span>
                       </SidebarMenuButton>
+                    </Link>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="/master-admin/users">
-                      <Users />
-                      <span>उपयोगकर्ता</span>
+                    <Link href="/master-admin/users" passHref>
+                      <SidebarMenuButton asChild>
+                        <Users />
+                        <span>उपयोगकर्ता</span>
                       </SidebarMenuButton>
+                    </Link>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="/master-admin/content">
-                      <FileText />
-                      <span>सामग्री</span>
+                    <Link href="/master-admin/content" passHref>
+                      <SidebarMenuButton asChild>
+                        <FileText />
+                        <span>सामग्री</span>
                       </SidebarMenuButton>
+                    </Link>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="/master-admin/analytics">
-                      <BarChart2 />
-                      <span>एनालिटिक्स</span>
+                    <Link href="/master-admin/analytics" passHref>
+                      <SidebarMenuButton asChild>
+                        <BarChart2 />
+                        <span>एनालिटिक्स</span>
                       </SidebarMenuButton>
+                    </Link>
                   </SidebarMenuItem>
                 </SidebarMenu>
 
@@ -108,20 +116,24 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   {pageManagementItems.map((item) => (
                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton href={item.href}>
-                           <item.icon />
-                           <span>{item.title}</span>
-                        </SidebarMenuButton>
+                        <Link href={item.href} passHref>
+                          <SidebarMenuButton asChild>
+                             <item.icon />
+                             <span>{item.title}</span>
+                          </SidebarMenuButton>
+                        </Link>
                      </SidebarMenuItem>
                   ))}
                 </SidebarMenu>
 
                 <SidebarMenu className="mt-auto">
                     <SidebarMenuItem>
-                        <SidebarMenuButton href="/master-admin/settings">
-                        <Settings />
-                        <span>सेटिंग्स</span>
-                        </SidebarMenuButton>
+                        <Link href="/master-admin/settings" passHref>
+                          <SidebarMenuButton asChild>
+                            <Settings />
+                            <span>सेटिंग्स</span>
+                          </SidebarMenuButton>
+                        </Link>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContent>

@@ -31,11 +31,20 @@ const CommunityIcon = () => (
 );
 
 const GlobalMonitoringIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
-    <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
-    <path d="M22 12A10 10 0 0 0 12 2v10z" />
-  </svg>
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary">
+        <path d="M48 0H0V48H48V0Z" fill="white" fillOpacity="0.01"/>
+        <path d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z" stroke="currentColor" strokeWidth="4" strokeLinejoin="round"/>
+        <path d="M24 4L20 8" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M4 24L8 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M44 24L40 28" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M24 44L28 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M24 4V44" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M44 24H4" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M38.1213 9.87866L9.87868 38.1213" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M38.1213 38.1213L9.87868 9.87866" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
 );
+
 
 const ImplementationTrackerIcon = () => (
     <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary">
@@ -360,6 +369,87 @@ const CommentSection = () => {
 export default function DashboardPage() {
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const allFeatures = [
+    { 
+      href: "/implementation-tracker", 
+      icon: <ImplementationTrackerIcon />, 
+      title: "कार्यान्वयन ट्रैकर", 
+      description: "गैंट चार्ट के साथ हमारी प्रमुख वैश्विक पहलों की प्रगति की निगरानी करें।" 
+    },
+    { 
+      href: "/funding-tracker", 
+      icon: <FundingTrackerIcon />, 
+      title: "फंडिंग ट्रैकर", 
+      description: "देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।" 
+    },
+    { 
+      href: "/success-indicators", 
+      icon: <SuccessIndicatorIcon />, 
+      title: "सफलता संकेतक", 
+      description: "प्रमुख प्रदर्शन संकेतकों (KPIs) के साथ हमारी सामूहिक सफलता को मापें।" 
+    },
+    { 
+      href: "/safe-cities", 
+      icon: <Building2 className="h-6 w-6 text-primary" />, 
+      title: "सुरक्षित शहर", 
+      description: "स्थानीय सुरक्षा पहल, सहायता केंद्र खोजें और ऑडिट करें।" 
+    },
+    { 
+      href: "/community-empowerment", 
+      icon: <CommunityIcon />, 
+      title: "सामुदायिक सशक्तिकरण", 
+      description: "सहायता समूहों, कार्यक्रमों और सशक्तिकरण कार्यक्रमों से जुड़ें।" 
+    },
+    { 
+      href: "/global-monitoring", 
+      icon: <GlobalMonitoringIcon />, 
+      title: "वैश्विक निगरानी", 
+      description: "सुरक्षा स्कोर और देश-विशिष्ट डेटा का वैश्विक हीटमैप देखें।" 
+    },
+    { 
+      href: "/global-monitoring", 
+      icon: <BarChartBig className="h-6 w-6 text-primary" />, 
+      title: "वैश्विक डेटा", 
+      description: "इंटरैक्टिव मानचित्र, रुझान और प्रमुख वैश्विक आँकड़े देखें।" 
+    },
+    { 
+      href: "/education", 
+      icon: <GraduationCap className="h-6 w-6 text-primary" />, 
+      title: "शिक्षा", 
+      description: "जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।" 
+    },
+    { 
+      href: "/legal-reform", 
+      icon: <Scale className="h-6 w-6 text-primary" />, 
+      title: "कानूनी सुधार", 
+      description: "देश के अनुसार कानूनी सुधारों और नीतिगत परिवर्तनों की प्रगति को ट्रैक करें।" 
+    },
+    { 
+      href: "/male-engagement", 
+      icon: <Handshake className="h-6 w-6 text-primary" />, 
+      title: "पुरुष सहभागिता", 
+      description: "पुरुषों को सहयोगी के रूप में शामिल करने के लिए पहल और संसाधन खोजें।" 
+    },
+    { 
+      href: "/smart-safety", 
+      icon: <Shield className="h-6 w-6 text-primary" />, 
+      title: "स्मार्ट सुरक्षा", 
+      description: "व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।" 
+    },
+    { 
+      href: "/updates-feed", 
+      icon: <RefreshCw className="h-6 w-6 text-primary" />, 
+      title: "अपडेट्स फ़ीड", 
+      description: "नवीनतम समाचार, अपडेट और उपयोगकर्ता-प्रस्तुत रिपोर्टों से सूचित रहें।" 
+    }
+  ];
+
+  const filteredFeatures = allFeatures.filter(feature => 
+    feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    feature.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const filterCategories = [
     { id: 'global-data', label: 'वैश्विक डेटा' },
@@ -545,6 +635,8 @@ export default function DashboardPage() {
             <Input
               placeholder="किसी सुविधा के लिए खोजें..."
               className="pl-10 bg-secondary/50 border-border"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <Sheet>
@@ -930,197 +1022,24 @@ export default function DashboardPage() {
         
         <div className="space-y-4">
             <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
-            <Link href="/implementation-tracker" className="block">
-              <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                      <ImplementationTrackerIcon />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">कार्यान्वयन ट्रैकर</h3>
-                      <p className="text-sm text-muted-foreground">गैंट चार्ट के साथ हमारी प्रमुख वैश्विक पहलों की प्रगति की निगरानी करें।</p>
-                    </div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-              </Card>
-            </Link>
-            <Link href="/funding-tracker" className="block">
-              <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                      <FundingTrackerIcon />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">फंडिंग ट्रैकर</h3>
-                      <p className="text-sm text-muted-foreground">देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।</p>                  </div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-              </Card>
-            </Link>
-            <Link href="/success-indicators" className="block">
-              <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                      <SuccessIndicatorIcon />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">सफलता संकेतक</h3>
-                      <p className="text-sm text-muted-foreground">प्रमुख प्रदर्शन संकेतकों (KPIs) के साथ हमारी सामूहिक सफलता को मापें।</p>
-                    </div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-              </Card>
-            </Link>
-            <Link href="/safe-cities" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <Building2 className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">सुरक्षित शहर</h3>
-                        <p className="text-sm text-muted-foreground">स्थानीय सुरक्षा पहल, सहायता केंद्र खोजें और ऑडिट करें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
-            <Link href="/community-empowerment" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <CommunityIcon />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">सामुदायिक सशक्तिकरण</h3>
-                        <p className="text-sm text-muted-foreground">सहायता समूहों, कार्यक्रमों और सशक्तिकरण कार्यक्रमों से जुड़ें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
-            <Link href="/global-monitoring" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <GlobalMonitoringIcon />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">वैश्विक निगरानी</h3>
-                        <p className="text-sm text-muted-foreground">सुरक्षा स्कोर और देश-विशिष्ट डेटा का वैश्विक हीटमैप देखें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
-            <Link href="/global-monitoring" className="block">
-              <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                      <BarChartBig className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">वैश्विक डेटा</h3>
-                      <p className="text-sm text-muted-foreground">इंटरैक्टिव मानचित्र, रुझान और प्रमुख वैश्विक आँकड़े देखें।</p>
-                    </div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-              </Card>
-            </Link>
-            <Link href="/education" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <GraduationCap className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">शिक्षा</h3>
-                        <p className="text-sm text-muted-foreground">जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
-            <Link href="/legal-reform" className="block">
+            {filteredFeatures.map((feature, index) => (
+              <Link href={feature.href} key={index} className="block">
                 <Card className="bg-secondary/50 border-border">
                   <CardContent className="flex items-center justify-between p-4">
                     <div className="flex items-center space-x-4">
                       <div className="bg-background p-3 rounded-lg">
-                        <Scale className="h-6 w-6 text-primary" />
+                        {feature.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold">कानूनी सुधार</h3>
-                        <p className="text-sm text-muted-foreground">देश के अनुसार कानूनी सुधारों और नीतिगत परिवर्तनों की प्रगति को ट्रैक करें।</p>
+                        <h3 className="font-semibold">{feature.title}</h3>
+                        <p className="text-sm text-muted-foreground">{feature.description}</p>
                       </div>
                     </div>
                     <ArrowRight className="h-5 w-5 text-muted-foreground" />
                   </CardContent>
                 </Card>
-            </Link>
-            <Link href="/male-engagement" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <Handshake className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">पुरुष सहभागिता</h3>
-                        <p className="text-sm text-muted-foreground">पुरुषों को सहयोगी के रूप में शामिल करने के लिए पहल और संसाधन खोजें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
-            <Link href="/smart-safety" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <Shield className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">स्मार्ट सुरक्षा</h3>
-                        <p className="text-sm text-muted-foreground">व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
-            <Link href="/updates-feed" className="block">
-                <Card className="bg-secondary/50 border-border">
-                <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center space-x-4">
-                    <div className="bg-background p-3 rounded-lg">
-                        <RefreshCw className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                        <h3 className="font-semibold">अपडेट्स फ़ीड</h3>
-                        <p className="text-sm text-muted-foreground">नवीनतम समाचार, अपडेट और उपयोगकर्ता-प्रस्तुत रिपोर्टों से सूचित रहें।</p>
-                    </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-                </Card>
-            </Link>
+              </Link>
+            ))}
         </div>
 
         <div className="space-y-4">

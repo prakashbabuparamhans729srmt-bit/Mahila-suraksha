@@ -1,9 +1,7 @@
+
 'use client';
 
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BottomNav } from '@/components/layout/bottom-nav';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
@@ -11,15 +9,7 @@ import { Button } from '@/components/ui/button';
 
 export default function MasterAdminSettingsPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-      <header className="flex items-center p-4 border-b border-border">
-        <Link href="/master-admin" className="mr-4">
-          <ArrowLeft className="h-6 w-6" />
-        </Link>
-        <h1 className="text-xl font-bold">मास्टर एडमिन सेटिंग्स</h1>
-      </header>
-
-      <main className="flex-grow p-4 space-y-6 overflow-auto">
+    <>
         <p className="text-muted-foreground px-1">
           एडमिनिस्ट्रेटर-विशिष्ट सेटिंग्स और कॉन्फ़िगरेशन प्रबंधित करें।
         </p>
@@ -72,10 +62,6 @@ export default function MasterAdminSettingsPage() {
         </Card>
         
         <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12">सेटिंग्स सहेजें</Button>
-
-      </main>
-
-      <BottomNav />
-    </div>
+    </>
   );
 }

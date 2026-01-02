@@ -13,21 +13,6 @@ export default function MasterAdminPage() {
     { title: 'ऐप सेटिंग्स', icon: Settings, description: 'वैश्विक ऐप सेटिंग्स और कॉन्फ़िगरेशन प्रबंधित करें।', href: '/master-admin/settings' },
   ];
   
-  const pageManagementItems = [
-    { title: 'होम पेज प्रबंधित करें', href: '/' },
-    { title: 'शिक्षा पेज प्रबंधित करें', href: '/education' },
-    { title: 'वैश्विक निगरानी पेज प्रबंधित करें', href: '/global-monitoring' },
-    { title: 'कानूनी सुधार पेज प्रबंधित करें', href: '/legal-reform' },
-    { title: 'पुरुष सहभागिता पेज प्रबंधित करें', href: '/male-engagement' },
-    { title: 'सुरक्षित शहर पेज प्रबंधित करें', href: '/safe-cities' },
-    { title: 'स्मार्ट सुरक्षा पेज प्रबंधित करें', href: '/smart-safety' },
-    { title: 'फंडिंग ट्रैकर पेज प्रबंधित करें', href: '/funding-tracker' },
-    { title: 'कार्यान्वयन ट्रैकर पेज प्रबंधित करें', href: '/implementation-tracker' },
-    { title: 'सफलता संकेतक पेज प्रबंधित करें', href: '/success-indicators' },
-    { title: 'अपडेट्स फ़ीड पेज प्रबंधित करें', href: '/updates-feed' },
-    { title: 'सामुदायिक सशक्तिकरण पेज प्रबंधित करें', href: '/community-empowerment' },
-  ];
-
   return (
     <>
         <p className="text-muted-foreground px-1">
@@ -51,22 +36,6 @@ export default function MasterAdminPage() {
                 </CardContent>
                 </Card>
             </Link>
-            ))}
-        </div>
-
-        <div className="space-y-4">
-            <h2 className="text-xl font-bold px-1">पेज प्रबंधन</h2>
-            {pageManagementItems.map((item, index) => (
-                <Link href={item.href} key={index}>
-                    <Card className="bg-secondary/50 border-border hover:border-primary transition-all">
-                        <CardContent className="p-4 flex items-center justify-between">
-                            <div className='flex items-center gap-3'>
-                                <BookOpen className="h-6 w-6 text-muted-foreground" />
-                                <span className="text-base font-semibold">{item.title}</span>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Link>
             ))}
         </div>
     </>

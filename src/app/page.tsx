@@ -1171,7 +1171,7 @@ export default function DashboardPage() {
                   <p className="text-xs text-muted-foreground">5 दिन पहले</p>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के لیے $10M जुटाना है।
+                हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।
                 </p>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>5812 Likes</span>

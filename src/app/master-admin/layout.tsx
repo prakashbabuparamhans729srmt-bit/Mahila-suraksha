@@ -69,9 +69,9 @@ function AdminSidebar() {
           <SidebarHeader>
             <div className="flex items-center gap-2 p-2">
                 <Avatar className="h-8 w-8">
-                    <AvatarFallback>U</AvatarFallback>
+                    <AvatarFallback>M</AvatarFallback>
                 </Avatar>
-                <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">UCLAP</span>
+                <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">Mahila Suraksha</span>
             </div>
           </SidebarHeader>
             <SidebarContent className="p-2">

@@ -14,9 +14,9 @@ export default function MasterAdminPage() {
   ];
   
   const pageManagementItems = [
-    { title: 'होम पेज प्रबंधित करें', href: '#' },
+    { title: 'होम पेज प्रबंधित करें', href: '/' },
     { title: 'शिक्षा पेज प्रबंधित करें', href: '/education' },
-    { title: 'वैश्विक डेटा पेज प्रबंधित करें', href: '/global-monitoring' },
+    { title: 'वैश्विक निगरानी पेज प्रबंधित करें', href: '/global-monitoring' },
     { title: 'कानूनी सुधार पेज प्रबंधित करें', href: '/legal-reform' },
     { title: 'पुरुष सहभागिता पेज प्रबंधित करें', href: '/male-engagement' },
     { title: 'सुरक्षित शहर पेज प्रबंधित करें', href: '/safe-cities' },

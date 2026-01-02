@@ -45,11 +45,11 @@ export default function MasterAdminPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card className="lg:col-span-1 bg-cyan-500 text-black shadow-lg shadow-cyan-500/50">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-base font-semibold">
-                        कुल रिपोर्ट
+                <CardHeader>
+                    <CardTitle className="text-base font-semibold flex items-center justify-between">
+                        <span>कुल रिपोर्ट</span>
+                        <FileText className="h-6 w-6 text-black/80" />
                     </CardTitle>
-                     <FileText className="h-6 w-6 text-black/80" />
                 </CardHeader>
                 <CardContent>
                     <div className="text-5xl font-bold">15,506</div>
@@ -62,17 +62,17 @@ export default function MasterAdminPage() {
             {managementCards.map((item, index) => (
                 <Link href={item.href} key={index} className="block">
                     <Card className="bg-secondary/50 border-border hover:border-primary transition-all h-full">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-base font-semibold">
-                        {item.title}
-                        </CardTitle>
-                        <item.icon className="h-6 w-6 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-2xl font-bold">
-                        {item.value}
-                        </p>
-                    </CardContent>
+                        <CardHeader>
+                           <CardTitle className="text-base font-semibold flex items-center justify-between">
+                             <span>{item.title}</span>
+                             <item.icon className="h-6 w-6 text-muted-foreground" />
+                           </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">
+                            {item.value}
+                            </p>
+                        </CardContent>
                     </Card>
                 </Link>
             ))}

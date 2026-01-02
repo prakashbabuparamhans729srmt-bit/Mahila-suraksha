@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X, Trash2 } from 'lucide-react';
+import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X, Trash2, UserCog } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -211,6 +211,24 @@ export default function SettingsPage() {
         </div>
 
         <div>
+          <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">प्रशासन</h2>
+           <Link href="/master-admin" className="block">
+              <Card className="bg-secondary/50 border-border cursor-pointer">
+                <CardContent className="p-4 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                        <UserCog className="h-6 w-6 text-primary" />
+                        <div>
+                            <h3 className="font-semibold">मास्टर एडमिन पैनल</h3>
+                            <p className="text-sm text-muted-foreground">उपयोगकर्ताओं, सामग्री और ऐप सेटिंग्स को प्रबंधित करें</p>
+                        </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+           </Link>
+        </div>
+
+        <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">के बारे में</h2>
           <Card className="bg-secondary/50 border-border divide-y divide-border">
             <Dialog>
@@ -297,5 +315,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    

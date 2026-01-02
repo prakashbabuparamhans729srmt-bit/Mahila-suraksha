@@ -47,17 +47,18 @@ function AdminSidebar() {
     const { open, setOpen } = useSidebar();
     
     const pageManagementItems = [
-      { title: 'शिक्षा पेज', href: '/education', icon: GraduationCap },
-      { title: 'वैश्विक निगरानी', href: '/global-monitoring', icon: BarChart2 },
-      { title: 'कानूनी सुधार', href: '/legal-reform', icon: Scale },
-      { title: 'पुरुष सहभागिता', href: '/male-engagement', icon: Handshake },
-      { title: 'सुरक्षित शहर', href: '/safe-cities', icon: Building2 },
-      { title: 'स्मार्ट सुरक्षा', href: '/smart-safety', icon: Shield },
-      { title: 'अपडेट्स फ़ीड', href: '/updates-feed', icon: RefreshCw },
-      { title: 'फंडिंग ट्रैकर', href: '/funding-tracker', icon: FilePieChart },
-      { title: 'कार्यान्वयन ट्रैकर', href: '/implementation-tracker', icon: Target },
-      { title: 'सफलता संकेतक', href: '/success-indicators', icon: LineChart },
-      { title: 'सामुदायिक सशक्तिकरण', href: '/community-empowerment', icon: HeartHandshake },
+      { title: 'होम पेज', href: '/master-admin/pages/home', icon: Home },
+      { title: 'शिक्षा पेज', href: '/master-admin/pages/education', icon: GraduationCap },
+      { title: 'वैश्विक निगरानी', href: '/master-admin/pages/global-monitoring', icon: BarChart2 },
+      { title: 'कानूनी सुधार', href: '/master-admin/pages/legal-reform', icon: Scale },
+      { title: 'पुरुष सहभागिता', href: '/master-admin/pages/male-engagement', icon: Handshake },
+      { title: 'सुरक्षित शहर', href: '/master-admin/pages/safe-cities', icon: Building2 },
+      { title: 'स्मार्ट सुरक्षा', href: '/master-admin/pages/smart-safety', icon: Shield },
+      { title: 'अपडेट्स फ़ीड', href: '/master-admin/pages/updates-feed', icon: RefreshCw },
+      { title: 'फंडिंग ट्रैकर', href: '/master-admin/pages/funding-tracker', icon: FilePieChart },
+      { title: 'कार्यान्वयन ट्रैकर', href: '/master-admin/pages/implementation-tracker', icon: Target },
+      { title: 'सफलता संकेतक', href: '/master-admin/pages/success-indicators', icon: LineChart },
+      { title: 'सामुदायिक सशक्तिकरण', href: '/master-admin/pages/community-empowerment', icon: HeartHandshake },
     ];
 
     return (
@@ -82,19 +83,19 @@ function AdminSidebar() {
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="#">
+                      <SidebarMenuButton href="/master-admin/users">
                       <Users />
                       <span>उपयोगकर्ता</span>
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="#">
+                      <SidebarMenuButton href="/master-admin/content">
                       <FileText />
                       <span>सामग्री</span>
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton href="#">
+                      <SidebarMenuButton href="/master-admin/analytics">
                       <BarChart2 />
                       <span>एनालिटिक्स</span>
                       </SidebarMenuButton>

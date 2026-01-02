@@ -14,12 +14,12 @@ export default function MasterAdminPage() {
   ];
 
   const managementCards = [
-    { title: 'उपयोगकर्ता प्रबंधित करें', value: '1.25 लाख', icon: Users, href: '#' },
-    { title: 'सामग्री मॉडरेशन', value: '52 लंबित', icon: FileText, href: '#' },
-    { title: 'पहल प्रबंधित करें', value: '78 सक्रिय', icon: Building2, href: '#' },
+    { title: 'उपयोगकर्ता प्रबंधित करें', value: '1.25 लाख', icon: Users, href: '/master-admin/users' },
+    { title: 'सामग्री मॉडरेशन', value: '52 लंबित', icon: FileText, href: '/master-admin/content' },
+    { title: 'पहल प्रबंधित करें', value: '78 सक्रिय', icon: Building2, href: '/master-admin/pages/community-empowerment' },
     { title: 'सुरक्षा अलर्ट', value: '99+', icon: Shield, href: '#' },
-    { title: 'एनालिटिक्स', value: 'डेटा देखें', icon: BarChart2, href: '#' },
-    { title: 'व्यवस्थापक प्रबंधित करें', value: '5 व्यवस्थापक', icon: UserCog, href: '#' },
+    { title: 'एनालिटिक्स', value: 'डेटा देखें', icon: BarChart2, href: '/master-admin/analytics' },
+    { title: 'व्यवस्थापक प्रबंधित करें', value: '5 व्यवस्थापक', icon: UserCog, href: '/master-admin/settings' },
   ];
   
   return (

@@ -15,14 +15,17 @@ export default function MasterAdminPage() {
   
   const pageManagementItems = [
     { title: 'होम पेज प्रबंधित करें', href: '#' },
-    { title: 'शिक्षा पेज प्रबंधित करें', href: '#' },
-    { title: 'वैश्विक डेटा पेज प्रबंधित करें', href: '#' },
-    { title: 'कानूनी सुधार पेज प्रबंधित करें', href: '#' },
-    { title: 'पुरुष सहभागिता पेज प्रबंधित करें', href: '#' },
-    { title: 'सुरक्षित शहर पेज प्रबंधित करें', href: '#' },
-    { title: 'स्मार्ट सुरक्षा पेज प्रबंधित करें', href: '#' },
-    { title: 'फंडिंग ट्रैकर पेज प्रबंधित करें', href: '#' },
-    { title: 'कार्यान्वयन ट्रैकर पेज प्रबंधित करें', href: '#' },
+    { title: 'शिक्षा पेज प्रबंधित करें', href: '/education' },
+    { title: 'वैश्विक डेटा पेज प्रबंधित करें', href: '/global-monitoring' },
+    { title: 'कानूनी सुधार पेज प्रबंधित करें', href: '/legal-reform' },
+    { title: 'पुरुष सहभागिता पेज प्रबंधित करें', href: '/male-engagement' },
+    { title: 'सुरक्षित शहर पेज प्रबंधित करें', href: '/safe-cities' },
+    { title: 'स्मार्ट सुरक्षा पेज प्रबंधित करें', href: '/smart-safety' },
+    { title: 'फंडिंग ट्रैकर पेज प्रबंधित करें', href: '/funding-tracker' },
+    { title: 'कार्यान्वयन ट्रैकर पेज प्रबंधित करें', href: '/implementation-tracker' },
+    { title: 'सफलता संकेतक पेज प्रबंधित करें', href: '/success-indicators' },
+    { title: 'अपडेट्स फ़ीड पेज प्रबंधित करें', href: '/updates-feed' },
+    { title: 'सामुदायिक सशक्तिकरण पेज प्रबंधित करें', href: '/community-empowerment' },
   ];
 
   return (

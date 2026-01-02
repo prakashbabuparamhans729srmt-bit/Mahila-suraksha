@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Users, Shield, FileText, Settings, BarChart2, UserCog } from 'lucide-react';
+import { ArrowLeft, Users, Shield, FileText, Settings, BarChart2, UserCog, BookOpen } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BottomNav } from '@/components/layout/bottom-nav';
 
@@ -11,6 +11,14 @@ export default function MasterAdminPage() {
     { title: 'सामग्री मॉडरेशन', icon: FileText, description: 'उपयोगकर्ता द्वारा सबमिट की गई रिपोर्ट और सामग्री की समीक्षा करें।', href: '#' },
     { title: 'ऐप एनालिटिक्स', icon: BarChart2, description: 'ऐप उपयोग और सहभागिता डेटा देखें।', href: '#' },
     { title: 'ऐप सेटिंग्स', icon: Settings, description: 'वैश्विक ऐप सेटिंग्स और कॉन्फ़िगरेशन प्रबंधित करें।', href: '#' },
+  ];
+  
+  const pageManagementItems = [
+    { title: 'होम पेज प्रबंधित करें', href: '#' },
+    { title: 'शिक्षा पेज प्रबंधित करें', href: '#' },
+    { title: 'वैश्विक डेटा पेज प्रबंधित करें', href: '#' },
+    { title: 'कानूनी सुधार पेज प्रबंधित करें', href: '#' },
+    { title: 'पुरुष सहभागिता पेज प्रबंधित करें', href: '#' },
   ];
 
   return (
@@ -52,6 +60,23 @@ export default function MasterAdminPage() {
               </Link>
             ))}
           </div>
+
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold px-1">पेज प्रबंधन</h2>
+             {pageManagementItems.map((item, index) => (
+                <Link href={item.href} key={index}>
+                    <Card className="bg-secondary/50 border-border hover:border-primary transition-all">
+                        <CardContent className="p-4 flex items-center justify-between">
+                            <div className='flex items-center gap-3'>
+                                <BookOpen className="h-6 w-6 text-muted-foreground" />
+                                <span className="text-base font-semibold">{item.title}</span>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Link>
+             ))}
+          </div>
+
         </main>
       </div>
 

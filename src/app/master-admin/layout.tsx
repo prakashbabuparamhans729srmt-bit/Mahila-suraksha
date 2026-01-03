@@ -40,7 +40,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Input } from '@/components/ui/input';
-import { SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 
 function AdminSidebar() {
@@ -78,7 +78,7 @@ function AdminSidebar() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <Link href="/master-admin" passHref>
-                      <SidebarMenuButton asChild isActive>
+                      <SidebarMenuButton isActive>
                         <Home />
                         <span>डैशबोर्ड</span>
                       </SidebarMenuButton>
@@ -86,7 +86,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/users" passHref>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton>
                         <Users />
                         <span>उपयोगकर्ता</span>
                       </SidebarMenuButton>
@@ -94,7 +94,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/content" passHref>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton>
                         <FileText />
                         <span>सामग्री</span>
                       </SidebarMenuButton>
@@ -102,7 +102,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/analytics" passHref>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton>
                         <BarChart2 />
                         <span>एनालिटिक्स</span>
                       </SidebarMenuButton>
@@ -117,7 +117,7 @@ function AdminSidebar() {
                   {pageManagementItems.map((item) => (
                      <SidebarMenuItem key={item.title}>
                         <Link href={item.href} passHref>
-                          <SidebarMenuButton asChild>
+                          <SidebarMenuButton>
                              <item.icon />
                              <span>{item.title}</span>
                           </SidebarMenuButton>
@@ -129,7 +129,7 @@ function AdminSidebar() {
                 <SidebarMenu className="mt-auto">
                     <SidebarMenuItem>
                         <Link href="/master-admin/settings" passHref>
-                          <SidebarMenuButton asChild>
+                          <SidebarMenuButton>
                             <Settings />
                             <span>सेटिंग्स</span>
                           </SidebarMenuButton>

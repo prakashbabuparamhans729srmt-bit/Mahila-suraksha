@@ -7,8 +7,18 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useState } from 'react';
 
 export default function MaleEngagementPage() {
+    const [pledges, setPledges] = useState({
+        respect: 125034,
+        coaching: 45000,
+    });
+
+    const handlePledge = (type: 'respect' | 'coaching') => {
+        setPledges(prev => ({ ...prev, [type]: prev[type] + 1 }));
+    };
+
     const handleShare = async (title: string, text: string) => {
         if (navigator.share) {
             try {
@@ -50,11 +60,11 @@ export default function MaleEngagementPage() {
                                 </p>
                                 <p className="text-xs text-muted-foreground">लक्षित दर्शक: सभी पुरुष और लड़के</p>
                                 <div className="bg-background/50 rounded-lg p-3 text-center">
-                                    <p className="text-3xl font-bold text-primary">125,034</p>
+                                    <p className="text-3xl font-bold text-primary">{pledges.respect.toLocaleString()}</p>
                                     <p className="text-xs text-muted-foreground">ली गई प्रतिज्ञाएँ</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <Button className="w-full bg-green-600 hover:bg-green-700">प्रतिज्ञा लें</Button>
+                                    <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => handlePledge('respect')}>प्रतिज्ञा लें</Button>
                                     <Button 
                                         className="w-full bg-blue-600 hover:bg-blue-700"
                                         onClick={() => handleShare('सम्मान के लिए प्रतिज्ञा', 'मैंने महिलाओं और लड़कियों के खिलाफ हिंसा को समाप्त करने में मदद करने के लिए सम्मान की प्रतिज्ञा ली है। आप भी शामिल हों!')}
@@ -73,10 +83,10 @@ export default function MaleEngagementPage() {
                                 </p>
                                 <p className="text-xs text-muted-foreground">लक्षित दर्शक: युवा खेल कोच और एथलीट</p>
                                 <div className="bg-background/50 rounded-lg p-3 text-center">
-                                    <p className="text-3xl font-bold text-primary">45,000</p>
+                                    <p className="text-3xl font-bold text-primary">{pledges.coaching.toLocaleString()}</p>
                                     <p className="text-xs text-muted-foreground">ली गई प्रतिज्ञाएँ</p>
                                 </div>
-                                <Button className="w-full bg-green-600 hover:bg-green-700">प्रतिज्ञा लें</Button>
+                                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => handlePledge('coaching')}>प्रतिज्ञा लें</Button>
                             </CardContent>
                         </Card>
                     </TabsContent>
@@ -93,5 +103,3 @@ export default function MaleEngagementPage() {
         </div>
     );
 }
-
-    

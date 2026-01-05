@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings, Share2, ArrowUp } from 'lucide-react';
+import { ArrowLeft, Share2, ArrowUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';

@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X, Trash2, UserCog } from 'lucide-react';
+import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X, Trash2, UserCog, Image as ImageIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -16,6 +16,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
+import { Label } from '@/components/ui/label';
 
 
 export default function SettingsPage() {
@@ -27,6 +28,8 @@ export default function SettingsPage() {
   const [textSize, setTextSize] = useState('medium');
   const [feedback, setFeedback] = useState('');
   const { toast } = useToast();
+  const [profileName, setProfileName] = useState('उपयोगकर्ता');
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -69,6 +72,21 @@ export default function SettingsPage() {
       }
   };
 
+  const handleProfileSave = () => {
+    console.log({ profileName, profilePhoto });
+    toast({
+      title: "प्रोफ़ाइल सहेजी गई!",
+      description: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।",
+    });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setProfilePhoto(e.target.files[0]);
+    }
+  };
+
+
   if (!mounted) {
     return null;
   }
@@ -83,6 +101,32 @@ export default function SettingsPage() {
       </header>
 
       <main className="p-4 space-y-8">
+        <div>
+          <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">प्रोफ़ाइल</h2>
+          <Card className="bg-secondary/50 border-border">
+            <CardContent className="p-4 space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">नाम</Label>
+                <Input id="name" value={profileName} onChange={(e) => setProfileName(e.target.value)} placeholder="अपना नाम दर्ज करें" className="bg-background"/>
+              </div>
+              <div className="space-y-2">
+                  <Label>प्रोफ़ाइल फोटो</Label>
+                  <div className="flex items-center justify-center w-full">
+                      <label htmlFor="photo-upload" className="flex flex-col items-center justify-center w-full h-32 border-2 border-border border-dashed rounded-lg cursor-pointer bg-background hover:bg-secondary/50">
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              <ImageIcon className="w-8 h-8 mb-2 text-muted-foreground" />
+                              <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">अपलोड करने के लिए क्लिक करें</span></p>
+                               {profilePhoto && <p className="text-xs text-green-500">{profilePhoto.name}</p>}
+                          </div>
+                          <input id="photo-upload" type="file" className="hidden" onChange={handleFileChange} accept="image/*"/>
+                      </label>
+                  </div> 
+              </div>
+              <Button onClick={handleProfileSave} className="w-full bg-blue-600 hover:bg-blue-700">प्रोफ़ाइल सहेजें</Button>
+            </CardContent>
+          </Card>
+        </div>
+
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">सुरक्षा और आपातकाल</h2>
           <Sheet>
@@ -352,5 +396,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    

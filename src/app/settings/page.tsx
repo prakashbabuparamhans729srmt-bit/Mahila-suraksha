@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BarChart2, Home, Plus, RefreshCw, Settings, ChevronRight, X, Trash2, UserCog, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft, ChevronRight, X, Trash2, UserCog, Image as ImageIcon, LogOut } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -18,6 +18,7 @@ import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { useAdminContent } from '@/context/admin-content-context';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 
 export default function SettingsPage() {
@@ -102,6 +103,15 @@ export default function SettingsPage() {
     if (e.target.files && e.target.files[0]) {
       setLocalProfilePhoto(e.target.files[0]);
     }
+  };
+  
+  const handleLogout = () => {
+    toast({
+        title: "लॉग आउट किया गया",
+        description: "आप सफलतापूर्वक लॉग आउट हो गए हैं।",
+    });
+    // Here you would typically redirect to the login page or clear user session.
+    // e.g., router.push('/login');
   };
 
 
@@ -310,6 +320,35 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
         </div>
+        
+        <div>
+            <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">खाता</h2>
+            <Card className="bg-secondary/50 border-border">
+                <CardContent className="p-4">
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive" className="w-full">
+                                <LogOut className="mr-2 h-4 w-4" />
+                                लॉग आउट
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>क्या आप वाकई लॉग आउट करना चाहते हैं?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    आपको फिर से साइन इन करने की आवश्यकता होगी।
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                                <AlertDialogAction onClick={handleLogout}>लॉग आउट</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </CardContent>
+            </Card>
+        </div>
+
 
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">प्रशासन</h2>
@@ -418,5 +457,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    

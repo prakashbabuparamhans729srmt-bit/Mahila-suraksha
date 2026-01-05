@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useAdminContent } from '@/context/admin-content-context';
 
 export default function ReportIncidentPage() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,7 @@ export default function ReportIncidentPage() {
     photo: null as File | null,
   });
   const { toast } = useToast();
+  const { addContent } = useAdminContent();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -41,13 +43,25 @@ export default function ReportIncidentPage() {
         });
         return;
     }
-    console.log('Submitting incident report:', formData);
+    
+    addContent({
+      title: formData.title,
+      type: 'घटना रिपोर्ट',
+      description: formData.description,
+      location: formData.location,
+      photo: formData.photo,
+    });
+
     toast({
       title: "रिपोर्ट सबमिट की गई",
-      description: "आपकी रिपोर्ट सफलतापूर्वक सबमिट कर दी गई है।",
+      description: "आपकी रिपोर्ट सफलतापूर्वक समीक्षा के लिए सबमिट कर दी गई है।",
     });
     // Reset form
     setFormData({ title: '', description: '', location: '', photo: null });
+    const fileInput = document.getElementById('dropzone-file') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   };
 
   return (

@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useAdminContent } from '@/context/admin-content-context';
 
 export default function AddUpdatePage() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export default function AddUpdatePage() {
     photo: null as File | null,
   });
   const { toast } = useToast();
+  const { addContent } = useAdminContent();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -40,12 +42,24 @@ export default function AddUpdatePage() {
         });
         return;
     }
-    console.log('Submitting update:', formData);
+    
+    addContent({
+      title: formData.title,
+      type: 'अपडेट',
+      description: formData.content,
+      photo: formData.photo,
+    });
+
     toast({
       title: "अपडेट पोस्ट किया गया",
-      description: "आपका अपडेट सफलतापूर्वक समुदाय के साथ साझा किया गया है।",
+      description: "आपका अपडेट समीक्षा के लिए सफलतापूर्वक सबमिट कर दिया गया है।",
     });
     setFormData({ title: '', content: '', photo: null });
+     // Reset file input visually if needed
+    const fileInput = document.getElementById('dropzone-file') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   };
 
 

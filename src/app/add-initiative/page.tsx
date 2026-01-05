@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useAdminContent } from '@/context/admin-content-context';
 
 export default function AddInitiativePage() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,7 @@ export default function AddInitiativePage() {
     kpi: '',
   });
   const { toast } = useToast();
+  const { addContent } = useAdminContent();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -35,10 +37,18 @@ export default function AddInitiativePage() {
         });
         return;
     }
-    console.log('Submitting initiative:', formData);
+    
+    addContent({
+      title: formData.title,
+      type: 'पहल',
+      description: formData.description,
+      targetAudience: formData.targetAudience,
+      kpi: formData.kpi,
+    });
+    
     toast({
       title: "पहल जोड़ी गई",
-      description: "नई पहल डेटाबेस में सफलतापूर्वक जोड़ दी गई है।",
+      description: "नई पहल समीक्षा के लिए सफलतापूर्वक सबमिट कर दी गई है।",
     });
     setFormData({ title: '', description: '', targetAudience: '', kpi: '' });
   };
@@ -68,9 +78,9 @@ export default function AddInitiativePage() {
                 <Textarea id="description" placeholder="पहल के लक्ष्यों और गतिविधियों का वर्णन करें..." className="bg-background min-h-[120px]" value={formData.description} onChange={handleChange} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="target-audience">लक्षित दर्शक</Label>
+                <Label htmlFor="targetAudience">लक्षित दर्शक</Label>
                 <div className="relative">
-                  <Input id="target-audience" placeholder="जैसे, 'कॉलेज के छात्र'" className="bg-background pl-10" value={formData.targetAudience} onChange={handleChange} />
+                  <Input id="targetAudience" placeholder="जैसे, 'कॉलेज के छात्र'" className="bg-background pl-10" value={formData.targetAudience} onChange={handleChange} />
                   <Users className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                 </div>
               </div>

@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useAdminContent } from '@/context/admin-content-context';
 
 type ContentType = 'article' | 'video' | 'quiz' | 'resource' | '';
 
@@ -22,6 +23,7 @@ export default function AddContentPage() {
     descriptionOrUrl: '',
   });
   const { toast } = useToast();
+  const { addContent } = useAdminContent();
 
   const handleSelectChange = (value: ContentType) => {
     setFormData({ ...formData, contentType: value });
@@ -41,7 +43,13 @@ export default function AddContentPage() {
         });
         return;
     }
-    console.log('Submitting content:', formData);
+    
+    addContent({
+      title: formData.title,
+      type: formData.contentType,
+      description: formData.descriptionOrUrl
+    });
+
     toast({
       title: "सामग्री सबमिट की गई",
       description: "आपकी सामग्री समीक्षा के लिए सफलतापूर्वक सबमिट कर दी गई है।",

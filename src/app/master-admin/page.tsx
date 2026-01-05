@@ -4,23 +4,28 @@
 import Link from 'next/link';
 import { Users, FileText, BarChart2, BookOpen, UserCog, HeartHandshake, Shield, Building2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAdminContent } from '@/context/admin-content-context';
 
 export default function MasterAdminPage() {
+  const { stats } = useAdminContent();
+
   const kpiData = [
-    { title: 'कुल उपयोगकर्ता', value: '1,25,631', icon: Users, change: '+12.5%', changeType: 'increase' },
-    { title: 'रिपोर्ट की गई घटनाएं', value: '8,421', icon: FileText, change: '+5.2%', changeType: 'increase' },
-    { title: 'सक्रिय पहल', value: '78', icon: HeartHandshake, change: '-1.8%', changeType: 'decrease' },
-    { title: 'कुल सामग्री', value: '1,204', icon: BookOpen, change: '+20.1%', changeType: 'increase' },
+    { title: 'कुल उपयोगकर्ता', value: stats.totalUsers.toLocaleString(), icon: Users, change: '', changeType: 'increase' },
+    { title: 'लंबित घटनाएं', value: stats.reportedIncidents.toLocaleString(), icon: FileText, change: '', changeType: 'increase' },
+    { title: 'लंबित पहल', value: stats.activeInitiatives.toLocaleString(), icon: HeartHandshake, change: '', changeType: 'increase' },
+    { title: 'लंबित सामग्री', value: stats.totalContent.toLocaleString(), icon: BookOpen, change: '', changeType: 'increase' },
   ];
 
   const managementCards = [
-    { title: 'उपयोगकर्ता प्रबंधित करें', value: '1.25 लाख', icon: Users, href: '/master-admin/users' },
-    { title: 'सामग्री मॉडरेशन', value: '52 लंबित', icon: FileText, href: '/master-admin/content' },
+    { title: 'उपयोगकर्ता प्रबंधित करें', value: `${stats.totalUsers} उपयोगकर्ता`, icon: Users, href: '/master-admin/users' },
+    { title: 'सामग्री मॉडरेशन', value: `${stats.totalContent} लंबित`, icon: FileText, href: '/master-admin/content' },
     { title: 'पहल प्रबंधित करें', value: '78 सक्रिय', icon: Building2, href: '/master-admin/pages/community-empowerment' },
     { title: 'सुरक्षा अलर्ट', value: '99+', icon: Shield, href: '#' },
     { title: 'एनालिटिक्स', value: 'डेटा देखें', icon: BarChart2, href: '/master-admin/analytics' },
-    { title: 'व्यवस्थापक प्रबंधित करें', value: '5 व्यवस्थापक', icon: UserCog, href: '/master-admin/settings' },
+    { title: 'व्यवस्थापक प्रबंधित करें', value: `${stats.totalUsers > 0 ? users.filter(u => u.role === 'एडमिन').length : '0'} व्यवस्थापक`, icon: UserCog, href: '/master-admin/settings' },
   ];
+  
+  const { users } = useAdminContent();
   
   return (
     <>
@@ -35,9 +40,11 @@ export default function MasterAdminPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="text-3xl font-bold">{item.value}</div>
-                        <p className={`text-xs ${item.changeType === 'increase' ? 'text-green-500' : 'text-red-500'}`}>
-                            {item.change} पिछले महीने से
-                        </p>
+                        {item.change && (
+                             <p className={`text-xs ${item.changeType === 'increase' ? 'text-green-500' : 'text-red-500'}`}>
+                                {item.change} पिछले महीने से
+                            </p>
+                        )}
                     </CardContent>
                 </Card>
             ))}

@@ -1,11 +1,28 @@
 
+'use client';
+
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { toast } = useToast();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Logging in with:', { email, password });
+    toast({
+      title: "लॉग इन किया गया!",
+      description: "वापसी पर स्वागत है!",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
@@ -23,28 +40,34 @@ export default function LoginPage() {
               <p className="text-muted-foreground">अपने डैशबोर्ड पर जाने के लिए साइन इन करें</p>
             </div>
             
-            <div className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4">
               <Input 
                 type="email" 
                 placeholder="ईमेल पता" 
                 className="bg-background border-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <Input 
                 type="password" 
                 placeholder="पासवर्ड"
                 className="bg-background border-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
-            </div>
             
-            <div className="text-sm">
-                <Link href="/reset-password" className="text-blue-500 hover:underline">
-                    पासवर्ड भूल गए?
-                </Link>
-            </div>
+              <div className="text-sm">
+                  <Link href="/reset-password" className="text-blue-500 hover:underline">
+                      पासवर्ड भूल गए?
+                  </Link>
+              </div>
 
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
-              साइन इन करें
-            </Button>
+              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+                साइन इन करें
+              </Button>
+            </form>
             
             <div className="text-center text-sm">
               <span className="text-muted-foreground">खाता नहीं है? </span>

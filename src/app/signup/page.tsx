@@ -1,12 +1,42 @@
 
+'use client';
+
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function SignupPage() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    country: '',
+    state: '',
+  });
+  const { toast } = useToast();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectChange = (name: 'country' | 'state', value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Signing up with:', formData);
+    toast({
+      title: "खाता बनाया गया!",
+      description: "हमारे आंदोलन में शामिल होने के लिए धन्यवाद।",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
@@ -24,23 +54,35 @@ export default function SignupPage() {
               <p className="text-muted-foreground">शुरू करने के लिए एक खाता बनाएं</p>
             </div>
             
-            <div className="space-y-4">
+            <form onSubmit={handleSignup} className="space-y-4">
               <Input 
                 type="text" 
+                name="fullName"
                 placeholder="पूरा नाम" 
                 className="bg-background border-input"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
               />
               <Input 
                 type="email" 
+                name="email"
                 placeholder="ईमेल पता" 
                 className="bg-background border-input"
+                value={formData.email}
+                onChange={handleChange}
+                required
               />
               <Input 
                 type="password" 
+                name="password"
                 placeholder="पासवर्ड"
                 className="bg-background border-input"
+                value={formData.password}
+                onChange={handleChange}
+                required
               />
-               <Select>
+               <Select onValueChange={(value) => handleSelectChange('country', value)} required>
                 <SelectTrigger className="w-full bg-background border-input">
                   <SelectValue placeholder="देश" />
                 </SelectTrigger>
@@ -50,7 +92,7 @@ export default function SignupPage() {
                   <SelectItem value="uk">यूनाइटेड किंगडम</SelectItem>
                 </SelectContent>
               </Select>
-               <Select>
+               <Select onValueChange={(value) => handleSelectChange('state', value)} required>
                 <SelectTrigger className="w-full bg-background border-input">
                   <SelectValue placeholder="राज्य" />
                 </SelectTrigger>
@@ -60,11 +102,11 @@ export default function SignupPage() {
                   <SelectItem value="karnataka">कर्नाटक</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
-              खाता बनाएं
-            </Button>
+              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+                खाता बनाएं
+              </Button>
+            </form>
             
             <div className="text-center text-sm">
               <span className="text-muted-foreground">पहले से ही एक खाता है? </span>

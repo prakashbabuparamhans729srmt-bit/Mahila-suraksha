@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -10,6 +10,8 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Pie, PieChart, Cell } from 'recharts';
 import React from 'react';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useToast } from '@/hooks/use-toast';
+
 
 const chartData = [
   { source: 'सरकारी अनुदान', amount: 3000000, percentage: 40, fill: '#8884d8' },
@@ -41,9 +43,19 @@ const chartConfig = {
 };
 
 export default function FundingTrackerPage() {
+  const { toast } = useToast();
   const totalAmount = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.amount, 0);
   }, []);
+
+  const handleDonate = () => {
+    toast({
+        title: "दान पृष्ठ पर रीडायरेक्ट किया जा रहा है...",
+        description: "आपके समर्थन के लिए धन्यवाद!",
+    });
+    // In a real app, you would redirect to a payment gateway.
+    // window.location.href = '/donate';
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
@@ -67,7 +79,7 @@ export default function FundingTrackerPage() {
                 <span>100%</span>
               </div>
             </div>
-            <Button className="w-full bg-green-600 hover:bg-green-700 text-lg h-12">अभी दान करें</Button>
+            <Button className="w-full bg-green-600 hover:bg-green-700 text-lg h-12" onClick={handleDonate}>अभी दान करें</Button>
           </CardContent>
         </Card>
 

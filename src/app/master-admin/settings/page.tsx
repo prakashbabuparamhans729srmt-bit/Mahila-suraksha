@@ -6,8 +6,27 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 export default function MasterAdminSettingsPage() {
+  const { toast } = useToast();
+  const [defaultRole, setDefaultRole] = useState('user');
+  const [requireEmailVerification, setRequireEmailVerification] = useState(true);
+  const [autoContentFlagging, setAutoContentFlagging] = useState(true);
+
+  const handleSaveChanges = () => {
+    console.log({
+      defaultRole,
+      requireEmailVerification,
+      autoContentFlagging,
+    });
+    toast({
+      title: "सेटिंग्स सहेजी गईं",
+      description: "एडमिन सेटिंग्स सफलतापूर्वक अपडेट की गईं।",
+    });
+  };
+
   return (
     <>
         <p className="text-muted-foreground px-1">
@@ -21,7 +40,7 @@ export default function MasterAdminSettingsPage() {
             <CardContent className="space-y-4">
                 <div className="space-y-2">
                     <Label htmlFor="default-role">नए उपयोगकर्ताओं के लिए डिफ़ॉल्ट भूमिका</Label>
-                    <Select>
+                    <Select value={defaultRole} onValueChange={setDefaultRole}>
                         <SelectTrigger id="default-role" className="w-full bg-background">
                         <SelectValue placeholder="एक भूमिका चुनें" />
                         </SelectTrigger>
@@ -39,7 +58,7 @@ export default function MasterAdminSettingsPage() {
                         साइन अप करने पर उपयोगकर्ताओं को अपना ईमेल सत्यापित करने के लिए बाध्य करें।
                         </p>
                     </div>
-                    <Switch defaultChecked={true} />
+                    <Switch checked={requireEmailVerification} onCheckedChange={setRequireEmailVerification} />
                 </div>
             </CardContent>
         </Card>
@@ -56,12 +75,12 @@ export default function MasterAdminSettingsPage() {
                         संभावित रूप से अनुचित सामग्री को चिह्नित करने के लिए AI का उपयोग करें।
                         </p>
                     </div>
-                    <Switch defaultChecked={true} />
+                    <Switch checked={autoContentFlagging} onCheckedChange={setAutoContentFlagging} />
                 </div>
             </CardContent>
         </Card>
         
-        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12">सेटिंग्स सहेजें</Button>
+        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12" onClick={handleSaveChanges}>सेटिंग्स सहेजें</Button>
     </>
   );
 }

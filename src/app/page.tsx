@@ -19,6 +19,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
+import { useAdminContent } from '@/context/admin-content-context';
 
 
 const CommunityIcon = () => (
@@ -367,6 +368,20 @@ const CommentSection = () => {
 
 
 export default function DashboardPage() {
+  const { profileName, profilePhoto } = useAdminContent();
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (profilePhoto) {
+      const url = URL.createObjectURL(profilePhoto);
+      setProfilePhotoUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setProfilePhotoUrl(null);
+    }
+  }, [profilePhoto]);
+
+
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -619,14 +634,14 @@ export default function DashboardPage() {
           <Dialog>
             <DialogTrigger asChild>
               <Avatar className="h-9 w-9 cursor-pointer">
-                <AvatarImage src="https://picsum.photos/seed/user-main/40/40" alt="User" />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarImage src={profilePhotoUrl ?? undefined} alt={profileName} />
+                <AvatarFallback>{profileName.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogTrigger>
             <DialogContent className="p-0 bg-transparent border-0 w-fit max-w-[90vw] h-fit flex items-center justify-center">
               <Avatar className="h-64 w-64">
-                <AvatarImage src="https://picsum.photos/seed/user-main/400/400" alt="User" />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarImage src={profilePhotoUrl ?? undefined} alt={profileName} />
+                <AvatarFallback>{profileName.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogContent>
           </Dialog>

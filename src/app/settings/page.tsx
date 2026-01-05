@@ -17,10 +17,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
+import { useAdminContent } from '@/context/admin-content-context';
 
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
+  const { profileName, setProfileName, profilePhoto, setProfilePhoto } = useAdminContent();
+
+  const [localProfileName, setLocalProfileName] = useState(profileName);
+  const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(profilePhoto);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
   const [personalContacts, setPersonalContacts] = useState([{ id: 1, name: '', phone: '' }]);
   const [authorityNumbers, setAuthorityNumbers] = useState({ police: '', ambulance: '', firetruck: '' });
   const [dangerZoneAlerts, setDangerZoneAlerts] = useState(false);
@@ -28,13 +35,23 @@ export default function SettingsPage() {
   const [textSize, setTextSize] = useState('medium');
   const [feedback, setFeedback] = useState('');
   const { toast } = useToast();
-  const [profileName, setProfileName] = useState('उपयोगकर्ता');
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
-
+  
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (localProfilePhoto) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(localProfilePhoto);
+    } else {
+      setPhotoPreview(null);
+    }
+  }, [localProfilePhoto]);
 
   const handleAuthorityNumberChange = (service: 'police' | 'ambulance' | 'firetruck', value: string) => {
     setAuthorityNumbers(prev => ({ ...prev, [service]: value }));
@@ -73,7 +90,8 @@ export default function SettingsPage() {
   };
 
   const handleProfileSave = () => {
-    console.log({ profileName, profilePhoto });
+    setProfileName(localProfileName);
+    setProfilePhoto(localProfilePhoto);
     toast({
       title: "प्रोफ़ाइल सहेजी गई!",
       description: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।",
@@ -81,8 +99,8 @@ export default function SettingsPage() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setProfilePhoto(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      setLocalProfilePhoto(e.target.files[0]);
     }
   };
 
@@ -107,17 +125,21 @@ export default function SettingsPage() {
             <CardContent className="p-4 space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">नाम</Label>
-                <Input id="name" value={profileName} onChange={(e) => setProfileName(e.target.value)} placeholder="अपना नाम दर्ज करें" className="bg-background"/>
+                <Input id="name" value={localProfileName} onChange={(e) => setLocalProfileName(e.target.value)} placeholder="अपना नाम दर्ज करें" className="bg-background"/>
               </div>
               <div className="space-y-2">
                   <Label>प्रोफ़ाइल फोटो</Label>
                   <div className="flex items-center justify-center w-full">
                       <label htmlFor="photo-upload" className="flex flex-col items-center justify-center w-full h-32 border-2 border-border border-dashed rounded-lg cursor-pointer bg-background hover:bg-secondary/50">
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                              <ImageIcon className="w-8 h-8 mb-2 text-muted-foreground" />
-                              <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">अपलोड करने के लिए क्लिक करें</span></p>
-                               {profilePhoto && <p className="text-xs text-green-500">{profilePhoto.name}</p>}
-                          </div>
+                          {photoPreview ? (
+                            <img src={photoPreview} alt="Profile preview" className="h-28 w-28 rounded-full object-cover"/>
+                          ) : (
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                <ImageIcon className="w-8 h-8 mb-2 text-muted-foreground" />
+                                <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">अपलोड करने के लिए क्लिक करें</span></p>
+                                {localProfilePhoto && <p className="text-xs text-green-500">{localProfilePhoto.name}</p>}
+                            </div>
+                          )}
                           <input id="photo-upload" type="file" className="hidden" onChange={handleFileChange} accept="image/*"/>
                       </label>
                   </div> 
@@ -396,3 +418,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    

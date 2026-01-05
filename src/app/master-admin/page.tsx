@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAdminContent } from '@/context/admin-content-context';
 
 export default function MasterAdminPage() {
-  const { stats } = useAdminContent();
+  const { stats, users } = useAdminContent();
 
   const kpiData = [
     { title: 'कुल उपयोगकर्ता', value: stats.totalUsers.toLocaleString(), icon: Users, change: '', changeType: 'increase' },
@@ -22,10 +22,8 @@ export default function MasterAdminPage() {
     { title: 'पहल प्रबंधित करें', value: '78 सक्रिय', icon: Building2, href: '/master-admin/pages/community-empowerment' },
     { title: 'सुरक्षा अलर्ट', value: '99+', icon: Shield, href: '#' },
     { title: 'एनालिटिक्स', value: 'डेटा देखें', icon: BarChart2, href: '/master-admin/analytics' },
-    { title: 'व्यवस्थापक प्रबंधित करें', value: `${stats.totalUsers > 0 ? users.filter(u => u.role === 'एडमिन').length : '0'} व्यवस्थापक`, icon: UserCog, href: '/master-admin/settings' },
+    { title: 'व्यवस्थापक प्रबंधित करें', value: `${users.filter(u => u.role === 'एडमिन').length} व्यवस्थापक`, icon: UserCog, href: '/master-admin/settings' },
   ];
-  
-  const { users } = useAdminContent();
   
   return (
     <>

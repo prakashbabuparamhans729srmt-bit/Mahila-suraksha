@@ -94,18 +94,18 @@ export default function MessagesPage() {
     const handleLike = (id: number) => {
         setComments(prev => findCommentAndUpdate(prev, id, c => ({
             ...c,
-            likes: c.liked ? c.likes - 1 : c.likes + 1,
+            likes: c.liked ? c.likes - 1 : c.likes + (c.unliked ? 1 : 0) + 1,
             liked: !c.liked,
-            unliked: c.liked ? c.unliked : false,
+            unliked: false,
         })));
     };
     
     const handleUnlike = (id: number) => {
         setComments(prev => findCommentAndUpdate(prev, id, c => ({
             ...c,
-            likes: c.liked ? c.likes - 1 : (c.unliked ? c.likes : c.likes),
+            likes: c.liked ? c.likes - 1 : c.likes,
             unliked: !c.unliked,
-            liked: c.unliked ? c.liked : false,
+            liked: false,
         })));
     };
     
@@ -144,7 +144,7 @@ export default function MessagesPage() {
 
     const handlePostComment = () => {
         if (newComment.trim()) {
-            const newCommentObj = {
+            const newCommentObj: CommentType = {
                 id: Date.now(),
                 user: 'आप',
                 avatar: 'https://picsum.photos/seed/currentUser/40/40',

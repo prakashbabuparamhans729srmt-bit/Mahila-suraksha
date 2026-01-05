@@ -1,12 +1,43 @@
 
+'use client';
+
 import Link from 'next/link';
-import { ArrowLeft, BarChart2, Home, MapPin, Plus, RefreshCw, Settings, LocateFixed } from 'lucide-react';
+import { ArrowLeft, MapPin, LocateFixed } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useState } from 'react';
 
 export default function LocationSettingsPage() {
+  const [location, setLocation] = useState('Patna Junction, Patna');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleDetectLocation = () => {
+    setLoading(true);
+    setError(null);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // In a real app, you would use a reverse geocoding service
+          // to get the address from coordinates.
+          // For now, we'll just update the state to show it's fetched.
+          setLocation(`अक्षांश: ${latitude.toFixed(4)}, देशांतर: ${longitude.toFixed(4)}`);
+          setLoading(false);
+        },
+        (err) => {
+          setError('स्थान का पता नहीं लगाया जा सका। कृपया सुनिश्चित करें कि आपने अनुमति दी है।');
+          setLoading(false);
+        }
+      );
+    } else {
+      setError('आपके ब्राउज़र में जियोलोकेशन समर्थित नहीं है।');
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
@@ -26,7 +57,7 @@ export default function LocationSettingsPage() {
             <h3 className="font-semibold">आपका वर्तमान स्थान</h3>
             <div className="flex items-center space-x-3">
               <MapPin className="h-5 w-5 text-red-500" />
-              <p>Patna Junction, Patna</p>
+              <p>{loading ? 'पता लगाया जा रहा है...' : error ? error : location}</p>
             </div>
           </CardContent>
         </Card>
@@ -48,9 +79,9 @@ export default function LocationSettingsPage() {
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-4 space-y-4">
             <h3 className="font-semibold">अपना स्थान अपडेट करें</h3>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={handleDetectLocation} disabled={loading}>
               <LocateFixed className="mr-2 h-5 w-5" />
-              मेरा स्थान पता लगाएँ
+              {loading ? 'पता लगाया जा रहा है...' : 'मेरा स्थान पता लगाएँ'}
             </Button>
             
             <div className="flex items-center space-x-2">
@@ -61,7 +92,13 @@ export default function LocationSettingsPage() {
 
             <div className="space-y-2">
                 <label htmlFor="manual-location" className="text-sm font-medium">स्थान मैन्युअल रूप से दर्ज करें</label>
-                <Input id="manual-location" placeholder="Patna Junction, Patna" defaultValue="Patna Junction, Patna" className="bg-background border-border" />
+                <Input 
+                  id="manual-location" 
+                  placeholder="जैसे, पटना जंक्शन, पटना" 
+                  className="bg-background border-border"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
             </div>
 
           </CardContent>

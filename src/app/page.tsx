@@ -613,12 +613,23 @@ export default function DashboardPage() {
           <Link href="/notifications">
             <Bell className="h-6 w-6" />
           </Link>
-          <Link href="/login">
-            <User className="h-6 w-6" />
-          </Link>
           <Link href="/settings">
             <Settings className="h-6 w-6" />
           </Link>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Avatar className="h-9 w-9 cursor-pointer">
+                <AvatarImage src="https://picsum.photos/seed/user-main/40/40" alt="User" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+            </DialogTrigger>
+            <DialogContent className="p-0 bg-transparent border-0 w-fit max-w-[90vw] h-fit flex items-center justify-center">
+              <Avatar className="h-64 w-64">
+                <AvatarImage src="https://picsum.photos/seed/user-main/400/400" alt="User" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+            </DialogContent>
+          </Dialog>
         </div>
       </header>
 
@@ -1101,3 +1112,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

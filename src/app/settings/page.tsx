@@ -15,19 +15,31 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useToast } from '@/hooks/use-toast';
 
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
-  const [personalContacts, setPersonalContacts] = React.useState([
-    { id: 1, name: '', phone: '' },
-  ]);
+  const [personalContacts, setPersonalContacts] = useState([{ id: 1, name: '', phone: '' }]);
+  const [authorityNumbers, setAuthorityNumbers] = useState({ police: '', ambulance: '', firetruck: '' });
+  const [dangerZoneAlerts, setDangerZoneAlerts] = useState(false);
+  const [vibrateOnAlert, setVibrateOnAlert] = useState(true);
+  const [textSize, setTextSize] = useState('medium');
+  const [feedback, setFeedback] = useState('');
+  const { toast } = useToast();
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
   }, []);
 
+  const handleAuthorityNumberChange = (service: 'police' | 'ambulance' | 'firetruck', value: string) => {
+    setAuthorityNumbers(prev => ({ ...prev, [service]: value }));
+  };
+
+  const handleContactChange = (id: number, field: 'name' | 'phone', value: string) => {
+    setPersonalContacts(prev => prev.map(contact => contact.id === id ? { ...contact, [field]: value } : contact));
+  };
 
   const addContact = () => {
     const newId = personalContacts.length > 0 ? Math.max(...personalContacts.map(c => c.id)) + 1 : 1;
@@ -38,10 +50,28 @@ export default function SettingsPage() {
     setPersonalContacts(personalContacts.filter(contact => contact.id !== id));
   };
 
+  const handleSaveChanges = () => {
+    console.log({ authorityNumbers, personalContacts });
+    toast({
+      title: "सेटिंग्स सहेजी गईं!",
+      description: "आपकी आपातकालीन संपर्क जानकारी अपडेट कर दी गई है।",
+    });
+  };
+
+  const handleSendFeedback = () => {
+      if (feedback.trim()) {
+        console.log("Feedback submitted:", feedback);
+        toast({
+            title: "प्रतिक्रिया भेजी गई",
+            description: "आपके बहुमूल्य सुझाव के लिए धन्यवाद!",
+        });
+        setFeedback('');
+      }
+  };
+
   if (!mounted) {
     return null;
   }
-
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -90,15 +120,15 @@ export default function SettingsPage() {
                       <div className="space-y-4">
                         <div>
                           <label className="text-sm font-medium flex items-center">पुलिस 🚨</label>
-                          <Input className="mt-1 bg-background border-border" placeholder="पुलिस का नंबर दर्ज करें" />
+                          <Input className="mt-1 bg-background border-border" placeholder="पुलिस का नंबर दर्ज करें" value={authorityNumbers.police} onChange={(e) => handleAuthorityNumberChange('police', e.target.value)} />
                         </div>
                         <div>
                           <label className="text-sm font-medium flex items-center">एम्बुलेंस 🚑</label>
-                          <Input className="mt-1 bg-background border-border" placeholder="एम्बुलेंस का नंबर दर्ज करें" />
+                          <Input className="mt-1 bg-background border-border" placeholder="एम्बुलेंस का नंबर दर्ज करें" value={authorityNumbers.ambulance} onChange={(e) => handleAuthorityNumberChange('ambulance', e.target.value)} />
                         </div>
                         <div>
                           <label className="text-sm font-medium flex items-center">दमकल 🚒</label>
-                          <Input className="mt-1 bg-background border-border" placeholder="दमकल का नंबर दर्ज करें" />
+                          <Input className="mt-1 bg-background border-border" placeholder="दमकल का नंबर दर्ज करें" value={authorityNumbers.firetruck} onChange={(e) => handleAuthorityNumberChange('firetruck', e.target.value)} />
                         </div>
                       </div>
                     </CardContent>
@@ -111,12 +141,14 @@ export default function SettingsPage() {
                         <div key={contact.id} className="space-y-3">
                            <div className="flex justify-between items-center">
                              <label className="text-sm font-medium">संपर्क {index + 1}</label>
-                             <Button variant="ghost" size="icon" onClick={() => removeContact(contact.id)} className="text-muted-foreground hover:text-destructive">
-                               <Trash2 className="h-5 w-5" />
-                             </Button>
+                             {personalContacts.length > 1 && (
+                               <Button variant="ghost" size="icon" onClick={() => removeContact(contact.id)} className="text-muted-foreground hover:text-destructive">
+                                 <Trash2 className="h-5 w-5" />
+                               </Button>
+                             )}
                            </div>
-                          <Input className="bg-background border-border" placeholder="संपर्क का नाम" />
-                          <Input className="bg-background border-border" placeholder="संपर्क का फ़ोन नंबर" type="tel" />
+                          <Input className="bg-background border-border" placeholder="संपर्क का नाम" value={contact.name} onChange={(e) => handleContactChange(contact.id, 'name', e.target.value)} />
+                          <Input className="bg-background border-border" placeholder="संपर्क का फ़ोन नंबर" type="tel" value={contact.phone} onChange={(e) => handleContactChange(contact.id, 'phone', e.target.value)} />
                           {index < personalContacts.length -1 && <Separator className="my-4" />}
                         </div>
                       ))}
@@ -131,7 +163,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               <div className="p-4 mt-auto">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12" onClick={handleSaveChanges}>
                   संपर्क सहेजें
                 </Button>
               </div>
@@ -148,14 +180,14 @@ export default function SettingsPage() {
                   <h3 className="font-semibold">खतरा क्षेत्र अलर्ट सक्षम करें</h3>
                   <p className="text-sm text-muted-foreground">ज्ञात उच्च जोखिम वाले क्षेत्र में प्रवेश करने पर एक अलर्ट प्राप्त करें।</p>
                 </div>
-                <Switch defaultChecked={false} />
+                <Switch checked={dangerZoneAlerts} onCheckedChange={setDangerZoneAlerts} />
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-semibold">अलर्ट पर कंपन</h3>
                   <p className="text-sm text-muted-foreground">खतरा क्षेत्र अलर्ट ट्रिगर होने पर डिवाइस को वाइब्रेट करें।</p>
                 </div>
-                <Switch defaultChecked={true} />
+                <Switch checked={vibrateOnAlert} onCheckedChange={setVibrateOnAlert} />
               </div>
             </CardContent>
           </Card>
@@ -197,15 +229,16 @@ export default function SettingsPage() {
                 <Switch
                   checked={theme === 'dark'}
                   onCheckedChange={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  aria-label="Toggle theme"
                 />
               </div>
               <div>
                 <h3 className="font-semibold">टेक्स्ट का आकार</h3>
                 <p className="text-sm text-muted-foreground">पठनीयता के लिए टेक्स्ट का आकार समायोजित करें</p>
                 <div className="grid grid-cols-3 gap-2 mt-2">
-                  <Button variant="outline">छोटा</Button>
-                  <Button className="bg-blue-600 hover:bg-blue-700">मध्यम</Button>
-                  <Button variant="outline">बड़ा</Button>
+                  <Button variant={textSize === 'small' ? 'default' : 'outline'} onClick={() => setTextSize('small')} className={textSize === 'small' ? 'bg-blue-600 hover:bg-blue-700' : ''}>छोटा</Button>
+                  <Button variant={textSize === 'medium' ? 'default' : 'outline'} onClick={() => setTextSize('medium')} className={textSize === 'medium' ? 'bg-blue-600 hover:bg-blue-700' : ''}>मध्यम</Button>
+                  <Button variant={textSize === 'large' ? 'default' : 'outline'} onClick={() => setTextSize('large')} className={textSize === 'large' ? 'bg-blue-600 hover:bg-blue-700' : ''}>बड़ा</Button>
                 </div>
               </div>
             </CardContent>
@@ -296,12 +329,14 @@ export default function SettingsPage() {
                   </DialogTitle>
                 </DialogHeader>
                 <div className="p-1 space-y-4">
-                  <Textarea placeholder="हमें बताएं कि हम कैसे सुधार कर सकते हैं..." className="min-h-[120px] bg-secondary/50 border-border" />
+                  <Textarea placeholder="हमें बताएं कि हम कैसे सुधार कर सकते हैं..." className="min-h-[120px] bg-secondary/50 border-border" value={feedback} onChange={(e) => setFeedback(e.target.value)} />
                   <div className="flex justify-end space-x-2">
                     <DialogClose asChild>
                       <Button variant="outline">रद्द करें</Button>
                     </DialogClose>
-                    <Button className="bg-blue-600 hover:bg-blue-700">सबमिट करें</Button>
+                    <DialogClose asChild>
+                      <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleSendFeedback}>सबमिट करें</Button>
+                    </DialogClose>
                   </div>
                 </div>
               </DialogContent>
@@ -317,3 +352,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    

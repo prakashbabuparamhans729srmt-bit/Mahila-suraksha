@@ -400,7 +400,13 @@ export default function DashboardPage() {
       href: "/startup-checklist", 
       icon: <ListChecks className="h-6 w-6 text-primary" />, 
       title: "Startup Checklist", 
-      description: "आपकी नई कंपनी शुरू करने के लिए 100 कामों की सूची।" 
+      description: "आपकी नई कंपनी शुरू करने के लिए 360+ कामों की सूची।" 
+    },
+    { 
+      href: "/legal-compliance", 
+      icon: <Scale className="h-6 w-6 text-primary" />, 
+      title: "कानूनी अनुपालन", 
+      description: "अपने संगठन की कानूनी स्थिति और फाइलिंग को ट्रैक करें।" 
     },
     { 
       href: "/implementation-tracker", 

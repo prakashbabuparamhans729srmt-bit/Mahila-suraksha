@@ -1,7 +1,7 @@
 
 'use client';
 import Link from 'next/link';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft, ListChecks } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -396,6 +396,12 @@ export default function DashboardPage() {
 
 
   const allFeatures = [
+    { 
+      href: "/startup-checklist", 
+      icon: <ListChecks className="h-6 w-6 text-primary" />, 
+      title: "Startup Checklist", 
+      description: "आपकी नई कंपनी शुरू करने के लिए 100 कामों की सूची।" 
+    },
     { 
       href: "/implementation-tracker", 
       icon: <ImplementationTrackerIcon />, 

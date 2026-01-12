@@ -631,7 +631,6 @@ export default function DashboardPage() {
     }
   };
 
-
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
@@ -1068,7 +1067,18 @@ export default function DashboardPage() {
         </div>
         
         <div className="space-y-4">
-            <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
+              {filteredFeatures.length > 4 && (
+                <Button variant="link" onClick={() => {
+                  const element = document.getElementById('recent-updates');
+                  if (element) {
+                    const y = element.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({top: y, behavior: 'smooth'});
+                  }
+                }}>सभी देखें</Button>
+              )}
+            </div>
             {filteredFeatures.map((feature, index) => (
               <Link href={feature.href} key={index} className="block">
                 <Card className="bg-secondary/50 border-border">
@@ -1089,7 +1099,7 @@ export default function DashboardPage() {
             ))}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4" id="recent-updates">
             <h2 className="text-xl font-bold">हाल के अपडेट</h2>
             {posts.map((post) => (
               <Card key={post.id} className={`bg-secondary/50 border-border ${post.highlighted ? 'border-yellow-400 border-2' : ''}`}>

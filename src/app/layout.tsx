@@ -5,6 +5,33 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AdminContentProvider } from '@/context/admin-content-context';
+import { Button } from '@/components/ui/button';
+import { MessageCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+
+function ChatbotFloater() {
+  const { toast } = useToast();
+
+  const handleChatbotClick = () => {
+    toast({
+      title: "चैटबॉट जल्द ही आ रहा है!",
+      description: "एक AI सहायक जल्द ही आपकी मदद के लिए उपलब्ध होगा।",
+    });
+  };
+
+  return (
+    <div className="fixed bottom-24 right-4 z-50">
+      <Button
+        size="icon"
+        className="rounded-full bg-blue-600 hover:bg-blue-700 h-16 w-16 shadow-lg"
+        onClick={handleChatbotClick}
+      >
+        <MessageCircle className="h-8 w-8 text-white" />
+      </Button>
+    </div>
+  );
+}
+
 
 export default function RootLayout({
   children,
@@ -45,6 +72,7 @@ export default function RootLayout({
         >
           <AdminContentProvider>
             {children}
+            <ChatbotFloater />
             <Toaster />
           </AdminContentProvider>
         </ThemeProvider>

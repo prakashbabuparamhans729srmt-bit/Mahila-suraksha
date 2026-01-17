@@ -137,6 +137,12 @@ export default function DashboardPage() {
     { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', likes: 5812, liked: false, commentsCount: 1, date: '5 दिन पहले', highlighted: true },
   ]);
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [loading, user, router]);
+
   const handlePostLike = (postId: number) => {
     setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
   };
@@ -388,13 +394,8 @@ export default function DashboardPage() {
     router.push('/login');
   };
 
-  if (loading) {
+  if (loading || !user) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
-  }
-
-  if (!user) {
-    router.push('/login');
-    return null;
   }
 
 

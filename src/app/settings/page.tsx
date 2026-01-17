@@ -42,10 +42,11 @@ export default function SettingsPage() {
   const [feedback, setFeedback] = useState('');
   const { toast } = useToast();
   
-  const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
 
   useEffect(() => {
     if (localProfilePhoto) {
@@ -138,12 +139,7 @@ export default function SettingsPage() {
   };
 
 
-  if (!mounted || loading) {
-    return null;
-  }
-  
-  if (!user) {
-    router.push('/login');
+  if (loading || !user) {
     return null;
   }
 

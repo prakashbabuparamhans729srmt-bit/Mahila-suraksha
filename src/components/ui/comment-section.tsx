@@ -6,7 +6,7 @@ import { ThumbsUp, ThumbsDown, CornerUpLeft, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 type CommentType = {
@@ -226,6 +226,9 @@ export const CommentSection = () => {
                 <DialogTitle className="text-xl">
                     कमेंट्स
                 </DialogTitle>
+                <DialogDescription>
+                    पोस्ट पर टिप्पणियाँ देखें और उत्तर दें।
+                </DialogDescription>
             </DialogHeader>
             <ScrollArea className="flex-grow px-4">
                 <div className="space-y-6 py-4">

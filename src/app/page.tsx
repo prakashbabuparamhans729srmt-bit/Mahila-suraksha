@@ -14,7 +14,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import React, { useState, useEffect } from 'react';
 import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose, DialogDescription } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -401,7 +401,11 @@ export default function DashboardPage() {
                 <AvatarFallback>{profileName.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogTrigger>
-            <DialogContent className="p-0 bg-transparent border-0 w-fit max-w-[90vw] h-fit flex items-center justify-center">
+            <DialogContent className="p-0 bg-transparent border-none shadow-none w-fit max-w-[90vw] h-fit flex items-center justify-center">
+              <DialogHeader className="sr-only">
+                <DialogTitle>{profileName}'s Profile Photo</DialogTitle>
+                <DialogDescription>A larger view of your profile photo.</DialogDescription>
+              </DialogHeader>
               <Avatar className="h-64 w-64">
                 <AvatarImage src={profilePhotoUrl ?? undefined} alt={profileName} />
                 <AvatarFallback>{profileName.charAt(0).toUpperCase()}</AvatarFallback>
@@ -653,16 +657,15 @@ export default function DashboardPage() {
             </DialogTrigger>
             <DialogContent className="bg-background text-foreground max-w-md w-full">
                 <DialogHeader>
-                <DialogTitle className="text-xl">
-                    वैश्विक सुरक्षा स्कोर की व्याख्या
-                </DialogTitle>
+                    <DialogTitle className="text-xl">
+                        वैश्विक सुरक्षा स्कोर की व्याख्या
+                    </DialogTitle>
+                    <DialogDescription>
+                        यह स्कोर हमारे वैश्विक डेटा से प्रमुख संकेतकों के आधार पर यौन हिंसा से निपटने में प्रगति का मूल्यांकन करता है।
+                    </DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="max-h-[70vh]">
                 <div className="p-1 pr-6 space-y-6">
-                    <p className="text-muted-foreground">
-                    वैश्विक सुरक्षा स्कोर एक समग्र मीट्रिक है जो हमारे वैश्विक डेटा से प्रमुख संकेतकों के आधार पर यौन हिंसा से निपटने में प्रगति का मूल्यांकन करता है।
-                    </p>
-
                     <div className="flex items-center justify-around text-center">
                     <div>
                         <p className="text-muted-foreground">पिछला सप्ताह</p>

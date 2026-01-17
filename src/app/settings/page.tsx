@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose, DialogDescription } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { BottomNav } from '@/components/layout/bottom-nav';
@@ -381,6 +381,7 @@ export default function SettingsPage() {
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>गोपनीयता नीति</DialogTitle>
+                  <DialogDescription>हमारी गोपनीयता नीति के बारे में पढ़ें।</DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="max-h-[60vh] p-4">
                   <div className="space-y-4 text-sm text-muted-foreground">
@@ -406,6 +407,7 @@ export default function SettingsPage() {
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle>सेवा की शर्तें</DialogTitle>
+                        <DialogDescription>हमारी सेवा की शर्तों के बारे में पढ़ें।</DialogDescription>
                     </DialogHeader>
                     <ScrollArea className="max-h-[60vh] p-4">
                         <div className="space-y-4 text-sm text-muted-foreground">
@@ -432,6 +434,9 @@ export default function SettingsPage() {
                   <DialogTitle>
                     प्रतिक्रिया भेजें
                   </DialogTitle>
+                  <DialogDescription>
+                    हमें बताएं कि हम ऐप को कैसे बेहतर बना सकते हैं।
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="p-1 space-y-4">
                   <Textarea placeholder="हमें बताएं कि हम कैसे सुधार कर सकते हैं..." className="min-h-[120px] bg-secondary/50 border-border" value={feedback} onChange={(e) => setFeedback(e.target.value)} />

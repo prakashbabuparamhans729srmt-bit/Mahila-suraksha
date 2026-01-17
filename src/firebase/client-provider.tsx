@@ -4,8 +4,8 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, getAuth, connectAuthEmulator } from 'firebase/auth';
 import { Firestore, getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import { createContext, useContext, ReactNode, useMemo } from 'react';
-import { FirebaseProvider, FirebaseContextType } from './provider';
+import { useContext, ReactNode, useMemo } from 'react';
+import { FirebaseProvider, FirebaseContext } from './provider';
 
 // This is a mock config, replace it with your actual Firebase config.
 // IMPORTANT: Replace with your actual Firebase configuration

@@ -38,10 +38,6 @@ type AdminContentContextType = {
     activeInitiatives: number;
     totalContent: number;
   };
-  profileName: string;
-  setProfileName: (name: string) => void;
-  profilePhoto: File | null;
-  setProfilePhoto: (photo: File | null) => void;
 };
 
 const AdminContentContext = createContext<AdminContentContextType | undefined>(undefined);
@@ -59,9 +55,6 @@ export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
   ]);
   
   const [users, setUsers] = useState<User[]>(initialUsers);
-  const [profileName, setProfileName] = useState('उपयोगकर्ता');
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
-
 
   const addContent = (item: Omit<ContentItem, 'id' | 'status' | 'date' | 'user'>) => {
     const newUserEmail = `user${Math.floor(Math.random() * 1000)}@example.com`;
@@ -116,8 +109,7 @@ export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AdminContentContext.Provider value={{ 
         pendingContent, addContent, moderateContent, 
-        users, addUser, deleteUser, stats,
-        profileName, setProfileName, profilePhoto, setProfilePhoto
+        users, addUser, deleteUser, stats
     }}>
       {children}
     </AdminContentContext.Provider>

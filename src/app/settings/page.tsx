@@ -18,7 +18,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
-import { useAdminContent } from '@/context/admin-content-context';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useUser } from '@/firebase/auth/use-user';
 import { useFirebase } from '@/firebase/client-provider';
@@ -31,10 +30,8 @@ export default function SettingsPage() {
   const { auth } = useFirebase();
   const router = useRouter();
 
-  const { profileName: contextProfileName, setProfileName, profilePhoto: contextProfilePhoto, setProfilePhoto } = useAdminContent();
-
-  const [localProfileName, setLocalProfileName] = useState(user?.displayName ?? contextProfileName);
-  const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(contextProfilePhoto);
+  const [localProfileName, setLocalProfileName] = useState(user?.displayName ?? '');
+  const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(user?.photoURL ?? null);
 
   const [personalContacts, setPersonalContacts] = useState([{ id: 1, name: '', phone: '' }]);
@@ -103,13 +100,13 @@ export default function SettingsPage() {
 
   const handleProfileSave = async () => {
     if (auth?.currentUser) {
+        if (auth.currentUser.displayName === localProfileName) return;
         try {
             await updateProfile(auth.currentUser, {
               displayName: localProfileName,
-              // photoURL update needs storage to work, skipping for now
+              // PhotoURL update requires uploading the file to a storage service first,
+              // then getting the URL to update the profile. This is not implemented yet.
             });
-            setProfileName(localProfileName);
-            setProfilePhoto(localProfilePhoto);
             toast({
               title: "प्रोफ़ाइल सहेजी गई!",
               description: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।",

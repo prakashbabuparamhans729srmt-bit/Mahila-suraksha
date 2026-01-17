@@ -19,7 +19,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
-import { useAdminContent } from '@/context/admin-content-context';
 import { CommentSection } from '@/components/ui/comment-section';
 import { useUser } from '@/firebase/auth/use-user';
 import { useFirebase } from '@/firebase/client-provider';
@@ -125,24 +124,10 @@ const AlertIcon = () => (
 );
 
 export default function DashboardPage() {
-  const { profileName, profilePhoto } = useAdminContent();
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
-
   const { user, loading } = useUser();
   const { auth } = useFirebase();
   const router = useRouter();
   const { toast } = useToast();
-
-  useEffect(() => {
-    if (profilePhoto) {
-      const url = URL.createObjectURL(profilePhoto);
-      setProfilePhotoUrl(url);
-      return () => URL.revokeObjectURL(url);
-    } else {
-      setProfilePhotoUrl(null);
-    }
-  }, [profilePhoto]);
-
 
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
@@ -427,18 +412,18 @@ export default function DashboardPage() {
           <Dialog>
             <DialogTrigger asChild>
                <Avatar className="h-9 w-9 cursor-pointer">
-                <AvatarImage src={user.photoURL ?? profilePhotoUrl ?? undefined} alt={user.displayName ?? profileName} />
-                <AvatarFallback>{(user.displayName ?? profileName).charAt(0).toUpperCase()}</AvatarFallback>
+                <AvatarImage src={user.photoURL ?? undefined} alt={user.displayName ?? ''} />
+                <AvatarFallback>{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogTrigger>
             <DialogContent className="p-0 bg-transparent border-none shadow-none w-fit max-w-[90vw] h-fit flex items-center justify-center">
               <DialogHeader className="sr-only">
-                <DialogTitle>{user.displayName ?? profileName}'s Profile Photo</DialogTitle>
+                <DialogTitle>{user.displayName}'s Profile Photo</DialogTitle>
                 <DialogDescription>A larger view of your profile photo.</DialogDescription>
               </DialogHeader>
               <Avatar className="h-64 w-64">
-                <AvatarImage src={user.photoURL ?? profilePhotoUrl ?? undefined} alt={user.displayName ?? profileName} />
-                <AvatarFallback>{(user.displayName ?? profileName).charAt(0).toUpperCase()}</AvatarFallback>
+                <AvatarImage src={user.photoURL ?? undefined} alt={user.displayName ?? ''} />
+                <AvatarFallback>{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogContent>
           </Dialog>
@@ -680,7 +665,7 @@ export default function DashboardPage() {
             <DialogTrigger asChild>
                 <Card className="bg-secondary/50 border-border cursor-pointer">
                 <CardContent className="p-4">
-                    <h3 className="font-semibold">वापसी पर स्वागत है, {user.displayName || profileName}!</h3>
+                    <h3 className="font-semibold">वापसी पर स्वागत है, {user.displayName || 'उपयोगकर्ता'}!</h3>
                     <p className="text-muted-foreground">
                     आपका वर्तमान वैश्विक सुरक्षा स्कोर है <span className="text-white font-bold">76/100</span>
                     </p>

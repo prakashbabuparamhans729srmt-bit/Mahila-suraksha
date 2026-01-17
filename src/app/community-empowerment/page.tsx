@@ -2,24 +2,18 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings, Users, Calendar, Handshake } from 'lucide-react';
+import { ArrowLeft, Calendar, Handshake, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
-
-
-const CommunityIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-primary">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  );
-
+import { useAdminContent } from '@/context/admin-content-context'; // Import context
 
 export default function CommunityEmpowermentPage() {
+    const { publishedContent } = useAdminContent(); // Get content from context
+
+    const initiatives = publishedContent.filter(item => item.type === 'पहल');
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
@@ -57,32 +51,39 @@ export default function CommunityEmpowermentPage() {
                         <TabsTrigger value="forum">मंच</TabsTrigger>
                     </TabsList>
                     <TabsContent value="program" className="mt-6 space-y-6">
-                        <Card className="bg-secondary/50 border-border">
-                            <CardContent className="p-4 space-y-4">
-                                <h3 className="font-semibold text-lg">स्थानीय सुरक्षा और सहायता केंद्र</h3>
-                                <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                    <li>मुफ्त परामर्श और कानूनी सहायता प्रदान करना।</li>
-                                    <li>उत्तरजीवियों के लिए मदद और संसाधन मांगने के लिए एक सुरक्षित, गोपनीय स्थान।</li>
-                                    <li>स्थानीय जागरूकता कार्यशालाएं आयोजित करना।</li>
-                                </ul>
-                                <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-2">आस-पास के केंद्र खोजें</Button>
-                            </CardContent>
-                        </Card>
-                        <Card className="bg-secondary/50 border-border">
-                            <CardContent className="p-4 space-y-4">
-                                <h3 className="font-semibold text-lg">आर्थिक सशक्तिकरण अनुदान</h3>
-                                 <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                    <li>महिलाओं को छोटे व्यवसाय शुरू करने या बढ़ाने के लिए अनुदान।</li>
-                                    <li>वित्तीय स्वतंत्रता को बढ़ावा देता है, भेद्यता को कम करता है।</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
+                        {initiatives.length > 0 ? initiatives.map(item => (
+                            <Card key={item.id} className="bg-secondary/50 border-border">
+                                <CardContent className="p-4 space-y-4">
+                                    <h3 className="font-semibold text-lg">{item.title}</h3>
+                                    <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                        <li>{item.description}</li>
+                                        {item.kpi && <li>KPI: {item.kpi}</li>}
+                                        {item.targetAudience && <li>लक्षित दर्शक: {item.targetAudience}</li>}
+                                    </ul>
+                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-2">और जानें</Button>
+                                </CardContent>
+                            </Card>
+                        )) : (
+                            <Card className="bg-secondary/50 border-border">
+                                <CardContent className="p-6 text-center text-muted-foreground">
+                                    <p>अभी तक कोई कार्यक्रम नहीं है।</p>
+                                </CardContent>
+                            </Card>
+                        )}
                     </TabsContent>
                     <TabsContent value="event">
-                        {/* Event content can be added here */}
+                        <Card className="bg-secondary/50 border-border">
+                            <CardContent className="p-6 text-center text-muted-foreground">
+                                <p>आयोजन की सुविधा जल्द ही आ रही है।</p>
+                            </CardContent>
+                        </Card>
                     </TabsContent>
                     <TabsContent value="forum">
-                        {/* Forum content can be added here */}
+                        <Card className="bg-secondary/50 border-border">
+                            <CardContent className="p-6 text-center text-muted-foreground">
+                                <p>मंच की सुविधा जल्द ही आ रही है।</p>
+                            </CardContent>
+                        </Card>
                     </TabsContent>
                 </Tabs>
             </main>

@@ -27,6 +27,7 @@ export type User = {
 
 type AdminContentContextType = {
   pendingContent: ContentItem[];
+  publishedContent: ContentItem[];
   addContent: (item: Omit<ContentItem, 'id' | 'status' | 'date' | 'user'>) => void;
   moderateContent: (id: number, status: 'approved' | 'rejected') => void;
   users: User[];
@@ -48,41 +49,49 @@ const initialUsers: User[] = [
     { id: 'user456', email: 'user456@example.com', role: 'उपयोगकर्ता', joined: '2024-07-24' },
 ];
 
+const initialPublishedContent: ContentItem[] = [
+    { id: 1, title: 'अर्जेंटीना में नया कानून पारित', type: 'अपडेट', user: 'admin456', date: '2024-07-22', status: 'approved', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', photo: null },
+    { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', type: 'अपडेट', user: 'admin456', date: '2024-07-20', status: 'approved', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', photo: null },
+    { id: 3, title: 'सहमति को समझना', type: 'article', user: 'admin456', date: '2024-07-19', status: 'approved', description: 'स्वस्थ संबंधों की आधारशिला।', url: '/education/consent-article' },
+    { id: 4, title: 'स्थानीय सुरक्षा और सहायता केंद्र', type: 'पहल', user: 'admin456', date: '2024-07-18', status: 'approved', description: 'मुफ्त परामर्श और कानूनी सहायता प्रदान करना।', targetAudience: 'सभी', kpi: '1000 लोगों की सहायता' },
+];
+
+
 export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
   const [pendingContent, setPendingContent] = useState<ContentItem[]>([
-    { id: 1, title: 'पार्क में असुरक्षित प्रकाश व्यवस्था', type: 'घटना रिपोर्ट', user: 'user123', date: '2024-07-25', status: 'pending' },
-    { id: 2, title: 'नया जागरूकता लेख', type: 'लेख', user: 'user456', date: '2024-07-24', status: 'pending' },
+    { id: 101, title: 'पार्क में असुरक्षित प्रकाश व्यवस्था', type: 'घटना रिपोर्ट', user: 'user123', date: '2024-07-25', status: 'pending' },
+    { id: 102, title: 'नया जागरूकता लेख', type: 'article', user: 'user456', date: '2024-07-24', status: 'pending', description: 'डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।' },
   ]);
   
+  const [publishedContent, setPublishedContent] = useState<ContentItem[]>(initialPublishedContent);
   const [users, setUsers] = useState<User[]>(initialUsers);
 
   const addContent = (item: Omit<ContentItem, 'id' | 'status' | 'date' | 'user'>) => {
-    const newUserEmail = `user${Math.floor(Math.random() * 1000)}@example.com`;
-    const newUser: User = {
-        id: `user${Date.now()}`,
-        email: newUserEmail,
-        role: 'उपयोगकर्ता',
-        joined: new Date().toISOString().split('T')[0],
-    };
+    // For simplicity, we'll assign a random existing user. In a real app, this would be the logged-in user.
+    const randomUser = users[Math.floor(Math.random() * users.length)];
 
     const newItem: ContentItem = {
       ...item,
       id: Date.now(),
       status: 'pending',
-      date: newUser.joined,
-      user: newUser.id,
+      date: new Date().toISOString().split('T')[0],
+      user: randomUser.id,
     };
     
-    setUsers(prev => [newUser, ...prev]);
     setPendingContent(prev => [newItem, ...prev]);
   };
 
   const moderateContent = (id: number, status: 'approved' | 'rejected') => {
-    if (status === 'approved' || status === 'rejected') {
-        // For now, we just remove it from the pending list.
-        // In a real app, you might move it to another list.
-        setPendingContent(prev => prev.filter(item => item.id !== id));
+    const itemToModerate = pendingContent.find(item => item.id === id);
+    if (!itemToModerate) return;
+
+    if (status === 'approved') {
+        const approvedItem = { ...itemToModerate, status: 'approved' };
+        setPublishedContent(prev => [approvedItem, ...prev]);
     }
+    
+    // Whether approved or rejected, remove from pending list.
+    setPendingContent(prev => prev.filter(item => item.id !== id));
   };
 
   const addUser = (user: Omit<User, 'id' | 'joined'>) => {
@@ -101,14 +110,14 @@ export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
   const stats = {
       totalUsers: users.length,
       reportedIncidents: pendingContent.filter(c => c.type === 'घटना रिपोर्ट').length,
-      activeInitiatives: pendingContent.filter(c => c.type === 'पहल').length,
+      activeInitiatives: publishedContent.filter(c => c.type === 'पहल').length + pendingContent.filter(c => c.type === 'पहल').length,
       totalContent: pendingContent.length,
   };
 
 
   return (
     <AdminContentContext.Provider value={{ 
-        pendingContent, addContent, moderateContent, 
+        pendingContent, publishedContent, addContent, moderateContent, 
         users, addUser, deleteUser, stats
     }}>
       {children}

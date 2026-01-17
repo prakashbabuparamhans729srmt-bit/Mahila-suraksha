@@ -2,23 +2,64 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings, FileText, Video, Brain, Link2, ChevronDown } from 'lucide-react';
+import { ArrowLeft, FileText, Video, Brain, Link2, ChevronDown } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
-
-const PencilPaperIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-primary">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <path d="M12 18h.01"></path>
-        <path d="M15.5 14.5a2.5 2.5 0 0 0-3.5 3.5l-2 2L8.5 18.5l2-2a2.5 2.5 0 0 0 3.5-3.5z"></path>
-    </svg>
-);
-
+import { useAdminContent } from '@/context/admin-content-context';
 
 export default function EducationPage() {
+    const { publishedContent } = useAdminContent();
+
+    const articles = publishedContent.filter(item => item.type === 'article');
+    const videos = publishedContent.filter(item => item.type === 'video');
+    const quizzes = publishedContent.filter(item => item.type === 'quiz');
+    const resources = publishedContent.filter(item => item.type === 'resource');
+
+
+    const renderContentItem = (item: any) => {
+        let icon;
+        switch (item.type) {
+            case 'article': icon = <FileText className="h-6 w-6 text-primary" />; break;
+            case 'video': icon = <Video className="h-6 w-6 text-primary" />; break;
+            case 'quiz': icon = <Brain className="h-6 w-6 text-primary" />; break;
+            case 'resource': icon = <Link2 className="h-6 w-6 text-primary" />; break;
+            default: icon = <FileText className="h-6 w-6 text-primary" />;
+        }
+        return (
+            <Card key={item.id} className="bg-secondary/50 border-border">
+               <CardContent className="p-4 flex items-start justify-between">
+                   <div className="flex items-start gap-4">
+                        <div className="bg-background p-3 rounded-lg">
+                           {icon}
+                       </div>
+                       <div>
+                           <h3 className="font-semibold text-lg">{item.title}</h3>
+                           
+                           {(item.type === 'video' || item.type === 'resource') ? (
+                                <a href={item.description} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 mt-1 block truncate max-w-xs hover:underline">{item.description}</a>
+                           ) : (
+                                <>
+                                 <p className="text-sm text-muted-foreground">{item.description}</p>
+                                 <p className="text-sm text-blue-400 mt-1">5 मिनट पढ़ें</p>
+                                </>
+                           )}
+                       </div>
+                   </div>
+                   <ChevronDown className="h-6 w-6 text-muted-foreground" />
+               </CardContent>
+           </Card>
+        );
+    };
+    
+    const renderEmptyState = (type: string) => (
+        <Card className="bg-secondary/50 border-border">
+            <CardContent className="p-6 text-center text-muted-foreground">
+                <p>अभी तक कोई {type} नहीं है।</p>
+            </CardContent>
+        </Card>
+    );
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
@@ -45,30 +86,16 @@ export default function EducationPage() {
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="articles" className="mt-6 space-y-6">
-                        <Card className="bg-secondary/50 border-border">
-                            <CardContent className="p-4 flex items-start justify-between">
-                                <div className="flex items-start gap-4">
-                                     <div className="bg-background p-3 rounded-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M12.5 15.5l-3 3L7 21l3-2.5 3 3L16 19l-3-2.5z"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-lg">सहमति को समझना</h3>
-                                        <p className="text-sm text-muted-foreground">स्वस्थ संबंधों की आधारशिला।</p>
-                                        <p className="text-sm text-blue-400 mt-1">5 मिनट पढ़ें</p>
-                                    </div>
-                                </div>
-                                <ChevronDown className="h-6 w-6 text-muted-foreground" />
-                            </CardContent>
-                        </Card>
+                        {articles.length > 0 ? articles.map(renderContentItem) : renderEmptyState('लेख')}
                     </TabsContent>
-                    <TabsContent value="videos">
-                        {/* Video content can be added here */}
+                    <TabsContent value="videos" className="mt-6 space-y-6">
+                       {videos.length > 0 ? videos.map(renderContentItem) : renderEmptyState('वीडियो')}
                     </TabsContent>
-                    <TabsContent value="quizzes">
-                        {/* Quiz content can be added here */}
+                    <TabsContent value="quizzes" className="mt-6 space-y-6">
+                        {quizzes.length > 0 ? quizzes.map(renderContentItem) : renderEmptyState('प्रश्नोत्तरी')}
                     </TabsContent>
-                    <TabsContent value="resources">
-                        {/* Resources content can be added here */}
+                    <TabsContent value="resources" className="mt-6 space-y-6">
+                        {resources.length > 0 ? resources.map(renderContentItem) : renderEmptyState('संसाधन')}
                     </TabsContent>
                 </Tabs>
             </main>

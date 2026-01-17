@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, ChevronRight, X, Trash2, UserCog, Image as ImageIcon, LogOut } from 'lucide-react';
+import { ArrowLeft, ChevronRight, X, Trash2, UserCog, Image as ImageIcon, LogOut, Plus } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';

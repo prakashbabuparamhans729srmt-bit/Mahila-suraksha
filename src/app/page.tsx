@@ -1,7 +1,7 @@
 
 'use client';
 import Link from 'next/link';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft, ListChecks } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft, ListChecks, LogOut } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,6 +21,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { useAdminContent } from '@/context/admin-content-context';
 import { CommentSection } from '@/components/ui/comment-section';
+import { useUser } from '@/firebase/auth/use-user';
+import { useFirebase } from '@/firebase/client-provider';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
+import { useToast } from '@/hooks/use-toast';
 
 
 const CommunityIcon = () => (
@@ -122,6 +127,11 @@ const AlertIcon = () => (
 export default function DashboardPage() {
   const { profileName, profilePhoto } = useAdminContent();
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
+
+  const { user, loading } = useUser();
+  const { auth } = useFirebase();
+  const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (profilePhoto) {
@@ -383,6 +393,26 @@ export default function DashboardPage() {
     }
   };
 
+  const handleLogout = async () => {
+    if (!auth) return;
+    await signOut(auth);
+    toast({
+      title: "लॉग आउट किया गया",
+      description: "आप सफलतापूर्वक लॉग आउट हो गए हैं।",
+    });
+    router.push('/login');
+  };
+
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
+  if (!user) {
+    router.push('/login');
+    return null;
+  }
+
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
@@ -396,22 +426,25 @@ export default function DashboardPage() {
           </Link>
           <Dialog>
             <DialogTrigger asChild>
-              <Avatar className="h-9 w-9 cursor-pointer">
-                <AvatarImage src={profilePhotoUrl ?? undefined} alt={profileName} />
-                <AvatarFallback>{profileName.charAt(0).toUpperCase()}</AvatarFallback>
+               <Avatar className="h-9 w-9 cursor-pointer">
+                <AvatarImage src={user.photoURL ?? profilePhotoUrl ?? undefined} alt={user.displayName ?? profileName} />
+                <AvatarFallback>{(user.displayName ?? profileName).charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogTrigger>
             <DialogContent className="p-0 bg-transparent border-none shadow-none w-fit max-w-[90vw] h-fit flex items-center justify-center">
               <DialogHeader className="sr-only">
-                <DialogTitle>{profileName}'s Profile Photo</DialogTitle>
+                <DialogTitle>{user.displayName ?? profileName}'s Profile Photo</DialogTitle>
                 <DialogDescription>A larger view of your profile photo.</DialogDescription>
               </DialogHeader>
               <Avatar className="h-64 w-64">
-                <AvatarImage src={profilePhotoUrl ?? undefined} alt={profileName} />
-                <AvatarFallback>{profileName.charAt(0).toUpperCase()}</AvatarFallback>
+                <AvatarImage src={user.photoURL ?? profilePhotoUrl ?? undefined} alt={user.displayName ?? profileName} />
+                <AvatarFallback>{(user.displayName ?? profileName).charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </DialogContent>
           </Dialog>
+           <Button variant="ghost" size="icon" onClick={handleLogout}>
+              <LogOut className="h-6 w-6" />
+           </Button>
         </div>
       </header>
 
@@ -543,7 +576,7 @@ export default function DashboardPage() {
                                 </div>
                               </div>
                               <AlertDialogTitle className="text-center">पुलिस से संपर्क करें?</AlertDialogTitle>
-                              <AlertDialogDescription className="text-center">
+                              <AlertDialogDescription>
                               यह पुलिस के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
                               </AlertDialogDescription>
                           </AlertDialogHeader>
@@ -576,7 +609,7 @@ export default function DashboardPage() {
                                  </div>
                               </div>
                               <AlertDialogTitle className="text-center">एम्बुलेंस से संपर्क करें?</AlertDialogTitle>
-                              <AlertDialogDescription className="text-center">
+                              <AlertDialogDescription >
                               यह एम्बुलेंस के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
                               </AlertDialogDescription>
                           </AlertDialogHeader>
@@ -609,7 +642,7 @@ export default function DashboardPage() {
                                  </div>
                               </div>
                               <AlertDialogTitle className="text-center">दमकल से संपर्क करें?</AlertDialogTitle>
-                              <AlertDialogDescription className="text-center">
+                              <AlertDialogDescription>
                               यह दमकल के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
                               </AlertDialogDescription>
                           </AlertDialogHeader>
@@ -647,7 +680,7 @@ export default function DashboardPage() {
             <DialogTrigger asChild>
                 <Card className="bg-secondary/50 border-border cursor-pointer">
                 <CardContent className="p-4">
-                    <h3 className="font-semibold">वापसी पर स्वागत है!</h3>
+                    <h3 className="font-semibold">वापसी पर स्वागत है, {user.displayName || profileName}!</h3>
                     <p className="text-muted-foreground">
                     आपका वर्तमान वैश्विक सुरक्षा स्कोर है <span className="text-white font-bold">76/100</span>
                     </p>

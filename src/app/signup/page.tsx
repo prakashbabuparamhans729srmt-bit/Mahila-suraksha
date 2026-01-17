@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useFirebase } from '@/firebase/client-provider';
+
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -19,6 +23,9 @@ export default function SignupPage() {
     state: '',
   });
   const { toast } = useToast();
+  const { auth } = useFirebase();
+  const router = useRouter();
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,13 +35,30 @@ export default function SignupPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signing up with:', formData);
-    toast({
-      title: "खाता बनाया गया!",
-      description: "हमारे आंदोलन में शामिल होने के लिए धन्यवाद।",
-    });
+    if (!auth) return;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      if (userCredential.user) {
+        await updateProfile(userCredential.user, {
+            displayName: formData.fullName,
+        });
+      }
+      toast({
+        title: "खाता बनाया गया!",
+        description: "हमारे आंदोलन में शामिल होने के लिए धन्यवाद।",
+      });
+      router.push('/');
+    } catch (error: any) {
+        console.error(error);
+        toast({
+            variant: 'destructive',
+            title: "त्रुटि",
+            description: error.message || "साइन अप करने में विफल।",
+        });
+    }
   };
 
   return (

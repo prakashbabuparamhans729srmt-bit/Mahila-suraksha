@@ -2,25 +2,42 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useFirebase } from '@/firebase/client-provider';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
+  const { auth } = useFirebase();
+  const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Logging in with:', { email, password });
-    toast({
-      title: "लॉग इन किया गया!",
-      description: "वापसी पर स्वागत है!",
-    });
+    if (!auth) return;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast({
+        title: "लॉग इन किया गया!",
+        description: "वापसी पर स्वागत है!",
+      });
+      router.push('/');
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: "त्रुटि",
+        description: error.message || "लॉग इन करने में विफल।",
+      });
+    }
   };
 
   return (

@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, ChevronRight, X, Trash2, UserCog, Image as ImageIcon, LogOut, Plus } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,15 +20,22 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { useAdminContent } from '@/context/admin-content-context';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { useUser } from '@/firebase/auth/use-user';
+import { useFirebase } from '@/firebase/client-provider';
+import { signOut, updateProfile } from 'firebase/auth';
 
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
-  const { profileName, setProfileName, profilePhoto, setProfilePhoto } = useAdminContent();
+  const { user, loading } = useUser();
+  const { auth } = useFirebase();
+  const router = useRouter();
 
-  const [localProfileName, setLocalProfileName] = useState(profileName);
-  const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(profilePhoto);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const { profileName: contextProfileName, setProfileName, profilePhoto: contextProfilePhoto, setProfilePhoto } = useAdminContent();
+
+  const [localProfileName, setLocalProfileName] = useState(user?.displayName ?? contextProfileName);
+  const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(contextProfilePhoto);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(user?.photoURL ?? null);
 
   const [personalContacts, setPersonalContacts] = useState([{ id: 1, name: '', phone: '' }]);
   const [authorityNumbers, setAuthorityNumbers] = useState({ police: '', ambulance: '', firetruck: '' });
@@ -49,10 +57,13 @@ export default function SettingsPage() {
         setPhotoPreview(reader.result as string);
       };
       reader.readAsDataURL(localProfilePhoto);
-    } else {
+    } else if (user?.photoURL) {
+      setPhotoPreview(user.photoURL);
+    }
+    else {
       setPhotoPreview(null);
     }
-  }, [localProfilePhoto]);
+  }, [localProfilePhoto, user]);
 
   const handleAuthorityNumberChange = (service: 'police' | 'ambulance' | 'firetruck', value: string) => {
     setAuthorityNumbers(prev => ({ ...prev, [service]: value }));
@@ -90,13 +101,27 @@ export default function SettingsPage() {
       }
   };
 
-  const handleProfileSave = () => {
-    setProfileName(localProfileName);
-    setProfilePhoto(localProfilePhoto);
-    toast({
-      title: "प्रोफ़ाइल सहेजी गई!",
-      description: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।",
-    });
+  const handleProfileSave = async () => {
+    if (auth?.currentUser) {
+        try {
+            await updateProfile(auth.currentUser, {
+              displayName: localProfileName,
+              // photoURL update needs storage to work, skipping for now
+            });
+            setProfileName(localProfileName);
+            setProfilePhoto(localProfilePhoto);
+            toast({
+              title: "प्रोफ़ाइल सहेजी गई!",
+              description: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।",
+            });
+        } catch (error: any) {
+            toast({
+              variant: 'destructive',
+              title: "त्रुटि",
+              description: "प्रोफ़ाइल अपडेट करने में विफल।",
+            });
+        }
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,17 +130,23 @@ export default function SettingsPage() {
     }
   };
   
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    if (!auth) return;
+    await signOut(auth);
     toast({
         title: "लॉग आउट किया गया",
         description: "आप सफलतापूर्वक लॉग आउट हो गए हैं।",
     });
-    // Here you would typically redirect to the login page or clear user session.
-    // e.g., router.push('/login');
+    router.push('/login');
   };
 
 
-  if (!mounted) {
+  if (!mounted || loading) {
+    return null;
+  }
+  
+  if (!user) {
+    router.push('/login');
     return null;
   }
 

@@ -5,6 +5,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AdminContentProvider } from '@/context/admin-content-context';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -70,11 +71,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AdminContentProvider>
-            {children}
-            <ChatbotFloater />
-            <Toaster />
-          </AdminContentProvider>
+          <FirebaseClientProvider>
+            <AdminContentProvider>
+              {children}
+              <ChatbotFloater />
+              <Toaster />
+            </AdminContentProvider>
+          </FirebaseClientProvider>
         </ThemeProvider>
       </body>
     </html>

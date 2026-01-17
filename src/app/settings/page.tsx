@@ -143,6 +143,8 @@ export default function SettingsPage() {
     return null;
   }
 
+  const isAdmin = user?.email === 'admin@example.com';
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
@@ -373,24 +375,25 @@ export default function SettingsPage() {
             </Card>
         </div>
 
-
-        <div>
-          <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">प्रशासन</h2>
-           <Link href="/master-admin" className="block">
-              <Card className="bg-secondary/50 border-border cursor-pointer">
-                <CardContent className="p-4 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                        <UserCog className="h-6 w-6 text-primary" />
-                        <div>
-                            <h3 className="font-semibold">मास्टर एडमिन पैनल</h3>
-                            <p className="text-sm text-muted-foreground">उपयोगकर्ताओं, सामग्री और ऐप सेटिंग्स को प्रबंधित करें</p>
-                        </div>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-              </Card>
-           </Link>
-        </div>
+        {isAdmin && (
+          <div>
+            <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">प्रशासन</h2>
+            <Link href="/master-admin" className="block">
+                <Card className="bg-secondary/50 border-border cursor-pointer">
+                  <CardContent className="p-4 flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                          <UserCog className="h-6 w-6 text-primary" />
+                          <div>
+                              <h3 className="font-semibold">मास्टर एडमिन पैनल</h3>
+                              <p className="text-sm text-muted-foreground">उपयोगकर्ताओं, सामग्री और ऐप सेटिंग्स को प्रबंधित करें</p>
+                          </div>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+            </Link>
+          </div>
+        )}
 
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">के बारे में</h2>

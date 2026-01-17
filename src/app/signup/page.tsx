@@ -26,6 +26,10 @@ export default function SignupPage() {
   const { auth } = useFirebase();
   const router = useRouter();
 
+  const indianStates = [
+    'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
+  ].sort();
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -121,9 +125,9 @@ export default function SignupPage() {
                   <SelectValue placeholder="राज्य" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="delhi">दिल्ली</SelectItem>
-                  <SelectItem value="maharashtra">महाराष्ट्र</SelectItem>
-                  <SelectItem value="karnataka">कर्नाटक</SelectItem>
+                  {indianStates.map(state => (
+                    <SelectItem key={state} value={state.toLowerCase().replace(/ & /g, ' and ').replace(/ /g, '-')}>{state}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
 

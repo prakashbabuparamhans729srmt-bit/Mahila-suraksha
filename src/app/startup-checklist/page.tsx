@@ -10,7 +10,19 @@ import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { BottomNav } from '@/components/layout/bottom-nav';
 
-const initialChecklist = {
+type Task = {
+  id: number;
+  text: string;
+  details: string;
+  status: 'To Do' | 'In Progress' | 'Done';
+  notes: string;
+};
+
+type Checklist = {
+  [key: string]: Task[];
+};
+
+const initialChecklist: Checklist = {
   planning: [
     { id: 1, text: 'व्यवसाय विचार का चुनाव', details: 'हमारा विचार "Mahila Suraksha" नामक एक तकनीकी प्लेटफॉर्म है जो यौन हिंसा के खिलाफ लड़ाई में डेटा, संसाधन और समुदाय को एकीकृत करता है।', status: 'Done', notes: '' },
     { id: 2, text: 'बाजार शोध (Market Research)', details: 'भारत और विश्व स्तर पर महिलाओं की सुरक्षा से संबंधित ऐप्स, एनजीओ और सरकारी पहलों का विश्लेषण करना।', status: 'To Do', notes: '' },
@@ -313,18 +325,6 @@ const initialChecklist = {
   ]
 };
 
-type Task = {
-  id: number;
-  text: string;
-  details: string;
-  status: 'To Do' | 'In Progress' | 'Done';
-  notes: string;
-};
-
-type Checklist = {
-  [key: string]: Task[];
-};
-
 export default function StartupChecklistPage() {
   const [checklist, setChecklist] = useState<Checklist>(initialChecklist);
 
@@ -434,5 +434,3 @@ export default function StartupChecklistPage() {
     </div>
   );
 }
-
-    

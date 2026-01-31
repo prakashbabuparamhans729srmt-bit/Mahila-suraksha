@@ -6,12 +6,16 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { AdminContentProvider } from '@/context/admin-content-context';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { Button } from '@/components/ui/button';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect, useRef } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetDescription } from '@/components/ui/sheet';
+import { Chatbot } from '@/components/chatbot';
+
 
 function ChatbotFloater() {
   const { toast } = useToast();
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const getInitialPosition = () => {
     if (typeof window === 'undefined') return { x: 0, y: 0 };
@@ -29,6 +33,9 @@ function ChatbotFloater() {
   const returnTimer = useRef<NodeJS.Timeout | null>(null);
 
   const resetPosition = () => {
+    if(floaterRef.current) {
+        floaterRef.current.style.transition = 'all 0.5s ease-in-out';
+    }
     setPosition(getInitialPosition());
   };
 
@@ -49,6 +56,9 @@ function ChatbotFloater() {
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if(floaterRef.current) {
+        floaterRef.current.style.transition = 'none';
+    }
     clearReturnTimer();
     if (floaterRef.current) {
       setIsDragging(true);
@@ -64,10 +74,7 @@ function ChatbotFloater() {
       if (hasDragged.current) {
           return;
       }
-      toast({
-        title: "चैटबॉट जल्द ही आ रहा है!",
-        description: "एक AI सहायक जल्द ही आपकी मदद के लिए उपलब्ध होगा।",
-      });
+      setIsChatOpen(true);
       startReturnTimer();
   };
 
@@ -107,24 +114,44 @@ function ChatbotFloater() {
   }, [isDragging]);
 
   return (
-    <div
-      ref={floaterRef}
-      className="fixed z-50 transition-all duration-500 ease-in-out"
-      style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        cursor: isDragging ? 'grabbing' : 'grab',
-      }}
-      onMouseDown={handleMouseDown}
-      onClick={handleClick}
-    >
-      <Button
-        size="icon"
-        className="rounded-full bg-blue-600 hover:bg-blue-700 h-16 w-16 shadow-lg pointer-events-none"
+    <>
+      <div
+        ref={floaterRef}
+        className="fixed z-50"
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          cursor: isDragging ? 'grabbing' : 'grab',
+        }}
+        onMouseDown={handleMouseDown}
+        onClick={handleClick}
       >
-        <MessageCircle className="h-8 w-8 text-white" />
-      </Button>
-    </div>
+        <Button
+          size="icon"
+          className="rounded-full bg-blue-600 hover:bg-blue-700 h-16 w-16 shadow-lg"
+        >
+          <MessageCircle className="h-8 w-8 text-white" />
+        </Button>
+      </div>
+      <Sheet open={isChatOpen} onOpenChange={setIsChatOpen}>
+        <SheetContent side="bottom" className="h-[90vh] p-0 border-t flex flex-col">
+           <SheetHeader className="p-4 border-b">
+               <div className="flex justify-between items-center">
+                <SheetTitle>AI सहायक</SheetTitle>
+                <SheetClose asChild>
+                    <Button variant="ghost" size="icon">
+                        <X className="h-6 w-6" />
+                    </Button>
+                </SheetClose>
+               </div>
+               <SheetDescription>
+                नमस्ते! मैं आपका AI सहायक हूँ। आप मुझसे कुछ भी पूछ सकते हैं।
+               </SheetDescription>
+           </SheetHeader>
+           <Chatbot />
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
 

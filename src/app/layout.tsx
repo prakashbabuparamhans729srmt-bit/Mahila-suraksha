@@ -12,26 +12,47 @@ import { useState, useEffect, useRef } from 'react';
 
 function ChatbotFloater() {
   const { toast } = useToast();
+
+  const getInitialPosition = () => {
+    if (typeof window === 'undefined') return { x: 0, y: 0 };
+    return {
+      x: window.innerWidth - 80,
+      y: window.innerHeight - 160,
+    };
+  };
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const offset = useRef({ x: 0, y: 0 });
   const floaterRef = useRef<HTMLDivElement>(null);
   const hasDragged = useRef(false);
+  const returnTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const resetPosition = () => {
+    setPosition(getInitialPosition());
+  };
+
+  const startReturnTimer = () => {
+    clearReturnTimer();
+    returnTimer.current = setTimeout(resetPosition, 10000);
+  };
+  
+  const clearReturnTimer = () => {
+    if (returnTimer.current) {
+      clearTimeout(returnTimer.current);
+      returnTimer.current = null;
+    }
+  };
 
   useEffect(() => {
-    // Initial position on bottom right, checking for window existence for SSR safety.
-    if (typeof window !== 'undefined') {
-      setPosition({
-        x: window.innerWidth - 80,
-        y: window.innerHeight - 160,
-      });
-    }
+    setPosition(getInitialPosition());
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    clearReturnTimer();
     if (floaterRef.current) {
       setIsDragging(true);
-      hasDragged.current = false; // Reset on new drag attempt
+      hasDragged.current = false;
       offset.current = {
         x: e.clientX - floaterRef.current.getBoundingClientRect().left,
         y: e.clientY - floaterRef.current.getBoundingClientRect().top,
@@ -40,7 +61,6 @@ function ChatbotFloater() {
   };
 
   const handleClick = () => {
-      // Only show toast if it was a click, not a drag
       if (hasDragged.current) {
           return;
       }
@@ -48,13 +68,13 @@ function ChatbotFloater() {
         title: "चैटबॉट जल्द ही आ रहा है!",
         description: "एक AI सहायक जल्द ही आपकी मदद के लिए उपलब्ध होगा।",
       });
+      startReturnTimer();
   };
 
   useEffect(() => {
     const handleWindowMouseMove = (e: MouseEvent) => {
       if (!isDragging || !floaterRef.current) return;
       
-      // Consider it a drag if mouse moved
       if (!hasDragged.current) {
           hasDragged.current = true;
       }
@@ -67,7 +87,12 @@ function ChatbotFloater() {
     };
 
     const handleWindowMouseUp = () => {
-      setIsDragging(false);
+      if (isDragging) {
+        setIsDragging(false);
+        if (hasDragged.current) {
+          startReturnTimer();
+        }
+      }
     };
 
     if (isDragging) {
@@ -84,7 +109,7 @@ function ChatbotFloater() {
   return (
     <div
       ref={floaterRef}
-      className="fixed z-50"
+      className="fixed z-50 transition-all duration-500 ease-in-out"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,

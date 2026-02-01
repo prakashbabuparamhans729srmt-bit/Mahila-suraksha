@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -12,8 +11,10 @@ import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminContent } from '@/context/admin-content-context';
+import { useTranslation } from '@/context/language-context';
 
 export default function AddInitiativePage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -32,8 +33,8 @@ export default function AddInitiativePage() {
     if (!formData.title || !formData.description) {
         toast({
             variant: "destructive",
-            title: "त्रुटि",
-            description: "कृपया पहल का नाम और विवरण भरें।",
+            title: t('Error'),
+            description: t('AddInitiative.errorFillFields'),
         });
         return;
     }
@@ -47,8 +48,8 @@ export default function AddInitiativePage() {
     });
     
     toast({
-      title: "पहल जोड़ी गई",
-      description: "नई पहल समीक्षा के लिए सफलतापूर्वक सबमिट कर दी गई है।",
+      title: t('AddInitiative.successTitle'),
+      description: t('AddInitiative.successDescription'),
     });
     setFormData({ title: '', description: '', targetAudience: '', kpi: '' });
   };
@@ -59,41 +60,41 @@ export default function AddInitiativePage() {
         <Link href="/" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
-        <h1 className="text-xl font-bold">पहल जोड़ें</h1>
+        <h1 className="text-xl font-bold">{t('AddInitiative.title')}</h1>
       </header>
 
       <main className="p-4 space-y-6">
         <p className="text-muted-foreground px-1">
-          डेटाबेस में एक नई सामुदायिक पहल या परियोजना जोड़ें।
+          {t('AddInitiative.description')}
         </p>
         <form onSubmit={handleSubmit}>
           <Card className="w-full bg-secondary/50 border-border">
             <CardContent className="p-6 space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="title">पहल का नाम</Label>
-                <Input id="title" placeholder="जैसे, 'जागरूकता अभियान 2024'" className="bg-background" value={formData.title} onChange={handleChange} required />
+                <Label htmlFor="title">{t('AddInitiative.initiativeNameLabel')}</Label>
+                <Input id="title" placeholder={t('AddInitiative.initiativeNamePlaceholder')} className="bg-background" value={formData.title} onChange={handleChange} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">विवरण</Label>
-                <Textarea id="description" placeholder="पहल के लक्ष्यों और गतिविधियों का वर्णन करें..." className="bg-background min-h-[120px]" value={formData.description} onChange={handleChange} required />
+                <Label htmlFor="description">{t('AddInitiative.descriptionLabel')}</Label>
+                <Textarea id="description" placeholder={t('AddInitiative.descriptionPlaceholder')} className="bg-background min-h-[120px]" value={formData.description} onChange={handleChange} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="targetAudience">लक्षित दर्शक</Label>
+                <Label htmlFor="targetAudience">{t('AddInitiative.targetAudienceLabel')}</Label>
                 <div className="relative">
-                  <Input id="targetAudience" placeholder="जैसे, 'कॉलेज के छात्र'" className="bg-background pl-10" value={formData.targetAudience} onChange={handleChange} />
+                  <Input id="targetAudience" placeholder={t('AddInitiative.targetAudiencePlaceholder')} className="bg-background pl-10" value={formData.targetAudience} onChange={handleChange} />
                   <Users className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="kpi">मुख्य प्रदर्शन संकेतक (KPI)</Label>
+                <Label htmlFor="kpi">{t('AddInitiative.kpiLabel')}</Label>
                  <div className="relative">
-                  <Input id="kpi" placeholder="जैसे, '10,000 लोगों तक पहुँचना'" className="bg-background pl-10" value={formData.kpi} onChange={handleChange} />
+                  <Input id="kpi" placeholder={t('AddInitiative.kpiPlaceholder')} className="bg-background pl-10" value={formData.kpi} onChange={handleChange} />
                    <Target className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                  </div>
               </div>
             </CardContent>
           </Card>
-          <Button type="submit" className="w-full text-lg h-12 mt-6">पहल जोड़ें</Button>
+          <Button type="submit" className="w-full text-lg h-12 mt-6">{t('AddInitiative.submitButton')}</Button>
         </form>
       </main>
       <BottomNav />

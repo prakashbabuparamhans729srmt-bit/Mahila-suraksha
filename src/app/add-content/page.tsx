@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -13,10 +12,12 @@ import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminContent } from '@/context/admin-content-context';
+import { useTranslation } from '@/context/language-context';
 
 type ContentType = 'article' | 'video' | 'quiz' | 'resource' | '';
 
 export default function AddContentPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     contentType: '' as ContentType,
     title: '',
@@ -38,8 +39,8 @@ export default function AddContentPage() {
     if (!formData.contentType || !formData.title || !formData.descriptionOrUrl) {
         toast({
             variant: "destructive",
-            title: "त्रुटि",
-            description: "कृपया सभी फ़ील्ड भरें।",
+            title: t('Error'),
+            description: t('AddContent.errorFillAllFields'),
         });
         return;
     }
@@ -51,8 +52,8 @@ export default function AddContentPage() {
     });
 
     toast({
-      title: "सामग्री सबमिट की गई",
-      description: "आपकी सामग्री समीक्षा के लिए सफलतापूर्वक सबमिट कर दी गई है।",
+      title: t('AddContent.successTitle'),
+      description: t('AddContent.successDescription'),
     });
     setFormData({ contentType: '', title: '', descriptionOrUrl: '' });
   };
@@ -63,41 +64,41 @@ export default function AddContentPage() {
         <Link href="/" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
-        <h1 className="text-xl font-bold">सामग्री जोड़ें</h1>
+        <h1 className="text-xl font-bold">{t('AddContent.title')}</h1>
       </header>
 
       <main className="p-4 space-y-6">
         <p className="text-muted-foreground px-1">
-          शिक्षा और जागरूकता अनुभाग के लिए नई सामग्री जोड़ें।
+          {t('AddContent.description')}
         </p>
         <form onSubmit={handleSubmit}>
           <Card className="w-full bg-secondary/50 border-border">
             <CardContent className="p-6 space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="content-type">सामग्री का प्रकार</Label>
+                <Label htmlFor="content-type">{t('AddContent.contentTypeLabel')}</Label>
                 <Select onValueChange={handleSelectChange} value={formData.contentType} required>
                   <SelectTrigger className="w-full bg-background" id="content-type">
-                    <SelectValue placeholder="एक प्रकार चुनें" />
+                    <SelectValue placeholder={t('AddContent.contentTypePlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="article"><div className="flex items-center"><FileText className="mr-2 h-4 w-4" />लेख</div></SelectItem>
-                    <SelectItem value="video"><div className="flex items-center"><Video className="mr-2 h-4 w-4" />वीडियो</div></SelectItem>
-                    <SelectItem value="quiz"><div className="flex items-center"><Brain className="mr-2 h-4 w-4" />प्रश्नोत्तरी</div></SelectItem>
-                    <SelectItem value="resource"><div className="flex items-center"><Link2 className="mr-2 h-4 w-4" />संसाधन</div></SelectItem>
+                    <SelectItem value="article"><div className="flex items-center"><FileText className="mr-2 h-4 w-4" />{t('AddContent.contentTypeArticle')}</div></SelectItem>
+                    <SelectItem value="video"><div className="flex items-center"><Video className="mr-2 h-4 w-4" />{t('AddContent.contentTypeVideo')}</div></SelectItem>
+                    <SelectItem value="quiz"><div className="flex items-center"><Brain className="mr-2 h-4 w-4" />{t('AddContent.contentTypeQuiz')}</div></SelectItem>
+                    <SelectItem value="resource"><div className="flex items-center"><Link2 className="mr-2 h-4 w-4" />{t('AddContent.contentTypeResource')}</div></SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="title">शीर्षक</Label>
-                <Input id="title" placeholder="सामग्री का शीर्षक" className="bg-background" value={formData.title} onChange={handleChange} required />
+                <Label htmlFor="title">{t('AddContent.titleLabel')}</Label>
+                <Input id="title" placeholder={t('AddContent.titlePlaceholder')} className="bg-background" value={formData.title} onChange={handleChange} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="descriptionOrUrl">विवरण या यूआरएल</Label>
-                <Textarea id="descriptionOrUrl" placeholder="यदि यह एक लेख है तो सामग्री लिखें, या यदि यह वीडियो या संसाधन है तो URL पेस्ट करें..." className="bg-background min-h-[120px]" value={formData.descriptionOrUrl} onChange={handleChange} required />
+                <Label htmlFor="descriptionOrUrl">{t('AddContent.descriptionOrUrlLabel')}</Label>
+                <Textarea id="descriptionOrUrl" placeholder={t('AddContent.descriptionOrUrlPlaceholder')} className="bg-background min-h-[120px]" value={formData.descriptionOrUrl} onChange={handleChange} required />
               </div>
             </CardContent>
           </Card>
-          <Button type="submit" className="w-full text-lg h-12 mt-6">सामग्री सबमिट करें</Button>
+          <Button type="submit" className="w-full text-lg h-12 mt-6">{t('AddContent.submitButton')}</Button>
         </form>
       </main>
       <BottomNav />

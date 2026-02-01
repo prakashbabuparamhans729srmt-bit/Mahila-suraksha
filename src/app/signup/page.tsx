@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useFirebase } from '@/firebase/client-provider';
+import { useTranslation } from '@/context/language-context';
 
 // Google Icon Component
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -32,6 +33,7 @@ const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function SignupPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -68,16 +70,16 @@ export default function SignupPage() {
         });
       }
       toast({
-        title: "खाता बनाया गया!",
-        description: "हमारे आंदोलन में शामिल होने के लिए धन्यवाद।",
+        title: t('Signup.accountCreated'),
+        description: t('Signup.thankYou'),
       });
       router.push('/');
     } catch (error: any) {
         console.error(error);
         toast({
             variant: 'destructive',
-            title: "त्रुटि",
-            description: error.message || "साइन अप करने में विफल।",
+            title: t('Error'),
+            description: error.message || t('Signup.signupFailed'),
         });
     }
   };
@@ -89,8 +91,8 @@ export default function SignupPage() {
       if (!authProvider) {
           toast({
               variant: 'destructive',
-              title: "जल्द आ रहा है",
-              description: "फेसबुक लॉगिन अभी उपलब्ध नहीं है।",
+              title: t('CommunityEmpowerment.comingSoon'),
+              description: t('Login.facebookComingSoon'),
           });
           return;
       }
@@ -98,16 +100,16 @@ export default function SignupPage() {
       try {
           await signInWithPopup(auth, authProvider);
           toast({
-              title: "खाता बनाया गया!",
-              description: "हमारे आंदोलन में शामिल होने के लिए धन्यवाद।",
+              title: t('Signup.accountCreated'),
+              description: t('Signup.thankYou'),
           });
           router.push('/');
       } catch (error: any) {
           console.error(error);
           toast({
               variant: 'destructive',
-              title: "त्रुटि",
-              description: error.message || `साइन अप करने में विफल।`,
+              title: t('Error'),
+              description: error.message || t('Signup.signupFailedSocial'),
           });
       }
   };
@@ -118,22 +120,22 @@ export default function SignupPage() {
         <Link href="/login" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
-        <h1 className="text-xl font-bold">खाता बनाएं</h1>
+        <h1 className="text-xl font-bold">{t('Signup.title')}</h1>
       </header>
 
       <main className="p-4 flex items-center justify-center">
         <Card className="w-full max-w-sm bg-secondary/50 border-border">
           <CardContent className="p-8 space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold">आंदोलन में शामिल हों</h2>
-              <p className="text-muted-foreground">शुरू करने के लिए एक खाता बनाएं</p>
+              <h2 className="text-2xl font-bold">{t('Signup.joinMovement')}</h2>
+              <p className="text-muted-foreground">{t('Signup.createAccount')}</p>
             </div>
             
             <form onSubmit={handleSignup} className="space-y-4">
               <Input 
                 type="text" 
                 name="fullName"
-                placeholder="पूरा नाम" 
+                placeholder={t('Signup.fullName')}
                 className="bg-background border-input"
                 value={formData.fullName}
                 onChange={handleChange}
@@ -142,7 +144,7 @@ export default function SignupPage() {
               <Input 
                 type="email" 
                 name="email"
-                placeholder="ईमेल पता" 
+                placeholder={t('Signup.email')}
                 className="bg-background border-input"
                 value={formData.email}
                 onChange={handleChange}
@@ -151,7 +153,7 @@ export default function SignupPage() {
               <Input 
                 type="password" 
                 name="password"
-                placeholder="पासवर्ड"
+                placeholder={t('Signup.password')}
                 className="bg-background border-input"
                 value={formData.password}
                 onChange={handleChange}
@@ -159,17 +161,17 @@ export default function SignupPage() {
               />
                <Select onValueChange={(value) => handleSelectChange('country', value)} required>
                 <SelectTrigger className="w-full bg-background border-input">
-                  <SelectValue placeholder="देश" />
+                  <SelectValue placeholder={t('Signup.country')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="india">भारत</SelectItem>
-                  <SelectItem value="usa">संयुक्त राज्य अमेरिका</SelectItem>
-                  <SelectItem value="uk">यूनाइटेड किंगडम</SelectItem>
+                  <SelectItem value="india">{t('Signup.india')}</SelectItem>
+                  <SelectItem value="usa">{t('Signup.usa')}</SelectItem>
+                  <SelectItem value="uk">{t('Signup.uk')}</SelectItem>
                 </SelectContent>
               </Select>
                <Select onValueChange={(value) => handleSelectChange('state', value)} required>
                 <SelectTrigger className="w-full bg-background border-input">
-                  <SelectValue placeholder="राज्य" />
+                  <SelectValue placeholder={t('Signup.state')} />
                 </SelectTrigger>
                 <SelectContent>
                   {indianStates.map(state => (
@@ -179,7 +181,7 @@ export default function SignupPage() {
               </Select>
 
               <Button type="submit" className="w-full font-bold text-lg h-12">
-                खाता बनाएं
+                {t('Signup.createAccountButton')}
               </Button>
             </form>
 
@@ -189,7 +191,7 @@ export default function SignupPage() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-secondary/50 px-2 text-muted-foreground">
-                    या जारी रखें
+                    {t('Signup.orContinueWith')}
                     </span>
                 </div>
             </div>
@@ -206,9 +208,9 @@ export default function SignupPage() {
             </div>
             
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">पहले से ही एक खाता है? </span>
+              <span className="text-muted-foreground">{t('Signup.alreadyHaveAccount')}</span>
               <Link href="/login" className="text-primary hover:underline">
-                लॉग इन करें
+                {t('Signup.loginLink')}
               </Link>
             </div>
           </CardContent>

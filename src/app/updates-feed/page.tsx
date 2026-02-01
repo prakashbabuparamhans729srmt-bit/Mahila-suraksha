@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -9,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CommentSection } from '@/components/ui/comment-section';
 import { useAdminContent } from '@/context/admin-content-context';
 
@@ -30,22 +29,32 @@ type Post = {
 export default function UpdatesFeedPage() {
     const { publishedContent } = useAdminContent();
     
-    const initialPosts = publishedContent
+    const initialPostsData = publishedContent
         .filter(item => item.type === 'अपडेट')
         .map((item, index) => ({
             id: item.id,
             title: item.title,
             description: item.description,
-            likes: Math.floor(Math.random() * 5000) + 50, 
+            likes: 0,
             liked: false,
-            commentsCount: Math.floor(Math.random() * 50) + 1,
+            commentsCount: 0,
             date: item.date,
             photo: item.photo,
             image: `https://picsum.photos/seed/${item.id}/600/400`, 
             imageHint: 'news update'
         }));
 
-    const [posts, setPosts] = useState<Post[]>(initialPosts);
+    const [posts, setPosts] = useState<Post[]>(initialPostsData);
+
+    useEffect(() => {
+        setPosts(currentPosts =>
+            currentPosts.map(post => ({
+                ...post,
+                likes: post.likes === 0 ? Math.floor(Math.random() * 5000) + 50 : post.likes,
+                commentsCount: post.commentsCount === 0 ? Math.floor(Math.random() * 50) + 1 : post.commentsCount,
+            }))
+        );
+    }, []);
 
     const handlePostLike = (postId: number) => {
         setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
@@ -100,7 +109,7 @@ export default function UpdatesFeedPage() {
                             <Separator />
                             <div className="flex justify-around">
                                 <Button variant="ghost" size="sm" className="flex items-center gap-2" onClick={() => handlePostLike(post.id)}>
-                                    <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-blue-500' : ''}`} /> लाइक
+                                    <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-primary' : ''}`} /> लाइक
                                 </Button>
                                 <Dialog>
                                     <DialogTrigger asChild>

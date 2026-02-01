@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -11,25 +12,26 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/context/language-context';
 
-const reformData = {
-    india: [
-        { title: 'आपराधिक कानून (संशोधन) अधिनियम, 2013', status: 'Implemented', description: 'यौन अपराधों के लिए कठोर दंड का प्रावधान किया और बलात्कार की परिभाषा का विस्तार किया।' },
-        { title: 'कार्यस्थल पर यौन उत्पीड़न अधिनियम, 2013', status: 'Implemented', description: 'कार्यस्थल पर यौन उत्पीड़न से महिलाओं का संरक्षण करता है।' },
-    ],
-    usa: [
-        { title: 'Violence Against Women Act (VAWA)', status: 'Implemented', description: 'Provides resources for victims of domestic violence, sexual assault, dating violence, and stalking.' },
-    ],
-    uk: [
-        { title: 'Domestic Abuse Act 2021', status: 'Implemented', description: 'Creates a statutory definition of domestic abuse, emphasizing that it is not just physical violence.' },
-    ]
-};
 
-type Country = keyof typeof reformData;
+type Country = 'india' | 'usa' | 'uk';
 
 export default function LegalReformPage() {
     const { t } = useTranslation();
     const [country, setCountry] = useState<Country>('india');
     const { toast } = useToast();
+
+    const reformData = {
+        india: [
+            { title: t('LegalReform.india.0.title'), status: 'Implemented', description: t('LegalReform.india.0.description') },
+            { title: t('LegalReform.india.1.title'), status: 'Implemented', description: t('LegalReform.india.1.description') },
+        ],
+        usa: [
+            { title: t('LegalReform.usa.0.title'), status: 'Implemented', description: t('LegalReform.usa.0.description') },
+        ],
+        uk: [
+            { title: t('LegalReform.uk.0.title'), status: 'Implemented', description: t('LegalReform.uk.0.description') },
+        ]
+    };
 
     const handleReadMore = () => {
         toast({

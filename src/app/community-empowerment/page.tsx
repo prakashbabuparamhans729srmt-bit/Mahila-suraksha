@@ -39,17 +39,17 @@ export default function CommunityEmpowermentPage() {
                     <CardContent className="p-4 grid grid-cols-3 gap-4 text-center">
                         <div>
                             <Users className="h-8 w-8 mx-auto text-primary mb-2" />
-                            <p className="text-lg font-bold">12 लाख+</p>
+                            <p className="text-lg font-bold">{t('CommunityEmpowerment.activeMembersValue')}</p>
                             <p className="text-xs text-muted-foreground">{t('CommunityEmpowerment.activeMembers')}</p>
                         </div>
                         <div>
                             <Calendar className="h-8 w-8 mx-auto text-primary mb-2" />
-                            <p className="text-lg font-bold">5,800+</p>
+                            <p className="text-lg font-bold">{t('CommunityEmpowerment.eventsHeldValue')}</p>
                             <p className="text-xs text-muted-foreground">{t('CommunityEmpowerment.eventsHeld')}</p>
                         </div>
                         <div>
                             <Handshake className="h-8 w-8 mx-auto text-primary mb-2" />
-                            <p className="text-lg font-bold">75 हजार+</p>
+                            <p className="text-lg font-bold">{t('CommunityEmpowerment.volunteersEngagedValue')}</p>
                             <p className="text-xs text-muted-foreground">{t('CommunityEmpowerment.volunteersEngaged')}</p>
                         </div>
                     </CardContent>

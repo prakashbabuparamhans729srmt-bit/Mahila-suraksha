@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -11,6 +12,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { useState, useEffect } from 'react';
 import { CommentSection } from '@/components/ui/comment-section';
 import { useAdminContent } from '@/context/admin-content-context';
+import { useTranslation } from '@/context/language-context';
 
 type Post = {
     id: number;
@@ -28,6 +30,7 @@ type Post = {
 
 export default function UpdatesFeedPage() {
     const { publishedContent } = useAdminContent();
+    const { t } = useTranslation();
     
     const initialPostsData = publishedContent
         .filter(item => item.type === 'अपडेट')
@@ -82,7 +85,7 @@ export default function UpdatesFeedPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">अपडेट्स फ़ीड</h1>
+                <h1 className="text-xl font-bold">{t('Admin.updatesFeedPage')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
@@ -109,12 +112,12 @@ export default function UpdatesFeedPage() {
                             <Separator />
                             <div className="flex justify-around">
                                 <Button variant="ghost" size="sm" className="flex items-center gap-2" onClick={() => handlePostLike(post.id)}>
-                                    <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-primary' : ''}`} /> लाइक
+                                    <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-primary' : ''}`} /> {t('UpdatesFeed.like')}
                                 </Button>
                                 <Dialog>
                                     <DialogTrigger asChild>
                                         <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                                            <MessageSquare className="h-4 w-4" /> कमेंट
+                                            <MessageSquare className="h-4 w-4" /> {t('UpdatesFeed.comment')}
                                         </Button>
                                     </DialogTrigger>
                                     <CommentSection />
@@ -125,7 +128,7 @@ export default function UpdatesFeedPage() {
                                     className="flex items-center gap-2"
                                     onClick={() => handleShare(post.title, post.description || '')}
                                 >
-                                    <Share2 className="h-4 w-4" /> साझा करें
+                                    <Share2 className="h-4 w-4" /> {t('UpdatesFeed.share')}
                                 </Button>
                             </div>
                         </div>
@@ -134,8 +137,8 @@ export default function UpdatesFeedPage() {
             )) : (
                 <Card className="bg-secondary/50 border-border">
                     <CardContent className="p-6 text-center text-muted-foreground">
-                        <p>अभी तक कोई अपडेट नहीं है।</p>
-                        <p className="text-sm mt-2">व्यवस्थापक द्वारा सामग्री स्वीकृत होने के बाद अपडेट यहां दिखाई देंगे।</p>
+                        <p>{t('UpdatesFeed.noUpdates')}</p>
+                        <p className="text-sm mt-2">{t('UpdatesFeed.updatesAppearAfterApproval')}</p>
                     </CardContent>
                 </Card>
             )}

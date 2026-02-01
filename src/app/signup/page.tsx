@@ -199,11 +199,11 @@ export default function SignupPage() {
             <div className="grid grid-cols-2 gap-4">
                 <Button variant="outline" onClick={() => handleSocialLogin('google')}>
                     <GoogleIcon className="mr-2 h-4 w-4"/>
-                    Google
+                    {t('Login.google')}
                 </Button>
                 <Button variant="outline" onClick={() => handleSocialLogin('facebook')}>
                     <FacebookIcon className="mr-2 h-4 w-4"/>
-                    Facebook
+                    {t('Login.facebook')}
                 </Button>
             </div>
             

@@ -144,10 +144,22 @@ export default function DashboardPage() {
     { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', likes: 5812, liked: false, commentsCount: 1, date: '5 दिन पहले', highlighted: true },
   ]);
   const [serviceContent, setServiceContent] = useState({ title: '', description: '', number: '', icon: null as React.ReactNode });
+  const [emergencyNumbers, setEmergencyNumbers] = useState({ police: '', ambulance: '', firetruck: '' });
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
+
+  useEffect(() => {
+    try {
+      const savedAuthorities = localStorage.getItem('authorityNumbers');
+      if (savedAuthorities) {
+        setEmergencyNumbers(JSON.parse(savedAuthorities));
+      }
+    } catch (error) {
+      console.error("Failed to parse settings from localStorage", error);
+    }
+  }, []);
 
   useEffect(() => {
     if (voiceSearchQuery) {
@@ -599,7 +611,7 @@ export default function DashboardPage() {
                                     <PoliceIcon />
                                     <div>
                                         <h3 className="font-semibold">पुलिस</h3>
-                                        <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.police || 'कोई नंबर सहेजा नहीं गया'}</p>
                                     </div>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -632,7 +644,7 @@ export default function DashboardPage() {
                                     <AmbulanceIcon />
                                     <div>
                                         <h3 className="font-semibold">एम्बुलेंस</h3>
-                                        <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.ambulance || 'कोई नंबर सहेजा नहीं गया'}</p>
                                     </div>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -665,7 +677,7 @@ export default function DashboardPage() {
                                     <FireTruckIcon />
                                     <div>
                                         <h3 className="font-semibold">दमकल</h3>
-                                        <p className="text-sm text-muted-foreground">कोई नंबर सहेजा नहीं गया</p>
+                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.firetruck || 'कोई नंबर सहेजा नहीं गया'}</p>
                                     </div>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -819,7 +831,7 @@ export default function DashboardPage() {
                         <Accordion type="single" collapsible className="w-full">
                         {stateData.map((state, index) => (
                             <AccordionItem value={`item-${index}`} key={index} className="border-none">
-                                <AccordionTrigger className="p-0 hover:no-underline [&>svg]:hidden">
+                                <AccordionTrigger className="p-0 hover:no-underline">
                                   <Card className='w-full bg-secondary/50 border-border mb-2'>
                                     <div className="p-4 flex justify-between w-full items-center">
                                         <span>{state.name}</span>

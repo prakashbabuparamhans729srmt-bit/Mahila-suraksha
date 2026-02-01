@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose, DialogDescription } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -113,7 +113,7 @@ const AmbulanceIcon = () => (
 const FireTruckIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-orange-500">
         <path d="M5 19h14" />
-        <path d="M2 13h1.4c.3 0 .7-.3.7-.7V11c0-1.7 1.3-3 3-3h10c1.7 0 3 1.3 3 3v1.3c0 .4.3.7.7.7H22" />
+        <path d="M2 13h1.4c.3 0 .7-.3.7-.7V11c0-1.7 1.3-3 3-3h10c1.7 0 3 1.3 3 3v1.3c0 .4.3.7.7H22" />
         <path d="M18 8V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2" />
         <path d="M9 13h6" />
         <path d="M17.5 19a1.5 1.5 0 0 1-3 0" />
@@ -141,10 +141,26 @@ export default function DashboardPage() {
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [posts, setPosts] = useState([
-    { id: 1, title: 'अर्जेंटीना में नया कानून पारित', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', likes: 1253, liked: false, commentsCount: 2, date: '2 दिन पहले' },
-    { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', likes: 5812, liked: false, commentsCount: 1, date: '5 दिन पहले', highlighted: true },
-  ]);
+  
+  const postsData = useMemo(() => ([
+    { id: 1, title: t('Dashboard.post1Title'), description: t('Dashboard.post1Desc'), likes: 1253, liked: false, commentsCount: 2, date: t('Dashboard.daysAgo', { count: 2 }) },
+    { id: 2, title: t('Dashboard.post2Title'), description: t('Dashboard.post2Desc'), likes: 5812, liked: false, commentsCount: 1, date: t('Dashboard.daysAgo', { count: 5 }), highlighted: true },
+  ]), [t]);
+
+  const [posts, setPosts] = useState(postsData);
+
+   useEffect(() => {
+    // This effect ensures that if the language changes, the posts' text content updates.
+    // It preserves the state (likes, liked status) while updating the text.
+    setPosts(currentPosts => 
+        currentPosts.map(p => {
+            const newPostData = postsData.find(pd => pd.id === p.id);
+            return newPostData ? { ...p, title: newPostData.title, description: newPostData.description, date: newPostData.date } : p;
+        })
+    );
+  }, [postsData]);
+
+
   const [serviceContent, setServiceContent] = useState({ title: '', description: '', number: '', icon: null as React.ReactNode });
   const [emergencyNumbers, setEmergencyNumbers] = useState({ police: '', ambulance: '', firetruck: '' });
 
@@ -193,31 +209,31 @@ export default function DashboardPage() {
         switch (selectedService) {
             case 'police':
                 setServiceContent({
-                    title: 'पुलिस अलर्ट भेजा गया!',
-                    description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
-                    number: numbers.police || 'कोई नंबर सहेजा नहीं गया',
+                    title: t('Dashboard.policeAlertSentTitle'),
+                    description: t('Dashboard.alertSentDesc'),
+                    number: numbers.police || t('Dashboard.noNumberSaved'),
                     icon: <AlertIcon />
                 });
                 break;
             case 'ambulance':
                 setServiceContent({
-                    title: 'एम्बुलेंस अलर्ट भेजा गया!',
-                    description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
-                    number: numbers.ambulance || 'कोई नंबर सहेजा नहीं गया',
+                    title: t('Dashboard.ambulanceAlertSentTitle'),
+                    description: t('Dashboard.alertSentDesc'),
+                    number: numbers.ambulance || t('Dashboard.noNumberSaved'),
                     icon: <AlertIcon />
                 });
                 break;
             case 'firetruck':
                 setServiceContent({
-                    title: 'दमकल अलर्ट भेजा गया!',
-                    description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
-                    number: numbers.firetruck || 'कोई नंबर सहेजा नहीं गया',
+                    title: t('Dashboard.firetruckAlertSentTitle'),
+                    description: t('Dashboard.alertSentDesc'),
+                    number: numbers.firetruck || t('Dashboard.noNumberSaved'),
                     icon: <AlertIcon />
                 });
                 break;
         }
     }
-  }, [showNoNumberDialog, selectedService]);
+  }, [showNoNumberDialog, selectedService, t]);
 
   const handlePostLike = (postId: number) => {
     setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
@@ -358,8 +374,8 @@ export default function DashboardPage() {
       score: 75,
       trend: 'up',
       details: [
-        "महिलाओं की सुरक्षा के लिए 'दिशा' पहल परिणाम दिखा रही है।",
-        "सार्वजनिक परिवहन में सुरक्षा सुधार पर ध्यान केंद्रित है।"
+        t('Dashboard.stateAPDetail1'),
+        t('Dashboard.stateAPDetail2')
       ]
     },
     { name: 'अरुणाचल प्रदेश', score: 68, trend: 'down' },
@@ -414,7 +430,11 @@ export default function DashboardPage() {
             console.error('Error sharing:', error);
         }
     } else {
-        alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: t('Dashboard.sharingNotSupported')
+        });
     }
   };
 
@@ -430,7 +450,11 @@ export default function DashboardPage() {
             console.error('Error sharing:', error);
         }
     } else {
-        alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: t('Dashboard.sharingNotSupported')
+        });
     }
   };
 
@@ -439,22 +463,22 @@ export default function DashboardPage() {
       exitGuestMode();
       router.push('/login');
       toast({
-        title: "लॉग आउट किया गया",
-        description: "आप अतिथि मोड से लॉग आउट हो गए हैं।",
+        title: t('Settings.loggedOut'),
+        description: t('Settings.guestLoggedOutDesc'),
       });
       return;
     }
     if (!auth) return;
     await signOut(auth);
     toast({
-      title: "लॉग आउट किया गया",
-      description: "आप सफलतापूर्वक लॉग आउट हो गए हैं।",
+      title: t('Settings.loggedOut'),
+      description: t('Settings.loggedOutDesc'),
     });
     router.push('/login');
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen">{t('Dashboard.loading')}</div>;
   }
   
   if (!user) {
@@ -534,11 +558,11 @@ export default function DashboardPage() {
             </SheetTrigger>
             <SheetContent side="bottom" className="bg-background rounded-t-lg">
               <SheetHeader className="text-left">
-                <SheetTitle className="text-xl font-bold mb-4">उन्नत फ़िल्टर</SheetTitle>
+                <SheetTitle className="text-xl font-bold mb-4">{t('Dashboard.advancedFilters')}</SheetTitle>
               </SheetHeader>
               <ScrollArea className="h-[60vh]">
                 <div className="p-1">
-                  <h3 className="text-lg font-semibold mb-3">श्रेणी</h3>
+                  <h3 className="text-lg font-semibold mb-3">{t('Dashboard.category')}</h3>
                   <div className="grid grid-cols-2 gap-4">
                     {filterCategories.map((category) => (
                       <div key={category.id} className="flex items-center space-x-2">
@@ -550,7 +574,7 @@ export default function DashboardPage() {
 
                   <Separator className="my-6" />
 
-                  <h3 className="text-lg font-semibold mb-3">गंभीरता स्तर</h3>
+                  <h3 className="text-lg font-semibold mb-3">{t('Dashboard.severityLevel')}</h3>
                   <div className="space-y-4">
                     {severityLevels.map((level) => (
                       <div key={level.id} className="flex items-center space-x-2">
@@ -562,7 +586,7 @@ export default function DashboardPage() {
                   
                   <Separator className="my-6" />
 
-                  <h3 className="text-lg font-semibold mb-3">तिथि सीमा</h3>
+                  <h3 className="text-lg font-semibold mb-3">{t('Dashboard.dateRange')}</h3>
                   <RadioGroup defaultValue="anytime" className="space-y-4">
                     {dateRanges.map((range) => (
                       <div key={range.id} className="flex items-center space-x-2">
@@ -575,8 +599,8 @@ export default function DashboardPage() {
                 </div>
               </ScrollArea>
               <div className="flex justify-between p-4 absolute bottom-0 left-0 right-0 bg-background">
-                <Button variant="outline" className="w-1/2 mr-2">रीसेट करें</Button>
-                <Button className="w-1/2 ml-2">फ़िल्टर लागू करें</Button>
+                <Button variant="outline" className="w-1/2 mr-2">{t('Dashboard.reset')}</Button>
+                <Button className="w-1/2 ml-2">{t('Dashboard.applyFilters')}</Button>
               </div>
             </SheetContent>
           </Sheet>
@@ -596,7 +620,7 @@ export default function DashboardPage() {
             <SheetContent side="bottom" className="bg-background text-foreground rounded-t-lg">
                 <SheetHeader className="text-left p-4">
                     <div className="flex justify-between items-center">
-                        <SheetTitle className="text-xl font-bold">आपातकालीन सेवा चुनें</SheetTitle>
+                        <SheetTitle className="text-xl font-bold">{t('Dashboard.selectEmergencyService')}</SheetTitle>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
                                 <X className="h-6 w-6" />
@@ -612,8 +636,8 @@ export default function DashboardPage() {
                                 <div className="flex items-center space-x-4">
                                     <PoliceIcon />
                                     <div>
-                                        <h3 className="font-semibold">पुलिस</h3>
-                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.police || 'कोई नंबर सहेजा नहीं गया'}</p>
+                                        <h3 className="font-semibold">{t('Dashboard.police')}</h3>
+                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.police || t('Dashboard.noNumberSaved')}</p>
                                     </div>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -627,14 +651,14 @@ export default function DashboardPage() {
                                     <PoliceIcon />
                                 </div>
                               </div>
-                              <AlertDialogTitle className="text-center">पुलिस से संपर्क करें?</AlertDialogTitle>
+                              <AlertDialogTitle className="text-center">{t('Dashboard.contactPoliceConfirmTitle')}</AlertDialogTitle>
                               <AlertDialogDescription>
-                              यह पुलिस के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
+                              {t('Dashboard.contactPoliceConfirmDesc')}
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('police')}>हाँ, पुष्टि करें</AlertDialogAction>
-                              <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('police')}>{t('Dashboard.confirmAction')}</AlertDialogAction>
+                              <AlertDialogCancel>{t('Dashboard.cancel')}</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -645,8 +669,8 @@ export default function DashboardPage() {
                                 <div className="flex items-center space-x-4">
                                     <AmbulanceIcon />
                                     <div>
-                                        <h3 className="font-semibold">एम्बुलेंस</h3>
-                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.ambulance || 'कोई नंबर सहेजा नहीं गया'}</p>
+                                        <h3 className="font-semibold">{t('Dashboard.ambulance')}</h3>
+                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.ambulance || t('Dashboard.noNumberSaved')}</p>
                                     </div>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -660,14 +684,14 @@ export default function DashboardPage() {
                                     <AmbulanceIcon />
                                  </div>
                               </div>
-                              <AlertDialogTitle className="text-center">एम्बुलेंस से संपर्क करें?</AlertDialogTitle>
+                              <AlertDialogTitle className="text-center">{t('Dashboard.contactAmbulanceConfirmTitle')}</AlertDialogTitle>
                               <AlertDialogDescription >
-                              यह एम्बुलेंस के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
+                              {t('Dashboard.contactAmbulanceConfirmDesc')}
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('ambulance')}>हाँ, पुष्टि करें</AlertDialogAction>
-                              <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('ambulance')}>{t('Dashboard.confirmAction')}</AlertDialogAction>
+                              <AlertDialogCancel>{t('Dashboard.cancel')}</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -678,8 +702,8 @@ export default function DashboardPage() {
                                  <div className="flex items-center space-x-4">
                                     <FireTruckIcon />
                                     <div>
-                                        <h3 className="font-semibold">दमकल</h3>
-                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.firetruck || 'कोई नंबर सहेजा नहीं गया'}</p>
+                                        <h3 className="font-semibold">{t('Dashboard.firetruck')}</h3>
+                                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{emergencyNumbers.firetruck || t('Dashboard.noNumberSaved')}</p>
                                     </div>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -693,14 +717,14 @@ export default function DashboardPage() {
                                     <FireTruckIcon />
                                  </div>
                               </div>
-                              <AlertDialogTitle className="text-center">दमकल से संपर्क करें?</AlertDialogTitle>
+                              <AlertDialogTitle className="text-center">{t('Dashboard.contactFiretruckConfirmTitle')}</AlertDialogTitle>
                               <AlertDialogDescription>
-                              यह दमकल के लिए एक अलर्ट भेजेगा। आपका स्थान साझा करने के लिए तैयार होगा।
+                              {t('Dashboard.contactFiretruckConfirmDesc')}
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('firetruck')}>हाँ, पुष्टि करें</AlertDialogAction>
-                              <AlertDialogCancel>रद्द करें</AlertDialogCancel>
+                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('firetruck')}>{t('Dashboard.confirmAction')}</AlertDialogAction>
+                              <AlertDialogCancel>{t('Dashboard.cancel')}</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -747,7 +771,7 @@ export default function DashboardPage() {
                     {serviceContent.number}
                 </div>
                 <AlertDialogFooter>
-                    <AlertDialogAction className="w-full" onClick={() => setShowNoNumberDialog(false)}>ठीक है</AlertDialogAction>
+                    <AlertDialogAction className="w-full" onClick={() => setShowNoNumberDialog(false)}>{t('Dashboard.ok')}</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
@@ -756,7 +780,7 @@ export default function DashboardPage() {
             <DialogTrigger asChild>
                 <Card className="bg-secondary/50 border-border cursor-pointer">
                 <CardContent className="p-4">
-                    <h3 className="font-semibold">{t('Dashboard.welcomeMessage', { name: user.displayName || 'उपयोगकर्ता' })}</h3>
+                    <h3 className="font-semibold">{t('Dashboard.welcomeMessage', { name: user.displayName || t('Dashboard.guestUser') })}</h3>
                     <p className="text-muted-foreground">
                     {t('Dashboard.globalSafetyScore', { score: '76/100' })}
                     </p>
@@ -767,60 +791,60 @@ export default function DashboardPage() {
             <DialogContent className="bg-background text-foreground max-w-md w-full">
                 <DialogHeader>
                     <DialogTitle className="text-xl">
-                        वैश्विक सुरक्षा स्कोर की व्याख्या
+                        {t('Dashboard.safetyScoreDialogTitle')}
                     </DialogTitle>
                     <DialogDescription>
-                        यह स्कोर हमारे वैश्विक डेटा से प्रमुख संकेतकों के आधार पर यौन हिंसा से निपटने में प्रगति का मूल्यांकन करता है।
+                        {t('Dashboard.safetyScoreDialogDesc')}
                     </DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="max-h-[70vh]">
                 <div className="p-1 pr-6 space-y-6">
                     <div className="flex items-center justify-around text-center">
                     <div>
-                        <p className="text-muted-foreground">पिछला सप्ताह</p>
+                        <p className="text-muted-foreground">{t('Dashboard.lastWeek')}</p>
                         <p className="text-4xl font-bold text-muted-foreground">74</p>
                     </div>
                     <ArrowRight className="h-8 w-8 text-green-500" />
                     <div>
-                        <p className="text-muted-foreground">वर्तमान स्कोर</p>
+                        <p className="text-muted-foreground">{t('Dashboard.currentScore')}</p>
                         <p className="text-4xl font-bold text-green-500">76</p>
                     </div>
                     </div>
 
                     <Card className="bg-secondary/50">
                     <CardContent className="p-4">
-                        <h4 className="font-semibold">बदलाव का कारण (+2 अंक)</h4>
-                        <p className="text-sm text-muted-foreground">कानूनी सुधारों (अर्जेंटीना) में सकारात्मक प्रवृत्ति और दक्षिण एशिया से सामुदायिक सहभागिता रिपोर्टों में एक महत्वपूर्ण वृद्धि।</p>
+                        <h4 className="font-semibold">{t('Dashboard.reasonForChangeTitle')}</h4>
+                        <p className="text-sm text-muted-foreground">{t('Dashboard.reasonForChangeDesc')}</p>
                     </CardContent>
                     </Card>
 
                     <div>
-                    <h4 className="font-semibold mb-4">स्कोर का विवरण</h4>
+                    <h4 className="font-semibold mb-4">{t('Dashboard.scoreBreakdownTitle')}</h4>
                     <div className="space-y-4">
                         <div className="space-y-1">
                         <div className="flex justify-between text-sm">
-                            <span>कानूनी और नीति सुधार</span>
+                            <span>{t('Dashboard.legalAndPolicyReform')}</span>
                             <span>82/100</span>
                         </div>
                         <Progress value={82} className="h-2 [&>div]:bg-primary" />
                         </div>
                         <div className="space-y-1">
                         <div className="flex justify-between text-sm">
-                            <span>सार्वजनिक जागरूकता</span>
+                            <span>{t('Dashboard.publicAwareness')}</span>
                             <span>75/100</span>
                         </div>
                         <Progress value={75} className="h-2 [&>div]:bg-primary" />
                         </div>
                         <div className="space-y-1">
                         <div className="flex justify-between text-sm">
-                            <span>सुरक्षा अवसंरचना</span>
+                            <span>{t('Dashboard.safetyInfrastructure')}</span>
                             <span>68/100</span>
                         </div>
                         <Progress value={68} className="h-2 [&>div]:bg-yellow-500" />
                         </div>
                         <div className="space-y-1">
                         <div className="flex justify-between text-sm">
-                            <span>घटना रिपोर्टिंग दर</span>
+                            <span>{t('Dashboard.incidentReportingRate')}</span>
                             <span>79/100</span>
                         </div>
                         <Progress value={79} className="h-2 [&>div]:bg-primary" />
@@ -829,7 +853,7 @@ export default function DashboardPage() {
                     </div>
                     
                     <div className="space-y-4">
-                        <h4 className="font-semibold mb-2">राज्य-वार डेटा (भारत)</h4>
+                        <h4 className="font-semibold mb-2">{t('Dashboard.stateWiseDataTitle')}</h4>
                         <Accordion type="single" collapsible className="w-full">
                         {stateData.map((state, index) => (
                             <AccordionItem value={`item-${index}`} key={index} className="border-none">
@@ -857,14 +881,14 @@ export default function DashboardPage() {
                                                     <Button 
                                                         size="sm" 
                                                         className="h-8"
-                                                        onClick={() => handleShare(`${state.name} सुरक्षा अपडेट`, `नवीनतम सुरक्षा अपडेट देखें: ${state.details.join(' ')}`)}
+                                                        onClick={() => handleShare(t('Dashboard.shareSafetyUpdate', { state: state.name }), t('Dashboard.shareSafetyUpdateText', { details: state.details.join(' ') }))}
                                                     >
                                                         <Share2 className="mr-2 h-4 w-4" />
-                                                        साझा करें
+                                                        {t('Dashboard.share')}
                                                     </Button>
                                                 </>
                                             ) : (
-                                                <p className="text-sm">इस राज्य के लिए कोई विस्तृत डेटा उपलब्ध नहीं है।</p>
+                                                <p className="text-sm">{t('Dashboard.noDetailedData')}</p>
                                             )}
                                         </div>
                                     </Card>
@@ -875,7 +899,7 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="space-y-4">
-                        <h4 className="font-semibold mb-2">केंद्र शासित प्रदेश (भारत)</h4>
+                        <h4 className="font-semibold mb-2">{t('Dashboard.unionTerritoriesTitle')}</h4>
                         <Accordion type="single" collapsible className="w-full">
                         {unionTerritoriesData.map((state, index) => (
                             <AccordionItem value={`item-ut-${index}`} key={index} className="border-none">
@@ -893,7 +917,7 @@ export default function DashboardPage() {
                                 <AccordionContent>
                                     <Card className='bg-secondary/50 border-border mb-2 -mt-2'>
                                         <div className="p-4 text-muted-foreground space-y-4">
-                                            <p className="text-sm">इस केंद्र शासित प्रदेश के लिए कोई विस्तृत डेटा उपलब्ध नहीं है।</p>
+                                            <p className="text-sm">{t('Dashboard.noDetailedDataUT')}</p>
                                         </div>
                                     </Card>
                                 </AccordionContent>
@@ -905,7 +929,7 @@ export default function DashboardPage() {
                 </div>
                 </ScrollArea>
                 <DialogClose asChild>
-                    <Button className="w-full mt-4">ठीक है</Button>
+                    <Button className="w-full mt-4">{t('Dashboard.ok')}</Button>
                 </DialogClose>
             </DialogContent>
         </Dialog>
@@ -916,7 +940,7 @@ export default function DashboardPage() {
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
                 <Shield className="h-8 w-8 text-primary" />
-                <span className="text-sm font-semibold text-center">सुरक्षा उपकरण</span>
+                <span className="text-sm font-semibold text-center">{t('Dashboard.safetyTools')}</span>
               </CardContent>
             </Card>
           </Link>
@@ -924,7 +948,7 @@ export default function DashboardPage() {
             <Card className="bg-secondary/50 border-border">
               <CardContent className="flex flex-col items-center justify-center p-4 space-y-2">
                 <Users className="h-8 w-8 text-primary" />
-                <span className="text-sm font-semibold text-center">सहायता खोजें</span>
+                <span className="text-sm font-semibold text-center">{t('Dashboard.findSupport')}</span>
               </CardContent>
             </Card>
           </Link>
@@ -932,15 +956,15 @@ export default function DashboardPage() {
         
         <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold">सुविधाएं एक्सप्लोर करें</h2>
+              <h2 className="text-xl font-bold">{t('Dashboard.exploreFeatures')}</h2>
               {filteredFeatures.length > 4 && (
                 <Sheet>
                   <SheetTrigger asChild>
-                    <Button variant="link">सभी देखें</Button>
+                    <Button variant="link">{t('Dashboard.viewAll')}</Button>
                   </SheetTrigger>
                   <SheetContent side="bottom" className="bg-background rounded-t-lg h-[90vh]">
                      <SheetHeader>
-                        <SheetTitle className="text-xl font-bold">सभी सुविधाएं</SheetTitle>
+                        <SheetTitle className="text-xl font-bold">{t('Dashboard.allFeatures')}</SheetTitle>
                      </SheetHeader>
                      <ScrollArea className="h-[calc(90vh-80px)]">
                       <div className="space-y-4 p-1 mt-4">
@@ -992,7 +1016,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="space-y-4" id="recent-updates">
-            <h2 className="text-xl font-bold">हाल के अपडेट</h2>
+            <h2 className="text-xl font-bold">{t('Dashboard.recentUpdates')}</h2>
             {posts.map((post) => (
               <Card key={post.id} className={`bg-secondary/50 border-border ${post.highlighted ? 'border-primary border-2' : ''}`}>
                 <CardContent className="p-4 space-y-4">
@@ -1004,18 +1028,18 @@ export default function DashboardPage() {
                     {post.description}
                   </p>
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>{post.likes} Likes</span>
-                      <span>{post.commentsCount} Comments</span>
+                      <span>{t('Dashboard.likes', { count: post.likes })}</span>
+                      <span>{t('Dashboard.comments', { count: post.commentsCount })}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-around">
                       <Button variant="ghost" size="sm" className="flex items-center gap-2" onClick={() => handlePostLike(post.id)}>
-                          <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-primary' : ''}`} /> लाइक
+                          <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-primary' : ''}`} /> {t('Dashboard.like')}
                       </Button>
                       <Dialog>
                           <DialogTrigger asChild>
                               <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                                  <MessageSquare className="h-4 w-4" /> कमेंट
+                                  <MessageSquare className="h-4 w-4" /> {t('Dashboard.comment')}
                               </Button>
                           </DialogTrigger>
                           <CommentSection />
@@ -1026,7 +1050,7 @@ export default function DashboardPage() {
                           className="flex items-center gap-2"
                           onClick={() => handlePostShare(post.title, post.description)}
                       >
-                          <Share2 className="h-4 w-4" /> साझा करें
+                          <Share2 className="h-4 w-4" /> {t('Dashboard.sharePost')}
                       </Button>
                   </div>
                 </CardContent>
@@ -1041,3 +1065,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

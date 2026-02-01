@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, CornerUpLeft, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,60 +22,66 @@ type CommentType = {
     replies: CommentType[];
 };
 
-const initialComments: CommentType[] = [
-    {
-        id: 1,
-        user: 'Aarav Sharma',
-        avatar: 'https://picsum.photos/seed/user1/40/40',
-        comment: 'यह एक बहुत ही महत्वपूर्ण कदम है। कार्यस्थल पर सुरक्षा हम सभी के लिए प्राथमिकता होनी चाहिए।',
-        timestamp: '2 घंटे पहले',
-        likes: 15,
-        liked: false,
-        unliked: false,
-        replies: [],
-    },
-    {
-        id: 2,
-        user: 'Priya Singh',
-        avatar: 'https://picsum.photos/seed/user2/40/40',
-        comment: 'शानदार खबर! उम्मीद है कि इसे सख्ती से लागू किया जाएगा।',
-        timestamp: '3 घंटे पहले',
-        likes: 8,
-        liked: false,
-        unliked: false,
-        replies: [
-            {
-                id: 4,
-                user: 'Rohan Gupta',
-                avatar: 'https://picsum.photos/seed/user3/40/40',
-                comment: 'मैं सहमत हूँ, प्रवर्तन महत्वपूर्ण है।',
-                timestamp: '1 घंटे पहले',
-                likes: 2,
-                liked: false,
-                unliked: false,
-                replies: [],
-            }
-        ],
-    },
-     {
-        id: 3,
-        user: 'Rohan Gupta',
-        avatar: 'https://picsum.photos/seed/user3/40/40',
-        comment: 'जागरूकता फैलाने के लिए धन्यवाद।',
-        timestamp: '5 घंटे पहले',
-        likes: 3,
-        liked: false,
-        unliked: false,
-        replies: [],
-    }
-];
-
 export const CommentSection = () => {
     const { t } = useTranslation();
+
+    const initialComments: CommentType[] = useMemo(() => [
+        {
+            id: 1,
+            user: 'Aarav Sharma',
+            avatar: 'https://picsum.photos/seed/user1/40/40',
+            comment: t('Messages.comment1'),
+            timestamp: t('Messages.timestamp1'),
+            likes: 15,
+            liked: false,
+            unliked: false,
+            replies: [],
+        },
+        {
+            id: 2,
+            user: 'Priya Singh',
+            avatar: 'https://picsum.photos/seed/user2/40/40',
+            comment: t('Messages.comment2'),
+            timestamp: t('Messages.timestamp2'),
+            likes: 8,
+            liked: false,
+            unliked: false,
+            replies: [
+                {
+                    id: 4,
+                    user: 'Rohan Gupta',
+                    avatar: 'https://picsum.photos/seed/user3/40/40',
+                    comment: t('Messages.reply1'),
+                    timestamp: t('Messages.timestamp3'),
+                    likes: 2,
+                    liked: false,
+                    unliked: false,
+                    replies: [],
+                }
+            ],
+        },
+         {
+            id: 3,
+            user: 'Rohan Gupta',
+            avatar: 'https://picsum.photos/seed/user3/40/40',
+            comment: t('Messages.comment3'),
+            timestamp: t('Messages.timestamp4'),
+            likes: 3,
+            liked: false,
+            unliked: false,
+            replies: [],
+        }
+    ], [t]);
+
+
     const [comments, setComments] = useState(initialComments);
     const [newComment, setNewComment] = useState('');
     const [replyingTo, setReplyingTo] = useState<{ parentId: number | null, commentId: number | null }>({ parentId: null, commentId: null });
     const [replyText, setReplyText] = useState('');
+
+    useEffect(() => {
+        setComments(initialComments);
+    }, [initialComments]);
 
     const findCommentAndUpdate = (
         comments: CommentType[], 

@@ -3,6 +3,7 @@
   "Settings.language": "Language",
   "Settings.chooseLanguage": "Choose your preferred language for the application.",
   "Dashboard.title": "Dashboard",
+  "Dashboard.metaDescription": "Your dashboard for the Mahila Suraksha app.",
   "Dashboard.notifications": "Notifications",
   "Dashboard.settings": "Settings",
   "Dashboard.currentLocation": "Your current location",
@@ -275,6 +276,14 @@
   "Messages.now": "now",
   "Messages.reply": "Reply",
   "Messages.writeComment": "Write a comment...",
+  "Messages.comment1": "This is a very important step. Safety at the workplace should be a priority for all of us.",
+  "Messages.timestamp1": "2 hours ago",
+  "Messages.comment2": "Great news! Hopefully, it will be strictly enforced.",
+  "Messages.timestamp2": "3 hours ago",
+  "Messages.reply1": "I agree, enforcement is key.",
+  "Messages.timestamp3": "1 hour ago",
+  "Messages.comment3": "Thank you for spreading awareness.",
+  "Messages.timestamp4": "5 hours ago",
   "Notifications.title": "Notifications",
   "Notifications.noNewNotifications": "You have no new notifications.",
   "Notifications.alertsAppearHere": "New alerts and updates will appear here.",
@@ -1101,5 +1110,3 @@
   "Dashboard.stateAPDetail1": "'Disha' initiative for women's safety is showing results.",
   "Dashboard.stateAPDetail2": "Focus on improving safety in public transport."
 }
-
-    

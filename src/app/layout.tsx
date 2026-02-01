@@ -19,6 +19,21 @@ import { LanguageProvider, useTranslation } from '@/context/language-context';
 import { cn } from '@/lib/utils';
 
 
+function TranslatedMetadata() {
+  const { t, locale } = useTranslation();
+
+  useEffect(() => {
+    document.title = t('Dashboard.title');
+    const descriptionTag = document.querySelector('meta[name="description"]');
+    if (descriptionTag) {
+      descriptionTag.setAttribute('content', t('Dashboard.metaDescription'));
+    }
+    document.documentElement.lang = locale;
+  }, [t, locale]);
+
+  return null;
+}
+
 function ChatbotFloater() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { t } = useTranslation();
@@ -164,6 +179,7 @@ function ChatbotFloater() {
 function AppWithProviders({ children }: { children: React.ReactNode }) {
     return (
         <LanguageProvider>
+            <TranslatedMetadata />
             {children}
             <ChatbotFloater />
             <Toaster />
@@ -210,9 +226,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <head>
-        <title>Dashboard</title>
         <meta name="description" content="User dashboard" />
         <meta name="manifest" content="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -3,6 +3,7 @@
   "Settings.language": "भाषा",
   "Settings.chooseLanguage": "एप्लिकेशन के लिए अपनी पसंदीदा भाषा चुनें।",
   "Dashboard.title": "डैशबोर्ड",
+  "Dashboard.metaDescription": "महिला सुरक्षा ऐप के लिए आपका डैशबोर्ड।",
   "Dashboard.notifications": "सूचनाएं",
   "Dashboard.settings": "सेटिंग्स",
   "Dashboard.currentLocation": "आपका वर्तमान स्थान",
@@ -275,6 +276,14 @@
   "Messages.now": "अभी",
   "Messages.reply": "रिप्लाई",
   "Messages.writeComment": "एक कमेंट लिखें...",
+  "Messages.comment1": "यह एक बहुत ही महत्वपूर्ण कदम है। कार्यस्थल पर सुरक्षा हम सभी के लिए प्राथमिकता होनी चाहिए।",
+  "Messages.timestamp1": "2 घंटे पहले",
+  "Messages.comment2": "शानदार खबर! उम्मीद है कि इसे सख्ती से लागू किया जाएगा।",
+  "Messages.timestamp2": "3 घंटे पहले",
+  "Messages.reply1": "मैं सहमत हूँ, प्रवर्तन महत्वपूर्ण है।",
+  "Messages.timestamp3": "1 घंटे पहले",
+  "Messages.comment3": "जागरूकता फैलाने के लिए धन्यवाद।",
+  "Messages.timestamp4": "5 घंटे पहले",
   "Notifications.title": "सूचनाएं",
   "Notifications.noNewNotifications": "आपके पास कोई नई सूचनाएं नहीं हैं।",
   "Notifications.alertsAppearHere": "नए अलर्ट और अपडेट यहां दिखाई देंगे।",
@@ -1101,5 +1110,3 @@
   "Dashboard.stateAPDetail1": "महिलाओं की सुरक्षा के लिए 'दिशा' पहल परिणाम दिखा रही है।",
   "Dashboard.stateAPDetail2": "सार्वजनिक परिवहन में सुरक्षा सुधार पर ध्यान केंद्रित है।"
 }
-
-    

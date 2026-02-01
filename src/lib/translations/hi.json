@@ -24,7 +24,7 @@
   "Chatbot.micStartError": "माइक्रोफ़ोन शुरू नहीं कर सका। कृपया अनुमतियाँ जांचें।",
   "Chatbot.placeholder": "एक संदेश लिखें...",
   "Chatbot.listening": "सुन रहा हूँ...",
-  "Chatbot.processing": "मैं आपके प्रश्न को संसाधित कर रहा हूँ: \"{input}\".",
+  "Chatbot.processing": "मैं आपके प्रश्न को संसाधित कर रहा हूँ \"{input}\".",
   "ChatbotFloater.title": "एआई सहायक",
   "ChatbotFloater.description": "नमस्ते! मैं आपका एआई सहायक हूँ। आप मुझसे कुछ भी पूछ सकते हैं।",
   "Error": "त्रुटि",
@@ -227,7 +227,18 @@
   "Login.toastLoggedInDescription": "वापसी पर आपका स्वागत है!",
   "Login.toastLoginFailed": "लॉग इन करने में विफल रहे।",
   "Admin.emailPlaceholder": "उपयोगकर्ता@उदाहरण.कॉम",
-  "Settings.appVersion": "ऐप संस्करण 1.0.0"
+  "Settings.appVersion": "ऐप संस्करण 1.0.0",
+  "AdminContent.published.1.title": "अर्जेंटीना में नया कानून पारित",
+  "AdminContent.published.1.description": "अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।",
+  "AdminContent.published.2.title": "वैश्विक धन उगाहने वाले की शुरूआत",
+  "AdminContent.published.2.description": "हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।",
+  "AdminContent.published.3.title": "सहमति को समझना",
+  "AdminContent.published.3.description": "स्वस्थ संबंधों की आधारशिला।",
+  "AdminContent.published.4.title": "स्थानीय सुरक्षा और सहायता केंद्र",
+  "AdminContent.published.4.description": "मुफ्त परामर्श और कानूनी सहायता प्रदान करना।",
+  "AdminContent.published.4.targetAudience": "सभी",
+  "AdminContent.published.4.kpi": "1000 लोगों की सहायता",
+  "AdminContent.pending.1.title": "पार्क में असुरक्षित प्रकाश व्यवस्था",
+  "AdminContent.pending.2.title": "नया जागरूकता लेख",
+  "AdminContent.pending.2.description": "डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।"
 }
-    
-    

@@ -24,7 +24,7 @@ export default function MasterAdminPage() {
     { title: t('Admin.manageInitiatives'), value: `78 ${t('Admin.active')}`, icon: Building2, href: '/master-admin/pages/community-empowerment' },
     { title: t('Admin.safetyAlerts'), value: '99+', icon: Shield, href: '#' },
     { title: t('Admin.analytics'), value: t('Admin.viewData'), icon: BarChart2, href: '/master-admin/analytics' },
-    { title: t('Admin.manageAdmins'), value: `${users.filter(u => u.role === 'एडमिन' || u.role === 'Admin').length} ${t('Admin.admins').toLowerCase()}`, icon: UserCog, href: '/master-admin/settings' },
+    { title: t('Admin.manageAdmins'), value: `${users.filter(u => u.role === 'admin').length} ${t('Admin.admins').toLowerCase()}`, icon: UserCog, href: '/master-admin/settings' },
   ];
   
   return (

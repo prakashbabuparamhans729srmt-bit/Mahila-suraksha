@@ -1,7 +1,8 @@
 
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import { useTranslation } from './language-context';
 
 export type ContentType = 'incident_report' | 'update' | 'initiative' | 'article' | 'video' | 'quiz' | 'resource';
 export type UserRole = 'user' | 'admin' | 'moderator';
@@ -52,22 +53,32 @@ const initialUsers: User[] = [
     { id: 'user456', email: 'user456@example.com', role: 'user', joined: '2024-07-24' },
 ];
 
-const initialPublishedContent: ContentItem[] = [
-    { id: 1, title: 'अर्जेंटीना में नया कानून पारित', type: 'update', user: 'admin456', date: '2024-07-22', status: 'approved', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', photo: null },
-    { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', type: 'update', user: 'admin456', date: '2024-07-20', status: 'approved', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', photo: null },
-    { id: 3, title: 'सहमति को समझना', type: 'article', user: 'admin456', date: '2024-07-19', status: 'approved', description: 'स्वस्थ संबंधों की आधारशिला।', url: '/education/consent-article' },
-    { id: 4, title: 'स्थानीय सुरक्षा और सहायता केंद्र', type: 'initiative', user: 'admin456', date: '2024-07-18', status: 'approved', description: 'मुफ्त परामर्श और कानूनी सहायता प्रदान करना।', targetAudience: 'सभी', kpi: '1000 लोगों की सहायता' },
-];
-
 
 export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
-  const [pendingContent, setPendingContent] = useState<ContentItem[]>([
-    { id: 101, title: 'पार्क में असुरक्षित प्रकाश व्यवस्था', type: 'incident_report', user: 'user123', date: '2024-07-25', status: 'pending' },
-    { id: 102, title: 'नया जागरूकता लेख', type: 'article', user: 'user456', date: '2024-07-24', status: 'pending', description: 'डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।' },
-  ]);
-  
+  const { t } = useTranslation();
+
+  const initialPublishedContent: ContentItem[] = useMemo(() => [
+    { id: 1, title: t('AdminContent.published.1.title'), type: 'update', user: 'admin456', date: '2024-07-22', status: 'approved', description: t('AdminContent.published.1.description'), photo: null },
+    { id: 2, title: t('AdminContent.published.2.title'), type: 'update', user: 'admin456', date: '2024-07-20', status: 'approved', description: t('AdminContent.published.2.description'), photo: null },
+    { id: 3, title: t('AdminContent.published.3.title'), type: 'article', user: 'admin456', date: '2024-07-19', status: 'approved', description: t('AdminContent.published.3.description'), url: '/education/consent-article' },
+    { id: 4, title: t('AdminContent.published.4.title'), type: 'initiative', user: 'admin456', date: '2024-07-18', status: 'approved', description: t('AdminContent.published.4.description'), targetAudience: t('AdminContent.published.4.targetAudience'), kpi: t('AdminContent.published.4.kpi') },
+  ], [t]);
+
+  const initialPendingContent: ContentItem[] = useMemo(() => [
+    { id: 101, title: t('AdminContent.pending.1.title'), type: 'incident_report', user: 'user123', date: '2024-07-25', status: 'pending' },
+    { id: 102, title: t('AdminContent.pending.2.title'), type: 'article', user: 'user456', date: '2024-07-24', status: 'pending', description: t('AdminContent.pending.2.description') },
+  ], [t]);
+
+  const [pendingContent, setPendingContent] = useState<ContentItem[]>(initialPendingContent);
   const [publishedContent, setPublishedContent] = useState<ContentItem[]>(initialPublishedContent);
   const [users, setUsers] = useState<User[]>(initialUsers);
+
+  // Sync state with translations when language changes
+  React.useEffect(() => {
+    setPublishedContent(initialPublishedContent);
+    setPendingContent(initialPendingContent);
+  }, [initialPublishedContent, initialPendingContent]);
+
 
   const addContent = (item: Omit<ContentItem, 'id' | 'status' | 'date' | 'user'>) => {
     // For simplicity, we'll assign a random existing user. In a real app, this would be the logged-in user.

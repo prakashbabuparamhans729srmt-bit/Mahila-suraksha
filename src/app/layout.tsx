@@ -179,11 +179,13 @@ function ChatbotFloater() {
 function AppWithProviders({ children }: { children: React.ReactNode }) {
     return (
         <LanguageProvider>
-            <TranslatedMetadata />
-            {children}
-            <ChatbotFloater />
-            <Toaster />
-            <VoiceSearchModal />
+          <AdminContentProvider>
+              <TranslatedMetadata />
+              {children}
+              <ChatbotFloater />
+              <Toaster />
+              <VoiceSearchModal />
+          </AdminContentProvider>
         </LanguageProvider>
     )
 }
@@ -205,7 +207,6 @@ function AppProviders({ children }: { children: React.ReactNode }) {
               disableTransitionOnChange
             >
               <FirebaseClientProvider>
-                <AdminContentProvider>
                   <VoiceSearchProvider>
                     <GuestProvider>
                         <AppWithProviders>
@@ -213,7 +214,6 @@ function AppProviders({ children }: { children: React.ReactNode }) {
                         </AppWithProviders>
                     </GuestProvider>
                   </VoiceSearchProvider>
-                </AdminContentProvider>
               </FirebaseClientProvider>
             </ThemeProvider>
         </div>

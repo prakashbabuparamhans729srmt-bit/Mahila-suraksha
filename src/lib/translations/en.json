@@ -24,7 +24,7 @@
   "Chatbot.micStartError": "Could not start microphone. Please check permissions.",
   "Chatbot.placeholder": "Write a message...",
   "Chatbot.listening": "Listening...",
-  "Chatbot.processing": "I am processing your question: \"{input}\".",
+  "Chatbot.processing": "I am processing your question \"{input}\".",
   "ChatbotFloater.title": "AI Assistant",
   "ChatbotFloater.description": "Hello! I am your AI assistant. You can ask me anything.",
   "Error": "Error",
@@ -325,7 +325,7 @@
   "SuccessIndicators.helplineCallsAnswered": "Helpline Calls Answered",
   "SuccessIndicators.target": "Target: {target}",
   "SuccessIndicators.shareTitle": "Success Indicators",
-  "SuccessIndicators.shareText": "Check out our progress:\\n{shareText}",
+  "SuccessIndicators.shareText": "Check out our progress:\n{shareText}",
   "SuccessIndicators.sharingNotSupported": "Sharing is not supported in this browser.",
   "SuccessIndicators.up": "up",
   "UpdatesFeed.like": "Like",
@@ -1206,7 +1206,18 @@
   "contentType.quiz": "Quiz",
   "contentType.resource": "Resource",
   "Admin.emailPlaceholder": "user@example.com",
-  "Settings.appVersion": "App version 1.0.0"
+  "Settings.appVersion": "App version 1.0.0",
+  "AdminContent.published.1.title": "New Law Passed in Argentina",
+  "AdminContent.published.1.description": "Argentina's congress passed a new bill expanding workplace protections against harassment.",
+  "AdminContent.published.2.title": "Global Fundraiser Launched",
+  "AdminContent.published.2.description": "Our annual global fundraiser has kicked off, aiming to raise $10M for survivor support programs.",
+  "AdminContent.published.3.title": "Understanding Consent",
+  "AdminContent.published.3.description": "The cornerstone of healthy relationships.",
+  "AdminContent.published.4.title": "Local Safety and Support Center",
+  "AdminContent.published.4.description": "Providing free counseling and legal aid.",
+  "AdminContent.published.4.targetAudience": "All",
+  "AdminContent.published.4.kpi": "Assisting 1000 people",
+  "AdminContent.pending.1.title": "Unsafe lighting in the park",
+  "AdminContent.pending.2.title": "New awareness article",
+  "AdminContent.pending.2.description": "Digital safety and how to avoid online harassment."
 }
-    
-    

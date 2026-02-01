@@ -85,7 +85,7 @@ export default function LegalCompliancePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Progress value={progressPercentage} className="h-2 [&>div]:bg-blue-500" />
+            <Progress value={progressPercentage} className="h-2 [&>div]:bg-primary" />
             <p className="text-xs text-muted-foreground mt-2 text-right">{completedTasks} / {totalTasks} कार्य पूर्ण</p>
           </CardContent>
         </Card>

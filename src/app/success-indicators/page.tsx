@@ -39,7 +39,7 @@ export default function SuccessIndicatorsPage() {
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
                 <h1 className="text-xl font-bold">सफलता संकेतक</h1>
-                <Button variant="default" size="sm" className="bg-blue-600 hover:bg-blue-700" onClick={handleShare}>
+                <Button variant="default" size="sm" onClick={handleShare}>
                     <Share2 className="mr-2 h-4 w-4" />
                     साझा करें
                 </Button>
@@ -58,7 +58,7 @@ export default function SuccessIndicatorsPage() {
                             </div>
                             <p className="text-4xl font-bold">{indicator.value}</p>
                             <div className="space-y-1">
-                                <Progress value={indicator.progress} className="h-2 [&>div]:bg-blue-500" />
+                                <Progress value={indicator.progress} className="h-2 [&>div]:bg-primary" />
                                 <div className="flex justify-between text-xs text-muted-foreground">
                                     <span>0</span>
                                     <span>{indicator.target}</span>

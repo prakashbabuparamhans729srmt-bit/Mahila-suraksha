@@ -37,11 +37,11 @@ export default function EducationPage() {
                            <h3 className="font-semibold text-lg">{item.title}</h3>
                            
                            {(item.type === 'video' || item.type === 'resource') ? (
-                                <a href={item.description} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 mt-1 block truncate max-w-xs hover:underline">{item.description}</a>
+                                <a href={item.description} target="_blank" rel="noopener noreferrer" className="text-sm text-primary mt-1 block truncate max-w-xs hover:underline">{item.description}</a>
                            ) : (
                                 <>
                                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                                 <p className="text-sm text-blue-400 mt-1">5 मिनट पढ़ें</p>
+                                 <p className="text-sm text-primary mt-1">5 मिनट पढ़ें</p>
                                 </>
                            )}
                        </div>

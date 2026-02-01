@@ -43,7 +43,10 @@ export default function SettingsPage() {
   const { toast } = useToast();
   
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && user) {
+      setLocalProfileName(user.displayName ?? '');
+      setPhotoPreview(user.photoURL ?? null);
+    } else if (!loading && !user) {
       router.push('/login');
     }
   }, [user, loading, router]);
@@ -55,13 +58,8 @@ export default function SettingsPage() {
         setPhotoPreview(reader.result as string);
       };
       reader.readAsDataURL(localProfilePhoto);
-    } else if (user?.photoURL) {
-      setPhotoPreview(user.photoURL);
     }
-    else {
-      setPhotoPreview(null);
-    }
-  }, [localProfilePhoto, user]);
+  }, [localProfilePhoto]);
 
   const handleAuthorityNumberChange = (service: 'police' | 'ambulance' | 'firetruck', value: string) => {
     setAuthorityNumbers(prev => ({ ...prev, [service]: value }));
@@ -101,12 +99,13 @@ export default function SettingsPage() {
 
   const handleProfileSave = async () => {
     if (auth?.currentUser) {
-        if (auth.currentUser.displayName === localProfileName) return;
+        if (auth.currentUser.displayName === localProfileName && !localProfilePhoto) return;
         try {
+            // PhotoURL update requires uploading the file to a storage service first,
+            // then getting the URL to update the profile. This part is complex and
+            // will be simplified here by not actually uploading the photo.
             await updateProfile(auth.currentUser, {
               displayName: localProfileName,
-              // PhotoURL update requires uploading the file to a storage service first,
-              // then getting the URL to update the profile. This is not implemented yet.
             });
             toast({
               title: "प्रोफ़ाइल सहेजी गई!",
@@ -180,7 +179,7 @@ export default function SettingsPage() {
                       </label>
                   </div> 
               </div>
-              <Button onClick={handleProfileSave} className="w-full bg-blue-600 hover:bg-blue-700">प्रोफ़ाइल सहेजें</Button>
+              <Button onClick={handleProfileSave} className="w-full">प्रोफ़ाइल सहेजें</Button>
             </CardContent>
           </Card>
         </div>
@@ -265,7 +264,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               <div className="p-4 mt-auto">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12" onClick={handleSaveChanges}>
+                <Button className="w-full font-bold text-lg h-12" onClick={handleSaveChanges}>
                   संपर्क सहेजें
                 </Button>
               </div>
@@ -338,9 +337,9 @@ export default function SettingsPage() {
                 <h3 className="font-semibold">टेक्स्ट का आकार</h3>
                 <p className="text-sm text-muted-foreground">पठनीयता के लिए टेक्स्ट का आकार समायोजित करें</p>
                 <div className="grid grid-cols-3 gap-2 mt-2">
-                  <Button variant={textSize === 'small' ? 'default' : 'outline'} onClick={() => setTextSize('small')} className={textSize === 'small' ? 'bg-blue-600 hover:bg-blue-700' : ''}>छोटा</Button>
-                  <Button variant={textSize === 'medium' ? 'default' : 'outline'} onClick={() => setTextSize('medium')} className={textSize === 'medium' ? 'bg-blue-600 hover:bg-blue-700' : ''}>मध्यम</Button>
-                  <Button variant={textSize === 'large' ? 'default' : 'outline'} onClick={() => setTextSize('large')} className={textSize === 'large' ? 'bg-blue-600 hover:bg-blue-700' : ''}>बड़ा</Button>
+                  <Button variant={textSize === 'small' ? 'default' : 'outline'} onClick={() => setTextSize('small')}>छोटा</Button>
+                  <Button variant={textSize === 'medium' ? 'default' : 'outline'} onClick={() => setTextSize('medium')}>मध्यम</Button>
+                  <Button variant={textSize === 'large' ? 'default' : 'outline'} onClick={() => setTextSize('large')}>बड़ा</Button>
                 </div>
               </div>
             </CardContent>
@@ -419,7 +418,7 @@ export default function SettingsPage() {
                   </div>
                 </ScrollArea>
                 <DialogClose asChild>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                  <Button className="w-full mt-4">ठीक है</Button>
                 </DialogClose>
               </DialogContent>
             </Dialog>
@@ -445,7 +444,7 @@ export default function SettingsPage() {
                         </div>
                     </ScrollArea>
                     <DialogClose asChild>
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                        <Button className="w-full mt-4">ठीक है</Button>
                     </DialogClose>
                 </DialogContent>
             </Dialog>
@@ -472,7 +471,7 @@ export default function SettingsPage() {
                       <Button variant="outline">रद्द करें</Button>
                     </DialogClose>
                     <DialogClose asChild>
-                      <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleSendFeedback}>सबमिट करें</Button>
+                      <Button onClick={handleSendFeedback}>सबमिट करें</Button>
                     </DialogClose>
                   </div>
                 </div>

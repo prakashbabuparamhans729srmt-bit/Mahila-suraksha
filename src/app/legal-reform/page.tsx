@@ -71,7 +71,7 @@ export default function LegalReformPage() {
                             <p className="text-sm text-muted-foreground">
                                 {reform.description}
                             </p>
-                            <Button variant="link" className="p-0 h-auto text-blue-400" onClick={handleReadMore}>
+                            <Button variant="link" className="p-0 h-auto text-primary" onClick={handleReadMore}>
                                 और पढ़ें
                             </Button>
                         </CardContent>

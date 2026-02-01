@@ -60,7 +60,7 @@ export default function CommunityEmpowermentPage() {
                                         {item.kpi && <li>KPI: {item.kpi}</li>}
                                         {item.targetAudience && <li>लक्षित दर्शक: {item.targetAudience}</li>}
                                     </ul>
-                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-2">और जानें</Button>
+                                    <Button className="w-full mt-2">और जानें</Button>
                                 </CardContent>
                             </Card>
                         )) : (

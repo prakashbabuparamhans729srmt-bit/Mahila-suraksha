@@ -67,7 +67,7 @@ export default function LocationSettingsPage() {
             <h3 className="font-semibold">स्थान सटीकता</h3>
             <div className="grid grid-cols-3 gap-2">
               <Button variant="outline">उच्च</Button>
-              <Button className="bg-blue-600 hover:bg-blue-700">मध्यम</Button>
+              <Button>मध्यम</Button>
               <Button variant="outline">कम</Button>
             </div>
             <p className="text-sm text-muted-foreground">
@@ -79,7 +79,7 @@ export default function LocationSettingsPage() {
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-4 space-y-4">
             <h3 className="font-semibold">अपना स्थान अपडेट करें</h3>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={handleDetectLocation} disabled={loading}>
+            <Button className="w-full" onClick={handleDetectLocation} disabled={loading}>
               <LocateFixed className="mr-2 h-5 w-5" />
               {loading ? 'पता लगाया जा रहा है...' : 'मेरा स्थान पता लगाएँ'}
             </Button>
@@ -104,7 +104,7 @@ export default function LocationSettingsPage() {
           </CardContent>
         </Card>
 
-        <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg h-12">
+        <Button className="w-full text-lg h-12">
             स्थान सहेजें
         </Button>
 

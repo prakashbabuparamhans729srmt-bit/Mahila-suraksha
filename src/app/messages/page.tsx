@@ -176,7 +176,7 @@ export default function MessagesPage() {
                     <p className="text-sm text-muted-foreground mt-1">{comment.comment}</p>
                     <div className="flex items-center gap-4 mt-2 text-muted-foreground">
                         <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => handleLike(comment.id)}>
-                            <ThumbsUp className={`h-4 w-4 ${comment.liked ? 'text-blue-500' : ''}`} />
+                            <ThumbsUp className={`h-4 w-4 ${comment.liked ? 'text-primary' : ''}`} />
                             <span className="text-xs">{comment.likes}</span>
                         </Button>
                         <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => handleUnlike(comment.id)}>
@@ -204,7 +204,7 @@ export default function MessagesPage() {
                                     onChange={(e) => setReplyText(e.target.value)}
                                     onKeyDown={(e) => e.key === 'Enter' && handlePostReply(replyingTo.parentId!)}
                                 />
-                                <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-blue-500" onClick={() => handlePostReply(replyingTo.parentId!)}>
+                                <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-primary" onClick={() => handlePostReply(replyingTo.parentId!)}>
                                     <Send className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -249,7 +249,7 @@ export default function MessagesPage() {
                             onChange={(e) => setNewComment(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
                         />
-                         <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-blue-500" onClick={handlePostComment}>
+                         <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-primary" onClick={handlePostComment}>
                             <Send className="h-5 w-5" />
                         </Button>
                     </div>

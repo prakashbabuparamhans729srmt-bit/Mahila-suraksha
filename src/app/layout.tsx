@@ -126,9 +126,9 @@ function ChatbotFloater() {
       >
         <Button
           size="icon"
-          className="rounded-full bg-blue-600 hover:bg-blue-700 h-16 w-16 shadow-lg"
+          className="rounded-full h-16 w-16 shadow-lg"
         >
-          <MessageCircle className="h-8 w-8 text-white" />
+          <MessageCircle className="h-8 w-8" />
         </Button>
       </div>
       <Sheet open={isChatOpen} onOpenChange={setIsChatOpen}>

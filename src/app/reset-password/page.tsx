@@ -49,13 +49,13 @@ export default function ResetPasswordPage() {
                 required
               />
             
-              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+              <Button type="submit" className="w-full font-bold text-lg h-12">
                 रीसेट लिंक भेजें
               </Button>
             </form>
             
             <div className="text-center text-sm">
-              <Link href="/login" className="text-blue-500 hover:underline">
+              <Link href="/login" className="text-primary hover:underline">
                 लॉगिन पर वापस जाएं
               </Link>
             </div>

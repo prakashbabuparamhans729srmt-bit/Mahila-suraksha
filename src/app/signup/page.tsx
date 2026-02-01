@@ -178,7 +178,7 @@ export default function SignupPage() {
                 </SelectContent>
               </Select>
 
-              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+              <Button type="submit" className="w-full font-bold text-lg h-12">
                 खाता बनाएं
               </Button>
             </form>
@@ -207,7 +207,7 @@ export default function SignupPage() {
             
             <div className="text-center text-sm">
               <span className="text-muted-foreground">पहले से ही एक खाता है? </span>
-              <Link href="/login" className="text-blue-500 hover:underline">
+              <Link href="/login" className="text-primary hover:underline">
                 लॉग इन करें
               </Link>
             </div>

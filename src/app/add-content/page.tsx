@@ -97,7 +97,7 @@ export default function AddContentPage() {
               </div>
             </CardContent>
           </Card>
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12 mt-6">सामग्री सबमिट करें</Button>
+          <Button type="submit" className="w-full text-lg h-12 mt-6">सामग्री सबमिट करें</Button>
         </form>
       </main>
       <BottomNav />

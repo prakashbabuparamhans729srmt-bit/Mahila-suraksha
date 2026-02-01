@@ -72,14 +72,14 @@ export default function FundingTrackerPage() {
             <h2 className="text-center font-semibold text-muted-foreground">धन उगाहने की प्रगति</h2>
             <p className="text-center text-5xl font-bold">$7.5M</p>
             <div className="space-y-2">
-              <Progress value={75} className="h-3 bg-background [&>div]:bg-gradient-to-r [&>div]:from-cyan-400 [&>div]:to-blue-500" />
+              <Progress value={75} className="h-3 bg-background [&>div]:bg-primary" />
               <div className="flex justify-between text-xs text-muted-foreground">
                 <span>0%</span>
                 <span>लक्ष्य: $10M</span>
                 <span>100%</span>
               </div>
             </div>
-            <Button className="w-full bg-green-600 hover:bg-green-700 text-lg h-12" onClick={handleDonate}>अभी दान करें</Button>
+            <Button className="w-full text-lg h-12" onClick={handleDonate}>अभी दान करें</Button>
           </CardContent>
         </Card>
 

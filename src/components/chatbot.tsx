@@ -148,12 +148,12 @@ export function Chatbot() {
                 className={cn(
                   'max-w-[75%] rounded-lg px-3 py-2',
                   message.sender === 'user'
-                    ? 'bg-blue-600 text-primary-foreground'
+                    ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary'
                 )}
               >
                 <p className="text-sm">{message.text}</p>
-                <p className={cn("text-xs mt-1 text-right", message.sender === 'user' ? 'text-blue-200' : 'text-muted-foreground')}>{message.timestamp}</p>
+                <p className={cn("text-xs mt-1 text-right", message.sender === 'user' ? 'text-primary-foreground/80' : 'text-muted-foreground')}>{message.timestamp}</p>
               </div>
             </div>
           ))}
@@ -184,7 +184,7 @@ export function Chatbot() {
           <Button type="button" size="icon" variant={isListening ? 'destructive' : 'outline'} onClick={handleMicClick}>
             <Mic className="h-5 w-5" />
           </Button>
-          <Button type="button" size="icon" onClick={handleSend} className="bg-blue-600 hover:bg-blue-700">
+          <Button type="button" size="icon" onClick={handleSend}>
             <Send className="h-5 w-5" />
           </Button>
         </div>

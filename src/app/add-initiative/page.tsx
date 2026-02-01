@@ -93,7 +93,7 @@ export default function AddInitiativePage() {
               </div>
             </CardContent>
           </Card>
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12 mt-6">पहल जोड़ें</Button>
+          <Button type="submit" className="w-full text-lg h-12 mt-6">पहल जोड़ें</Button>
         </form>
       </main>
       <BottomNav />

@@ -37,7 +37,7 @@ export default function SmartSafetyPage() {
                             यदि आप एक निर्धारित समय के बाद चेक-इन नहीं करते हैं तो स्वचालित रूप से आपके आपातकालीन संपर्कों को सचेत करता है।
                         </p>
                         <Button 
-                            className="w-full bg-blue-600 hover:bg-blue-700"
+                            className="w-full"
                             onClick={() => handleFeatureActivation('सुरक्षा चेक-इन', '5 मिनट का चेक-इन टाइमर शुरू हो गया है।')}
                         >
                             5-मिनट का चेक-इन शुरू करें
@@ -54,7 +54,7 @@ export default function SmartSafetyPage() {
                             जब तक आप अपने गंतव्य तक सुरक्षित नहीं पहुंच जाते, तब तक अपने विश्वसनीय संपर्कों के साथ अपना लाइव स्थान साझा करें।
                         </p>
                         <Button 
-                            className="w-full bg-blue-600 hover:bg-blue-700"
+                            className="w-full"
                             onClick={() => handleFeatureActivation('यात्रा साझा करना', 'आपका लाइव स्थान अब आपके आपातकालीन संपर्कों के साथ साझा किया जा रहा है।')}
                         >
                             मेरी यात्रा साझा करें
@@ -71,7 +71,7 @@ export default function SmartSafetyPage() {
                             एक असहज स्थिति से बाहर निकलने में आपकी मदद करने के लिए एक आने वाली फोन कॉल का अनुकरण करें।
                         </p>
                         <Button 
-                            className="w-full bg-blue-600 hover:bg-blue-700"
+                            className="w-full"
                             onClick={() => handleFeatureActivation('नकली कॉल', 'आपको 15 सेकंड में एक नकली कॉल आएगी।')}
                         >
                             नकली कॉल शुरू करें

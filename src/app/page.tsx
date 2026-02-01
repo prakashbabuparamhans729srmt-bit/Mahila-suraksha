@@ -510,7 +510,7 @@ export default function DashboardPage() {
               </ScrollArea>
               <div className="flex justify-between p-4 absolute bottom-0 left-0 right-0 bg-background">
                 <Button variant="outline" className="w-1/2 mr-2">रीसेट करें</Button>
-                <Button className="w-1/2 ml-2 bg-blue-600 hover:bg-blue-700">फ़िल्टर लागू करें</Button>
+                <Button className="w-1/2 ml-2">फ़िल्टर लागू करें</Button>
               </div>
             </SheetContent>
           </Sheet>
@@ -657,7 +657,7 @@ export default function DashboardPage() {
                     {getServiceContent().number}
                 </div>
                 <AlertDialogFooter>
-                    <AlertDialogAction className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setShowNoNumberDialog(false)}>ठीक है</AlertDialogAction>
+                    <AlertDialogAction className="w-full" onClick={() => setShowNoNumberDialog(false)}>ठीक है</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
@@ -766,7 +766,7 @@ export default function DashboardPage() {
                                                     </ul>
                                                     <Button 
                                                         size="sm" 
-                                                        className="bg-blue-600 hover:bg-blue-700 h-8"
+                                                        className="h-8"
                                                         onClick={() => handleShare(`${state.name} सुरक्षा अपडेट`, `नवीनतम सुरक्षा अपडेट देखें: ${state.details.join(' ')}`)}
                                                     >
                                                         <Share2 className="mr-2 h-4 w-4" />
@@ -815,7 +815,7 @@ export default function DashboardPage() {
                 </div>
                 </ScrollArea>
                 <DialogClose asChild>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">ठीक है</Button>
+                    <Button className="w-full mt-4">ठीक है</Button>
                 </DialogClose>
             </DialogContent>
         </Dialog>
@@ -920,7 +920,7 @@ export default function DashboardPage() {
                   <Separator />
                   <div className="flex justify-around">
                       <Button variant="ghost" size="sm" className="flex items-center gap-2" onClick={() => handlePostLike(post.id)}>
-                          <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-blue-500' : ''}`} /> लाइक
+                          <ThumbsUp className={`h-4 w-4 ${post.liked ? 'text-primary' : ''}`} /> लाइक
                       </Button>
                       <Dialog>
                           <DialogTrigger asChild>

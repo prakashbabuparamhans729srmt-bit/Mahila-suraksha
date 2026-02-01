@@ -51,9 +51,9 @@ export function BottomNav() {
                 <div className="absolute left-1/2 -translate-x-1/2 -top-6">
                   <Button
                     size="icon"
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 h-14 w-14 shadow-lg"
+                    className="rounded-full h-14 w-14 shadow-lg"
                   >
-                    <Plus className="h-8 w-8 text-white" />
+                    <Plus className="h-8 w-8" />
                   </Button>
                 </div>
               </SheetTrigger>

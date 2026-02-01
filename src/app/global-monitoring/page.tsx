@@ -76,7 +76,7 @@ export default function GlobalMonitoringPage() {
                         <p className="text-muted-foreground mb-4 text-sm">
                             गहन विश्लेषण और देश-विशिष्ट अंतर्दृष्टि के लिए हमारी व्यापक वार्षिक रिपोर्ट डाउनलोड करें।
                         </p>
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                        <Button className="w-full">
                             <BookOpen className="mr-2 h-4 w-4" />
                             रिपोर्ट खोलें
                         </Button>

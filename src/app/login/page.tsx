@@ -124,12 +124,12 @@ export default function LoginPage() {
               />
             
               <div className="text-sm">
-                  <Link href="/reset-password" className="text-blue-500 hover:underline">
+                  <Link href="/reset-password" className="text-primary hover:underline">
                       पासवर्ड भूल गए?
                   </Link>
               </div>
 
-              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg h-12">
+              <Button type="submit" className="w-full font-bold text-lg h-12">
                 साइन इन करें
               </Button>
             </form>
@@ -158,7 +158,7 @@ export default function LoginPage() {
 
             <div className="text-center text-sm">
               <span className="text-muted-foreground">खाता नहीं है? </span>
-              <Link href="/signup" className="text-blue-500 hover:underline">
+              <Link href="/signup" className="text-primary hover:underline">
                 साइन अप करें
               </Link>
             </div>

@@ -244,133 +244,135 @@ export default function DashboardPage() {
   };
 
 
-  const allFeatures = [
+  const allFeatures = useMemo(() => [
     { 
       href: "/startup-checklist", 
       icon: <ListChecks className="h-6 w-6 text-primary" />, 
-      title: "Startup Checklist", 
-      description: "आपकी नई कंपनी शुरू करने के लिए 360+ कामों की सूची।" 
+      title: t('Dashboard.featureStartupChecklistTitle'), 
+      description: t('Dashboard.featureStartupChecklistDesc') 
     },
     { 
       href: "/legal-compliance", 
       icon: <Scale className="h-6 w-6 text-primary" />, 
-      title: "कानूनी अनुपालन", 
-      description: "अपने संगठन की कानूनी स्थिति और फाइलिंग को ट्रैक करें।" 
+      title: t('Dashboard.featureLegalComplianceTitle'), 
+      description: t('Dashboard.featureLegalComplianceDesc') 
     },
     { 
       href: "/implementation-tracker", 
       icon: <ImplementationTrackerIcon />, 
-      title: "कार्यान्वयन ट्रैकर", 
-      description: "गैंट चार्ट के साथ हमारी प्रमुख वैश्विक पहलों की प्रगति की निगरानी करें।" 
+      title: t('Dashboard.featureImplementationTrackerTitle'), 
+      description: t('Dashboard.featureImplementationTrackerDesc') 
     },
     { 
       href: "/funding-tracker", 
       icon: <FundingTrackerIcon />, 
-      title: "फंडिंग ट्रैकर", 
-      description: "देखें कि हमारी धनराशि कैसे जुटाई जाती है, आवंटित की जाती है और प्रभाव डाल रही है।" 
+      title: t('Dashboard.featureFundingTrackerTitle'), 
+      description: t('Dashboard.featureFundingTrackerDesc') 
     },
     { 
       href: "/success-indicators", 
       icon: <SuccessIndicatorIcon />, 
-      title: "सफलता संकेतक", 
-      description: "प्रमुख प्रदर्शन संकेतकों (KPIs) के साथ हमारी सामूहिक सफलता को मापें।" 
+      title: t('Dashboard.featureSuccessIndicatorsTitle'), 
+      description: t('Dashboard.featureSuccessIndicatorsDesc') 
     },
     { 
       href: "/safe-cities", 
       icon: <Building2 className="h-6 w-6 text-primary" />, 
-      title: "सुरक्षित शहर", 
-      description: "स्थानीय सुरक्षा पहल, सहायता केंद्र खोजें और ऑडिट करें।" 
+      title: t('Dashboard.featureSafeCitiesTitle'), 
+      description: t('Dashboard.featureSafeCitiesDesc') 
     },
     { 
       href: "/community-empowerment", 
       icon: <CommunityIcon />, 
-      title: "सामुदायिक सशक्तिकरण", 
-      description: "सहायता समूहों, कार्यक्रमों और सशक्तिकरण कार्यक्रमों से जुड़ें।" 
+      title: t('Dashboard.featureCommunityEmpowermentTitle'), 
+      description: t('Dashboard.featureCommunityEmpowermentDesc') 
     },
     { 
       href: "/global-monitoring", 
       icon: <GlobalMonitoringIcon />, 
-      title: "वैश्विक निगरानी", 
-      description: "सुरक्षा स्कोर और देश-विशिष्ट डेटा का वैश्विक हीटमैप देखें।" 
+      title: t('Dashboard.featureGlobalMonitoringTitle'), 
+      description: t('Dashboard.featureGlobalMonitoringDesc') 
     },
     { 
       href: "/global-monitoring", 
       icon: <BarChartBig className="h-6 w-6 text-primary" />, 
-      title: "वैश्विक डेटा", 
-      description: "इंटरैक्टिव मानचित्र, रुझान और प्रमुख वैश्विक आँकड़े देखें।" 
+      title: t('Dashboard.featureGlobalDataTitle'), 
+      description: t('Dashboard.featureGlobalDataDesc') 
     },
     { 
       href: "/education", 
       icon: <GraduationCap className="h-6 w-6 text-primary" />, 
-      title: "शिक्षा", 
-      description: "जागरूकता बढ़ाने के लिए लेख, वीडियो और क्विज़ तक पहुँचें।" 
+      title: t('Dashboard.featureEducationTitle'), 
+      description: t('Dashboard.featureEducationDesc') 
     },
     { 
       href: "/legal-reform", 
       icon: <Scale className="h-6 w-6 text-primary" />, 
-      title: "कानूनी सुधार", 
-      description: "देश के अनुसार कानूनी सुधारों और नीतिगत परिवर्तनों की प्रगति को ट्रैक करें।" 
+      title: t('Dashboard.featureLegalReformTitle'), 
+      description: t('Dashboard.featureLegalReformDesc') 
     },
     { 
       href: "/male-engagement", 
       icon: <Handshake className="h-6 w-6 text-primary" />, 
-      title: "पुरुष सहभागिता", 
-      description: "पुरुषों को सहयोगी के रूप में शामिल करने के लिए पहल और संसाधन खोजें।" 
+      title: t('Dashboard.featureMaleEngagementTitle'), 
+      description: t('Dashboard.featureMaleEngagementDesc') 
     },
     { 
       href: "/smart-safety", 
       icon: <Shield className="h-6 w-6 text-primary" />, 
-      title: "स्मार्ट सुरक्षा", 
-      description: "व्यक्तिगत सुरक्षा के लिए सुरक्षा चेक-इन और यात्रा साझा करने जैसे स्मार्ट टूल का उपयोग करें।" 
+      title: t('Dashboard.featureSmartSafetyTitle'), 
+      description: t('Dashboard.featureSmartSafetyDesc') 
     },
     { 
       href: "/updates-feed", 
       icon: <RefreshCw className="h-6 w-6 text-primary" />, 
-      title: "अपडेट्स फ़ीड", 
-      description: "नवीनतम समाचार, अपडेट और उपयोगकर्ता-प्रस्तुत रिपोर्टों से सूचित रहें।" 
+      title: t('Dashboard.featureUpdatesFeedTitle'), 
+      description: t('Dashboard.featureUpdatesFeedDesc') 
     }
-  ];
+  ], [t]);
 
   const filteredFeatures = allFeatures.filter(feature => 
     feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     feature.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filterCategories = [
-    { id: 'global-data', label: 'वैश्विक डेटा' },
-    { id: 'education', label: 'शिक्षा' },
-    { id: 'legal-reform', label: 'कानूनी सुधार' },
-    { id: 'male-engagement', label: 'पुरुष सहभागिता' },
-    { id: 'smart-safety', label: 'स्मार्ट सुरक्षा' },
-    { id: 'safe-cities', label: 'सुरक्षित शहर' },
-    { id: 'community-empowerment', label: 'सामुदायिक सशक्तिकरण' },
-    { id: 'global-monitoring', label: 'वैश्विक निगरानी' },
-    { id: 'implementation-tracker', label: 'कार्यान्वयन ट्रैकर' },
-    { id: 'funding-tracker', label: 'फंडिंग ट्रैकर' },
-    { id: 'success-indicators', label: 'सफलता संकेतक' },
-    { id: 'updates-feed', label: 'अपडेट्स फ़ीड' },
-  ];
+  const filterCategories = useMemo(() => [
+    { id: 'startup-checklist', label: t('Dashboard.featureStartupChecklistTitle') },
+    { id: 'legal-compliance', label: t('Dashboard.featureLegalComplianceTitle') },
+    { id: 'global-data', label: t('Dashboard.featureGlobalDataTitle') },
+    { id: 'education', label: t('Dashboard.featureEducationTitle') },
+    { id: 'legal-reform', label: t('Dashboard.featureLegalReformTitle') },
+    { id: 'male-engagement', label: t('Dashboard.featureMaleEngagementTitle') },
+    { id: 'smart-safety', label: t('Dashboard.featureSmartSafetyTitle') },
+    { id: 'safe-cities', label: t('Dashboard.featureSafeCitiesTitle') },
+    { id: 'community-empowerment', label: t('Dashboard.featureCommunityEmpowermentTitle') },
+    { id: 'global-monitoring', label: t('Dashboard.featureGlobalMonitoringTitle') },
+    { id: 'implementation-tracker', label: t('Dashboard.featureImplementationTrackerTitle') },
+    { id: 'funding-tracker', label: t('Dashboard.featureFundingTrackerTitle') },
+    { id: 'success-indicators', label: t('Dashboard.featureSuccessIndicatorsTitle') },
+    { id: 'updates-feed', label: t('Dashboard.featureUpdatesFeedTitle') },
+  ], [t]);
 
-  const severityLevels = [
-    { id: 'positive', label: 'सकारात्मक' },
-    { id: 'neutral', label: 'तटस्थ' },
-    { id: 'negative', label: 'नकारात्मक' },
-  ];
+  const severityLevels = useMemo(() => [
+    { id: 'positive', label: t('Dashboard.filterSeverityPositive') },
+    { id: 'neutral', label: t('Dashboard.filterSeverityNeutral') },
+    { id: 'negative', label: t('Dashboard.filterSeverityNegative') },
+  ], [t]);
 
-  const dateRanges = [
-    { id: 'anytime', label: 'कभी भी' },
-    { id: 'last-week', label: 'पिछला सप्ताह' },
-    { id: 'last-month', label: 'पिछला महीना' },
-  ];
+  const dateRanges = useMemo(() => [
+    { id: 'anytime', label: t('Dashboard.filterDateAnytime') },
+    { id: 'last-week', label: t('Dashboard.filterDateLastWeek') },
+    { id: 'last-month', label: t('Dashboard.filterDateLastMonth') },
+  ], [t]);
 
   const handleConfirm = (service: 'police' | 'ambulance' | 'firetruck') => {
       setSelectedService(service);
       setShowNoNumberDialog(true);
   };
 
-  const stateData = [
+  const stateData = useMemo(() => [
     { 
-      name: 'आंध्र प्रदेश', 
+      name: t('Dashboard.stateAndhraPradesh'), 
       score: 75,
       trend: 'up',
       details: [
@@ -378,45 +380,45 @@ export default function DashboardPage() {
         t('Dashboard.stateAPDetail2')
       ]
     },
-    { name: 'अरुणाचल प्रदेश', score: 68, trend: 'down' },
-    { name: 'असम', score: 65, trend: 'down' },
-    { name: 'बिहार', score: 55, trend: 'down' },
-    { name: 'छत्तीसगढ़', score: 62, trend: 'down' },
-    { name: 'गोवा', score: 85, trend: 'down' },
-    { name: 'गुजरात', score: 78, trend: 'down' },
-    { name: 'हरियाणा', score: 72, trend: 'up' },
-    { name: 'हिमाचल प्रदेश', score: 79, trend: 'up' },
-    { name: 'झारखंड', score: 58, trend: 'down' },
-    { name: 'कर्नाटक', score: 82, trend: 'up' },
-    { name: 'केरल', score: 88, trend: 'up' },
-    { name: 'मध्य प्रदेश', score: 63, trend: 'down' },
-    { name: 'महाराष्ट्र', score: 80, trend: 'up' },
-    { name: 'मणिपुर', score: 61, trend: 'down' },
-    { name: 'मेघालय', score: 70, trend: 'up' },
-    { name: 'मिजोरम', score: 75, trend: 'up' },
-    { name: 'नागालैंड', score: 67, trend: 'down' },
-    { name: 'ओडिशा', score: 66, trend: 'down' },
-    { name: 'पंजाब', score: 77, trend: 'up' },
-    { name: 'राजस्थान', score: 64, trend: 'down' },
-    { name: 'सिक्किम', score: 84, trend: 'up' },
-    { name: 'तमिलनाडु', score: 81, trend: 'up' },
-    { name: 'तेलंगाना', score: 79, trend: 'up' },
-    { name: 'त्रिपुरा', score: 69, trend: 'down' },
-    { name: 'उत्तर प्रदेश', score: 60, trend: 'down' },
-    { name: 'उत्तराखंड', score: 74, trend: 'up' },
-    { name: 'पश्चिम बंगाल', score: 71, trend: 'down' },
-  ];
+    { name: t('Dashboard.stateArunachalPradesh'), score: 68, trend: 'down' },
+    { name: t('Dashboard.stateAssam'), score: 65, trend: 'down' },
+    { name: t('Dashboard.stateBihar'), score: 55, trend: 'down' },
+    { name: t('Dashboard.stateChhattisgarh'), score: 62, trend: 'down' },
+    { name: t('Dashboard.stateGoa'), score: 85, trend: 'down' },
+    { name: t('Dashboard.stateGujarat'), score: 78, trend: 'down' },
+    { name: t('Dashboard.stateHaryana'), score: 72, trend: 'up' },
+    { name: t('Dashboard.stateHimachalPradesh'), score: 79, trend: 'up' },
+    { name: t('Dashboard.stateJharkhand'), score: 58, trend: 'down' },
+    { name: t('Dashboard.stateKarnataka'), score: 82, trend: 'up' },
+    { name: t('Dashboard.stateKerala'), score: 88, trend: 'up' },
+    { name: t('Dashboard.stateMadhyaPradesh'), score: 63, trend: 'down' },
+    { name: t('Dashboard.stateMaharashtra'), score: 80, trend: 'up' },
+    { name: t('Dashboard.stateManipur'), score: 61, trend: 'down' },
+    { name: t('Dashboard.stateMeghalaya'), score: 70, trend: 'up' },
+    { name: t('Dashboard.stateMizoram'), score: 75, trend: 'up' },
+    { name: t('Dashboard.stateNagaland'), score: 67, trend: 'down' },
+    { name: t('Dashboard.stateOdisha'), score: 66, trend: 'down' },
+    { name: t('Dashboard.statePunjab'), score: 77, trend: 'up' },
+    { name: t('Dashboard.stateRajasthan'), score: 64, trend: 'down' },
+    { name: t('Dashboard.stateSikkim'), score: 84, trend: 'up' },
+    { name: t('Dashboard.stateTamilNadu'), score: 81, trend: 'up' },
+    { name: t('Dashboard.stateTelangana'), score: 79, trend: 'up' },
+    { name: t('Dashboard.stateTripura'), score: 69, trend: 'down' },
+    { name: t('Dashboard.stateUttarPradesh'), score: 60, trend: 'down' },
+    { name: t('Dashboard.stateUttarakhand'), score: 74, trend: 'up' },
+    { name: t('Dashboard.stateWestBengal'), score: 71, trend: 'down' },
+  ], [t]);
 
-  const unionTerritoriesData = [
-    { name: 'अंडमान और निकोबार द्वीप समूह', score: 76, trend: 'up' },
-    { name: 'चंडीगढ़', score: 80, trend: 'up' },
-    { name: 'दादरा और नगर हवेली और दमन और दीव', score: 72, trend: 'down' },
-    { name: 'दिल्ली', score: 68, trend: 'down' },
-    { name: 'जम्मू और कश्मीर', score: 60, trend: 'down' },
-    { name: 'लद्दाख', score: 78, trend: 'up' },
-    { name: 'लक्षद्वीप', score: 85, trend: 'up' },
-    { name: 'पुडुचेरी', score: 79, trend: 'up' }
-  ]
+  const unionTerritoriesData = useMemo(() => [
+    { name: t('Dashboard.utAndaman'), score: 76, trend: 'up' },
+    { name: t('Dashboard.utChandigarh'), score: 80, trend: 'up' },
+    { name: t('Dashboard.utDadra'), score: 72, trend: 'down' },
+    { name: t('Dashboard.utDelhi'), score: 68, trend: 'down' },
+    { name: t('Dashboard.utJammuKashmir'), score: 60, trend: 'down' },
+    { name: t('Dashboard.utLadakh'), score: 78, trend: 'up' },
+    { name: t('Dashboard.utLakshadweep'), score: 85, trend: 'up' },
+    { name: t('Dashboard.utPuducherry'), score: 79, trend: 'up' }
+  ], [t]);
 
   const handleShare = async (title: string, text: string) => {
     if (navigator.share) {
@@ -1065,5 +1067,7 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
 
     

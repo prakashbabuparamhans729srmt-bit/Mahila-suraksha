@@ -8,22 +8,24 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Card, CardContent } from '@/components/ui/card';
+import { useTranslation } from '@/context/language-context';
 
 export function BottomNav() {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const navItems = [
-    { href: '/', icon: Home, label: 'होम' },
-    { href: '/global-monitoring', icon: BarChart2, label: 'डेटा' },
-    { href: '/updates-feed', icon: RefreshCw, label: 'अपडेट्स' },
-    { href: '/education', icon: GraduationCap, label: 'शिक्षा' },
+    { href: '/', icon: Home, label: t('BottomNav.home') },
+    { href: '/global-monitoring', icon: BarChart2, label: t('BottomNav.data') },
+    { href: '/updates-feed', icon: RefreshCw, label: t('BottomNav.updates') },
+    { href: '/education', icon: GraduationCap, label: t('BottomNav.education') },
   ];
 
   const createMenuItems = [
-    { href: '/report-incident', icon: Siren, label: 'घटना की रिपोर्ट करें' },
-    { href: '/add-update', icon: FilePlus, label: 'अपडेट जोड़ें' },
-    { href: '/add-initiative', icon: Building, label: 'पहल जोड़ें' },
-    { href: '/add-content', icon: BookPlus, label: 'सामग्री जोड़ें' },
+    { href: '/report-incident', icon: Siren, label: t('BottomNav.reportIncident') },
+    { href: '/add-update', icon: FilePlus, label: t('BottomNav.addUpdate') },
+    { href: '/add-initiative', icon: Building, label: t('BottomNav.addInitiative') },
+    { href: '/add-content', icon: BookPlus, label: t('BottomNav.addContent') },
   ];
 
 
@@ -60,7 +62,7 @@ export function BottomNav() {
               <SheetContent side="bottom" className="bg-background text-foreground rounded-t-lg">
                 <SheetHeader className="text-left p-4">
                   <div className="flex justify-between items-center">
-                    <SheetTitle className="text-xl font-bold">बनाएं</SheetTitle>
+                    <SheetTitle className="text-xl font-bold">{t('BottomNav.create')}</SheetTitle>
                     <SheetTrigger asChild>
                         <Button variant="ghost" size="icon">
                             <X className="h-6 w-6" />
@@ -105,3 +107,5 @@ export function BottomNav() {
     </>
   );
 }
+
+    

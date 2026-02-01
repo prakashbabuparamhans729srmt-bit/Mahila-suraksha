@@ -46,25 +46,27 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { useToast } from '@/hooks/use-toast';
 import { useVoiceSearch } from '@/context/voice-search-context';
 import { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from '@/context/language-context';
 
 
 function AdminSidebar({ searchQuery }: { searchQuery: string }) {
     const pathname = usePathname();
+    const { t } = useTranslation();
     
     const pageManagementItems = useMemo(() => [
-      { title: 'होम पेज', href: '/master-admin/pages/home', icon: Home },
-      { title: 'शिक्षा पेज', href: '/master-admin/pages/education', icon: GraduationCap },
-      { title: 'वैश्विक निगरानी', href: '/master-admin/pages/global-monitoring', icon: BarChart2 },
-      { title: 'कानूनी सुधार', href: '/master-admin/pages/legal-reform', icon: Scale },
-      { title: 'पुरुष सहभागिता', href: '/master-admin/pages/male-engagement', icon: Handshake },
-      { title: 'सुरक्षित शहर', href: '/master-admin/pages/safe-cities', icon: Building2 },
-      { title: 'स्मार्ट सुरक्षा', href: '/master-admin/pages/smart-safety', icon: Shield },
-      { title: 'अपडेट्स फ़ीड', href: '/master-admin/pages/updates-feed', icon: RefreshCw },
-      { title: 'फंडिंग ट्रैकर', href: '/master-admin/pages/funding-tracker', icon: FilePieChart },
-      { title: 'कार्यान्वयन ट्रैकर', href: '/master-admin/pages/implementation-tracker', icon: Target },
-      { title: 'सफलता संकेतक', href: '/master-admin/pages/success-indicators', icon: LineChart },
-      { title: 'सामुदायिक सशक्तिकरण', href: '/master-admin/pages/community-empowerment', icon: HeartHandshake },
-    ], []);
+      { title: t('Admin.homePage'), href: '/master-admin/pages/home', icon: Home },
+      { title: t('Admin.educationPage'), href: '/master-admin/pages/education', icon: GraduationCap },
+      { title: t('Admin.globalMonitoringPage'), href: '/master-admin/pages/global-monitoring', icon: BarChart2 },
+      { title: t('Admin.legalReformPage'), href: '/master-admin/pages/legal-reform', icon: Scale },
+      { title: t('Admin.maleEngagementPage'), href: '/master-admin/pages/male-engagement', icon: Handshake },
+      { title: t('Admin.safeCitiesPage'), href: '/master-admin/pages/safe-cities', icon: Building2 },
+      { title: t('Admin.smartSafetyPage'), href: '/master-admin/pages/smart-safety', icon: Shield },
+      { title: t('Admin.updatesFeedPage'), href: '/master-admin/pages/updates-feed', icon: RefreshCw },
+      { title: t('Admin.fundingTrackerPage'), href: '/master-admin/pages/funding-tracker', icon: FilePieChart },
+      { title: t('Admin.implementationTrackerPage'), href: '/master-admin/pages/implementation-tracker', icon: Target },
+      { title: t('Admin.successIndicatorsPage'), href: '/master-admin/pages/success-indicators', icon: LineChart },
+      { title: t('Admin.communityEmpowermentPage'), href: '/master-admin/pages/community-empowerment', icon: HeartHandshake },
+    ], [t]);
 
     const filteredPageManagementItems = useMemo(() => {
         if (!searchQuery) return pageManagementItems;
@@ -93,7 +95,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
                     <Link href="/master-admin" passHref>
                       <SidebarMenuButton isActive={pathname === '/master-admin'}>
                         <Home />
-                        <span>डैशबोर्ड</span>
+                        <span>{t('Admin.dashboard')}</span>
                       </SidebarMenuButton>
                     </Link>
                   </SidebarMenuItem>
@@ -101,7 +103,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
                     <Link href="/master-admin/users" passHref>
                       <SidebarMenuButton isActive={pathname === '/master-admin/users'}>
                         <Users />
-                        <span>उपयोगकर्ता</span>
+                        <span>{t('Admin.users')}</span>
                       </SidebarMenuButton>
                     </Link>
                   </SidebarMenuItem>
@@ -109,7 +111,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
                     <Link href="/master-admin/content" passHref>
                       <SidebarMenuButton isActive={pathname.startsWith('/master-admin/content')}>
                         <FileText />
-                        <span>सामग्री</span>
+                        <span>{t('Admin.content')}</span>
                       </SidebarMenuButton>
                     </Link>
                   </SidebarMenuItem>
@@ -117,7 +119,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
                     <Link href="/master-admin/analytics" passHref>
                       <SidebarMenuButton isActive={pathname.startsWith('/master-admin/analytics')}>
                         <BarChart2 />
-                        <span>एनालिटिक्स</span>
+                        <span>{t('Admin.analytics')}</span>
                       </SidebarMenuButton>
                     </Link>
                   </SidebarMenuItem>
@@ -125,7 +127,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
 
                 <SidebarMenu>
                   <SidebarMenuItem className="mt-4">
-                    <span className="text-xs text-muted-foreground px-2">पेज प्रबंधन</span>
+                    <span className="text-xs text-muted-foreground px-2">{t('Admin.pageManagement')}</span>
                   </SidebarMenuItem>
                   {filteredPageManagementItems.map((item) => (
                      <SidebarMenuItem key={item.title}>
@@ -139,7 +141,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
                   ))}
                    {filteredPageManagementItems.length === 0 && (
                         <SidebarMenuItem>
-                            <span className="text-sm text-muted-foreground px-2 py-4 text-center block">कोई परिणाम नहीं मिला।</span>
+                            <span className="text-sm text-muted-foreground px-2 py-4 text-center block">{t('Admin.noResults')}</span>
                         </SidebarMenuItem>
                     )}
                 </SidebarMenu>
@@ -149,7 +151,7 @@ function AdminSidebar({ searchQuery }: { searchQuery: string }) {
                         <Link href="/master-admin/settings" passHref>
                           <SidebarMenuButton isActive={pathname.startsWith('/master-admin/settings')}>
                             <Settings />
-                            <span>सेटिंग्स</span>
+                            <span>{t('Admin.settings')}</span>
                           </SidebarMenuButton>
                         </Link>
                     </SidebarMenuItem>
@@ -166,6 +168,7 @@ export default function MasterAdminLayout({
 }) {
   const { openVoiceSearch, searchQuery: voiceSearchQuery, setSearchQuery: setGlobalSearchQuery } = useVoiceSearch();
   const [searchQuery, setSearchQuery] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (voiceSearchQuery) {
@@ -187,7 +190,7 @@ export default function MasterAdminLayout({
                     <SidebarTrigger className="mr-2 md:hidden" />
                     <div className="flex items-center gap-2">
                         <Shield className="h-6 w-6 text-primary" />
-                        <h1 className="text-xl font-bold">डैशबोर्ड</h1>
+                        <h1 className="text-xl font-bold">{t('Admin.dashboard')}</h1>
                     </div>
                 </div>
 
@@ -195,7 +198,7 @@ export default function MasterAdminLayout({
                     <div className="relative hidden md:block">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                         <Input 
-                            placeholder="पेज खोजें..." 
+                            placeholder={t('Admin.searchPages')}
                             className="pl-10 bg-secondary/50 border-input w-64"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}

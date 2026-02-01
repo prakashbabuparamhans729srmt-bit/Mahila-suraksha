@@ -8,9 +8,11 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { useTranslation } from '@/context/language-context';
 
 export default function MasterAdminSettingsPage() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [defaultRole, setDefaultRole] = useState('user');
   const [requireEmailVerification, setRequireEmailVerification] = useState(true);
   const [autoContentFlagging, setAutoContentFlagging] = useState(true);
@@ -22,40 +24,40 @@ export default function MasterAdminSettingsPage() {
       autoContentFlagging,
     });
     toast({
-      title: "सेटिंग्स सहेजी गईं",
-      description: "एडमिन सेटिंग्स सफलतापूर्वक अपडेट की गईं।",
+      title: t('Admin.settingsSaved'),
+      description: t('Admin.settingsSavedDesc'),
     });
   };
 
   return (
     <>
         <p className="text-muted-foreground px-1">
-          एडमिनिस्ट्रेटर-विशिष्ट सेटिंग्स और कॉन्फ़िगरेशन प्रबंधित करें।
+          {t('Admin.settingsDesc')}
         </p>
 
         <Card className="bg-secondary/50 border-border">
             <CardHeader>
-                <CardTitle>उपयोगकर्ता प्रबंधन</CardTitle>
+                <CardTitle>{t('Admin.userManagement')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="default-role">नए उपयोगकर्ताओं के लिए डिफ़ॉल्ट भूमिका</Label>
+                    <Label htmlFor="default-role">{t('Admin.defaultRoleLabel')}</Label>
                     <Select value={defaultRole} onValueChange={setDefaultRole}>
                         <SelectTrigger id="default-role" className="w-full bg-background">
-                        <SelectValue placeholder="एक भूमिका चुनें" />
+                        <SelectValue placeholder={t('Admin.selectRole')} />
                         </SelectTrigger>
                         <SelectContent>
-                        <SelectItem value="user">उपयोगकर्ता</SelectItem>
-                        <SelectItem value="moderator">मॉडरेटर</SelectItem>
-                        <SelectItem value="admin">एडमिन</SelectItem>
+                        <SelectItem value="user">{t('Admin.roleUser')}</SelectItem>
+                        <SelectItem value="moderator">{t('Admin.roleModerator')}</SelectItem>
+                        <SelectItem value="admin">{t('Admin.roleAdmin')}</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
                 <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm bg-background">
                     <div className="space-y-0.5">
-                        <Label>ईमेल सत्यापन की आवश्यकता है</Label>
+                        <Label>{t('Admin.requireEmailVerification')}</Label>
                         <p className="text-xs text-muted-foreground">
-                        साइन अप करने पर उपयोगकर्ताओं को अपना ईमेल सत्यापित करने के लिए बाध्य करें।
+                        {t('Admin.requireEmailVerificationDesc')}
                         </p>
                     </div>
                     <Switch checked={requireEmailVerification} onCheckedChange={setRequireEmailVerification} />
@@ -65,14 +67,14 @@ export default function MasterAdminSettingsPage() {
 
         <Card className="bg-secondary/50 border-border">
             <CardHeader>
-                <CardTitle>सामग्री मॉडरेशन</CardTitle>
+                <CardTitle>{t('Admin.contentModeration')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
                  <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm bg-background">
                     <div className="space-y-0.5">
-                        <Label>स्वचालित सामग्री फ़्लैगिंग</Label>
+                        <Label>{t('Admin.autoContentFlagging')}</Label>
                         <p className="text-xs text-muted-foreground">
-                        संभावित रूप से अनुचित सामग्री को चिह्नित करने के लिए AI का उपयोग करें।
+                        {t('Admin.autoContentFlaggingDesc')}
                         </p>
                     </div>
                     <Switch checked={autoContentFlagging} onCheckedChange={setAutoContentFlagging} />
@@ -80,7 +82,7 @@ export default function MasterAdminSettingsPage() {
             </CardContent>
         </Card>
         
-        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12" onClick={handleSaveChanges}>सेटिंग्स सहेजें</Button>
+        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-12" onClick={handleSaveChanges}>{t('Admin.saveSettings')}</Button>
     </>
   );
 }

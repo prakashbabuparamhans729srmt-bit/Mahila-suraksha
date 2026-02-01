@@ -6,16 +6,18 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminContent } from '@/context/admin-content-context';
+import { useTranslation } from '@/context/language-context';
 
 export default function ContentPage() {
   const { pendingContent, moderateContent } = useAdminContent();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleApprove = (id: number) => {
     moderateContent(id, 'approved');
     toast({
-      title: "स्वीकृत",
-      description: "सामग्री को सफलतापूर्वक स्वीकृत किया गया है।",
+      title: t('Admin.approvedToast'),
+      description: t('Admin.approvedToastDesc'),
     });
   };
   
@@ -23,34 +25,34 @@ export default function ContentPage() {
     moderateContent(id, 'rejected');
     toast({
       variant: 'destructive',
-      title: "अस्वीकृत",
-      description: "सामग्री को अस्वीकृत कर दिया गया है।",
+      title: t('Admin.rejectedToast'),
+      description: t('Admin.rejectedToastDesc'),
     });
   };
 
   const handleView = (title: string) => {
     toast({
-      title: "देखा जा रहा है...",
-      description: `आप "${title}" देख रहे हैं।`,
+      title: t('Admin.viewingToast'),
+      description: t('Admin.viewingToastDesc', { title }),
     });
   };
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">सामग्री मॉडरेशन</h1>
+      <h1 className="text-2xl font-bold mb-4">{t('Admin.contentModerationTitle')}</h1>
       <Card>
         <CardHeader>
-          <CardTitle>लंबित सामग्री</CardTitle>
+          <CardTitle>{t('Admin.pendingContent')}</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>शीर्षक</TableHead>
-                <TableHead>प्रकार</TableHead>
-                <TableHead>उपयोगकर्ता</TableHead>
-                <TableHead>तिथि</TableHead>
-                <TableHead>कार्रवाई</TableHead>
+                <TableHead>{t('Admin.title')}</TableHead>
+                <TableHead>{t('Admin.type')}</TableHead>
+                <TableHead>{t('Admin.user')}</TableHead>
+                <TableHead>{t('Admin.date')}</TableHead>
+                <TableHead>{t('Admin.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -61,14 +63,14 @@ export default function ContentPage() {
                   <TableCell>{item.user}</TableCell>
                   <TableCell>{item.date}</TableCell>
                   <TableCell className="space-x-2">
-                    <Button variant="outline" size="sm" onClick={() => handleView(item.title)}>देखें</Button>
-                    <Button variant="default" size="sm" onClick={() => handleApprove(item.id)}>स्वीकार करें</Button>
-                    <Button variant="destructive" size="sm" onClick={() => handleReject(item.id)}>अस्वीकार</Button>
+                    <Button variant="outline" size="sm" onClick={() => handleView(item.title)}>{t('Admin.view')}</Button>
+                    <Button variant="default" size="sm" onClick={() => handleApprove(item.id)}>{t('Admin.approve')}</Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleReject(item.id)}>{t('Admin.reject')}</Button>
                   </TableCell>
                 </TableRow>
               )) : (
                 <TableRow>
-                    <TableCell colSpan={5} className="text-center">कोई लंबित सामग्री नहीं है।</TableCell>
+                    <TableCell colSpan={5} className="text-center">{t('Admin.noPendingContent')}</TableCell>
                 </TableRow>
               )}
             </TableBody>

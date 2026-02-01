@@ -3,18 +3,22 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from '@/context/language-context';
 
 export default function ManageMaleEngagementPage() {
+  const { t } = useTranslation();
+  const pageName = t('Admin.maleEngagementPage');
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">पुरुष सहभागिता पेज प्रबंधित करें</h1>
+      <h1 className="text-2xl font-bold mb-4">{t('Admin.managePageTitle', { pageName })}</h1>
       <Card>
         <CardHeader>
-          <CardTitle>सामग्री संपादित करें</CardTitle>
+          <CardTitle>{t('Admin.editContent')}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>यहां पुरुष सहभागिता पेज की सामग्री को संपादित करें।</p>
-          <Button className="mt-4">बदलाव सहेजें</Button>
+          <p>{t('Admin.editContentDesc', { pageName })}</p>
+          <Button className="mt-4">{t('Admin.saveChanges')}</Button>
         </CardContent>
       </Card>
     </div>

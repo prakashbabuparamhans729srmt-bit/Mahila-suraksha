@@ -412,7 +412,6 @@
   "Settings.submit": "Submit",
   "Settings.feedbackSent": "Feedback Sent",
   "Settings.feedbackSentDesc": "Thank you for your valuable suggestion!",
-  "Settings.appVersion": "App version 1.0.0",
   "Settings.loggedOut": "Logged Out",
   "Settings.loggedOutDesc": "You have been successfully logged out.",
   "Settings.guestLoggedOutDesc": "You have been logged out of guest mode.",
@@ -1205,5 +1204,9 @@
   "contentType.article": "Article",
   "contentType.video": "Video",
   "contentType.quiz": "Quiz",
-  "contentType.resource": "Resource"
+  "contentType.resource": "Resource",
+  "Admin.emailPlaceholder": "user@example.com",
+  "Settings.appVersion": "App version 1.0.0"
 }
+    
+    

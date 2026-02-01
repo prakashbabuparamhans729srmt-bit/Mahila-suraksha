@@ -75,7 +75,7 @@ export default function UsersPage() {
                             <Input 
                                 id="email"
                                 type="email" 
-                                placeholder="user@example.com"
+                                placeholder={t('Admin.emailPlaceholder')}
                                 value={newUser.email}
                                 onChange={(e) => setNewUser({...newUser, email: e.target.value})}
                             />
@@ -155,3 +155,5 @@ export default function UsersPage() {
     </div>
   );
 }
+
+    

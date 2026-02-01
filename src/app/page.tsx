@@ -434,7 +434,7 @@ export default function DashboardPage() {
     } else {
         toast({
             variant: "destructive",
-            title: "Error",
+            title: t('Error'),
             description: t('Dashboard.sharingNotSupported')
         });
     }
@@ -454,7 +454,7 @@ export default function DashboardPage() {
     } else {
         toast({
             variant: "destructive",
-            title: "Error",
+            title: t('Error'),
             description: t('Dashboard.sharingNotSupported')
         });
     }
@@ -1067,6 +1067,8 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
 
     
 

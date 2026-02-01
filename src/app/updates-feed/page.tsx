@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { CommentSection } from '@/components/ui/comment-section';
 import { useAdminContent } from '@/context/admin-content-context';
 import { useTranslation } from '@/context/language-context';
+import { useToast } from '@/hooks/use-toast';
 
 type Post = {
     id: number;
@@ -31,6 +32,7 @@ type Post = {
 export default function UpdatesFeedPage() {
     const { publishedContent } = useAdminContent();
     const { t } = useTranslation();
+    const { toast } = useToast();
     
     const initialPostsData = publishedContent
         .filter(item => item.type === 'update')
@@ -75,7 +77,11 @@ export default function UpdatesFeedPage() {
                 console.error('Error sharing:', error);
             }
         } else {
-            alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+            toast({
+                variant: "destructive",
+                title: t('Error'),
+                description: t('Dashboard.sharingNotSupported')
+            });
         }
     };
 
@@ -106,8 +112,8 @@ export default function UpdatesFeedPage() {
                                 {post.description}
                             </p>
                             <div className="flex items-center justify-between text-xs text-muted-foreground">
-                                <span>{post.likes} Likes</span>
-                                <span>{post.commentsCount} Comments</span>
+                                <span>{t('Dashboard.likes', { count: post.likes })}</span>
+                                <span>{t('Dashboard.comments', { count: post.commentsCount })}</span>
                             </div>
                             <Separator />
                             <div className="flex justify-around">
@@ -148,3 +154,5 @@ export default function UpdatesFeedPage() {
         </div>
     );
 }
+
+    

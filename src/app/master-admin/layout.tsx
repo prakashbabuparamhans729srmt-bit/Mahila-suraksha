@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Users,
   FileText,
@@ -47,7 +48,7 @@ import { useVoiceSearch } from '@/context/voice-search-context';
 
 
 function AdminSidebar() {
-    const { open, setOpen } = useSidebar();
+    const pathname = usePathname();
     
     const pageManagementItems = [
       { title: 'होम पेज', href: '/master-admin/pages/home', icon: Home },
@@ -81,7 +82,7 @@ function AdminSidebar() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <Link href="/master-admin" passHref>
-                      <SidebarMenuButton isActive>
+                      <SidebarMenuButton isActive={pathname === '/master-admin'}>
                         <Home />
                         <span>डैशबोर्ड</span>
                       </SidebarMenuButton>
@@ -89,7 +90,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/users" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton isActive={pathname === '/master-admin/users'}>
                         <Users />
                         <span>उपयोगकर्ता</span>
                       </SidebarMenuButton>
@@ -97,7 +98,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/content" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton isActive={pathname === '/master-admin/content'}>
                         <FileText />
                         <span>सामग्री</span>
                       </SidebarMenuButton>
@@ -105,7 +106,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/analytics" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton isActive={pathname === '/master-admin/analytics'}>
                         <BarChart2 />
                         <span>एनालिटिक्स</span>
                       </SidebarMenuButton>
@@ -120,7 +121,7 @@ function AdminSidebar() {
                   {pageManagementItems.map((item) => (
                      <SidebarMenuItem key={item.title}>
                         <Link href={item.href} passHref>
-                          <SidebarMenuButton>
+                          <SidebarMenuButton isActive={pathname === item.href}>
                              <item.icon />
                              <span>{item.title}</span>
                           </SidebarMenuButton>
@@ -132,7 +133,7 @@ function AdminSidebar() {
                 <SidebarMenu className="mt-auto">
                     <SidebarMenuItem>
                         <Link href="/master-admin/settings" passHref>
-                          <SidebarMenuButton>
+                          <SidebarMenuButton isActive={pathname === '/master-admin/settings'}>
                             <Settings />
                             <span>सेटिंग्स</span>
                           </SidebarMenuButton>

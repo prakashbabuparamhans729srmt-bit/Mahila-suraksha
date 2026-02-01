@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft, ListChecks, LogOut } from 'lucide-react';
+import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft, ListChecks, LogOut, Mic } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -85,7 +85,7 @@ const SuccessIndicatorIcon = () => (
 
 
 const PoliceIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-blue-500">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-primary">
         <path d="M10.5 8.5h3" />
         <path d="M12 7v3" />
         <path d="m13 18-6-6 3-3 6 6-3 3z" />
@@ -95,7 +95,7 @@ const PoliceIcon = () => (
 );
 
 const AmbulanceIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-red-500">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-destructive">
         <path d="M10.5 8.5h3" />
         <path d="M12 7v3" />
         <path d="M18 18h-2a4 4 0 0 1-4-4V5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v9a4 4 0 0 0 4 4h2" />
@@ -120,8 +120,8 @@ const FireTruckIcon = () => (
 );
 
 const AlertIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500">
-        <path d="M12 2c.6 0 1.2.3 1.5.8l7.8 14.3c.3.5.3 1.1 0 1.6s-.9.8-1.5.8H4.2c-.6 0-1.2-.3-1.5-.8s-.3-1.1 0-1.6L10.5 2.8c.3-.5.9-.8 1.5-.8z" fill="#F44336" stroke-width="0"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-destructive">
+        <path d="M12 2c.6 0 1.2.3 1.5.8l7.8 14.3c.3.5.3 1.1 0 1.6s-.9.8-1.5.8H4.2c-.6 0-1.2-.3-1.5-.8s-.3-1.1 0-1.6L10.5 2.8c.3-.5.9-.8 1.5-.8z" fill="#F71F26" stroke-width="0"/>
         <path d="M12 18v.01" />
         <path d="M12 14v-4" stroke="#FFF" />
     </svg>
@@ -162,6 +162,13 @@ export default function DashboardPage() {
 
   const handlePostLike = (postId: number) => {
     setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
+  };
+
+  const handleMicSearch = () => {
+    toast({
+        title: "सुविधा जल्द ही आ रही है",
+        description: "वॉइस सर्च सुविधा जल्द ही उपलब्ध होगी।",
+    });
   };
 
 
@@ -490,6 +497,9 @@ export default function DashboardPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          <Button variant="outline" size="icon" className="bg-secondary/50 border-border" onClick={handleMicSearch}>
+            <Mic className="h-5 w-5" />
+          </Button>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="bg-secondary/50 border-border">
@@ -548,7 +558,7 @@ export default function DashboardPage() {
 
         <Sheet>
             <SheetTrigger asChild>
-                <Card className="bg-red-600 cursor-pointer">
+                <Card className="bg-destructive cursor-pointer">
                     <CardContent className="flex flex-col items-center justify-center p-6 text-center text-white">
                         <div className="border-2 border-white p-2 mb-2">
                         <span className="text-lg font-bold">SOS</span>
@@ -587,7 +597,7 @@ export default function DashboardPage() {
                       <AlertDialogContent>
                           <AlertDialogHeader>
                               <div className="flex justify-center">
-                                 <div className="bg-blue-100 p-3 rounded-full">
+                                 <div className="bg-primary/10 p-3 rounded-full">
                                     <PoliceIcon />
                                 </div>
                               </div>
@@ -597,7 +607,7 @@ export default function DashboardPage() {
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-red-600 hover:bg-red-700" onClick={() => handleConfirm('police')}>हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('police')}>हाँ, पुष्टि करें</AlertDialogAction>
                               <AlertDialogCancel>रद्द करें</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
@@ -620,7 +630,7 @@ export default function DashboardPage() {
                       <AlertDialogContent>
                           <AlertDialogHeader>
                               <div className="flex justify-center">
-                                 <div className="bg-red-100 p-3 rounded-full">
+                                 <div className="bg-destructive/10 p-3 rounded-full">
                                     <AmbulanceIcon />
                                  </div>
                               </div>
@@ -630,7 +640,7 @@ export default function DashboardPage() {
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-red-600 hover:bg-red-700" onClick={() => handleConfirm('ambulance')}>हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('ambulance')}>हाँ, पुष्टि करें</AlertDialogAction>
                               <AlertDialogCancel>रद्द करें</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
@@ -653,7 +663,7 @@ export default function DashboardPage() {
                       <AlertDialogContent>
                           <AlertDialogHeader>
                               <div className="flex justify-center">
-                                <div className="bg-orange-100 p-3 rounded-full">
+                                <div className="bg-orange-500/10 p-3 rounded-full">
                                     <FireTruckIcon />
                                  </div>
                               </div>
@@ -663,7 +673,7 @@ export default function DashboardPage() {
                               </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex-col space-y-2 sm:flex-col sm:space-x-0">
-                              <AlertDialogAction className="bg-red-600 hover:bg-red-700" onClick={() => handleConfirm('firetruck')}>हाँ, पुष्टि करें</AlertDialogAction>
+                              <AlertDialogAction className="bg-destructive hover:bg-destructive/90" onClick={() => handleConfirm('firetruck')}>हाँ, पुष्टि करें</AlertDialogAction>
                               <AlertDialogCancel>रद्द करें</AlertDialogCancel>
                           </AlertDialogFooter>
                       </AlertDialogContent>
@@ -766,14 +776,14 @@ export default function DashboardPage() {
                             <span>कानूनी और नीति सुधार</span>
                             <span>82/100</span>
                         </div>
-                        <Progress value={82} className="h-2 [&>div]:bg-green-500" />
+                        <Progress value={82} className="h-2 [&>div]:bg-primary" />
                         </div>
                         <div className="space-y-1">
                         <div className="flex justify-between text-sm">
                             <span>सार्वजनिक जागरूकता</span>
                             <span>75/100</span>
                         </div>
-                        <Progress value={75} className="h-2 [&>div]:bg-yellow-500" />
+                        <Progress value={75} className="h-2 [&>div]:bg-primary" />
                         </div>
                         <div className="space-y-1">
                         <div className="flex justify-between text-sm">
@@ -787,7 +797,7 @@ export default function DashboardPage() {
                             <span>घटना रिपोर्टिंग दर</span>
                             <span>79/100</span>
                         </div>
-                        <Progress value={79} className="h-2 [&>div]:bg-green-500" />
+                        <Progress value={79} className="h-2 [&>div]:bg-primary" />
                         </div>
                     </div>
                     </div>
@@ -958,7 +968,7 @@ export default function DashboardPage() {
         <div className="space-y-4" id="recent-updates">
             <h2 className="text-xl font-bold">हाल के अपडेट</h2>
             {posts.map((post) => (
-              <Card key={post.id} className={`bg-secondary/50 border-border ${post.highlighted ? 'border-yellow-400 border-2' : ''}`}>
+              <Card key={post.id} className={`bg-secondary/50 border-border ${post.highlighted ? 'border-primary border-2' : ''}`}>
                 <CardContent className="p-4 space-y-4">
                   <div className="flex justify-between items-start">
                     <h3 className="font-semibold text-primary">{post.title}</h3>

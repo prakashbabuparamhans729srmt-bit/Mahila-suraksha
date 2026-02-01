@@ -21,7 +21,8 @@ import {
   FilePieChart,
   HeartHandshake,
   Search,
-  Bell
+  Bell,
+  Mic
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -41,6 +42,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { useToast } from '@/hooks/use-toast';
 
 
 function AdminSidebar() {
@@ -146,6 +148,15 @@ export default function MasterAdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { toast } = useToast();
+
+  const handleMicSearch = () => {
+    toast({
+        title: "सुविधा जल्द ही आ रही है",
+        description: "वॉइस सर्च सुविधा जल्द ही उपलब्ध होगी।",
+    });
+  };
+
   return (
     <SidebarProvider>
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
@@ -163,6 +174,9 @@ export default function MasterAdminLayout({
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                         <Input placeholder="खोजें..." className="pl-10 bg-secondary/50 border-input w-64" />
                     </div>
+                    <Button variant="ghost" size="icon" className="hidden md:flex" onClick={handleMicSearch}>
+                        <Mic className="h-5 w-5" />
+                    </Button>
                     <Button variant="ghost" size="icon">
                         <Bell className="h-5 w-5" />
                     </Button>

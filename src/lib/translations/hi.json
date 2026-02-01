@@ -1187,5 +1187,13 @@
   "Dashboard.utJammuKashmir": "जम्मू और कश्मीर",
   "Dashboard.utLadakh": "लद्दाख",
   "Dashboard.utLakshadweep": "लक्षद्वीप",
-  "Dashboard.utPuducherry": "पुडुचेरी"
+  "Dashboard.utPuducherry": "पुडुचेरी",
+  "VoiceSearch.title": "मैं आपकी कैसे मदद कर सकता हूँ?",
+  "VoiceSearch.description": "बोलना शुरू करें, मैं सुन रहा हूँ...",
+  "VoiceSearch.micError": "माइक्रोफ़ोन त्रुटि",
+  "VoiceSearch.micNotAllowed": "माइक्रोफ़ोन की अनुमति नहीं दी गई है। कृपया ब्राउज़र सेटिंग्स में अनुमति दें।",
+  "VoiceSearch.noSpeech": "कोई आवाज़ नहीं मिली। कृपया फिर से प्रयास करें।",
+  "VoiceSearch.micStartError": "माइक्रोफ़ोन पहले से ही चल रहा हो सकता है या कोई अन्य त्रुटि हुई है।",
+  "VoiceSearch.unsupportedBrowser": "असमर्थित ब्राउज़र",
+  "VoiceSearch.unsupportedBrowserDesc": "आपका ब्राउज़र वाक् पहचान का समर्थन नहीं करता है।"
 }

@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useVoiceSearch } from '@/context/voice-search-context';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/context/language-context';
 
 declare global {
     interface Window {
@@ -17,6 +18,7 @@ declare global {
 
 export function VoiceSearchModal() {
   const { isVoiceSearchOpen, closeVoiceSearch, setSearchQuery } = useVoiceSearch();
+  const { t, locale } = useTranslation();
   const [transcript, setTranscript] = useState('');
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
@@ -32,7 +34,7 @@ export function VoiceSearchModal() {
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = 'hi-IN';
+    recognition.lang = locale;
 
     recognition.onstart = () => {
       setIsListening(true);
@@ -65,15 +67,15 @@ export function VoiceSearchModal() {
 
     recognition.onerror = (event: any) => {
       console.error('Speech recognition error:', event.error);
-      let errorMessage = 'एक अज्ञात त्रुटि हुई।';
+      let errorMessage = t('VoiceSearch.micError');
        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-            errorMessage = "माइक्रोफ़ोन की अनुमति नहीं दी गई है। कृपया ब्राउज़र सेटिंग्स में अनुमति दें।";
+            errorMessage = t('VoiceSearch.micNotAllowed');
         } else if (event.error === 'no-speech') {
-            errorMessage = "कोई आवाज़ नहीं मिली। कृपया फिर से प्रयास करें।";
+            errorMessage = t('VoiceSearch.noSpeech');
         }
        toast({
          variant: "destructive",
-         title: "माइक्रोफ़ोन त्रुटि",
+         title: t('VoiceSearch.micError'),
          description: errorMessage,
        });
       setIsListening(false);
@@ -81,7 +83,7 @@ export function VoiceSearchModal() {
     };
 
     recognitionRef.current = recognition;
-  }, [toast, closeVoiceSearch, transcript]);
+  }, [toast, closeVoiceSearch, transcript, t, locale]);
 
   const handleSearch = (query: string) => {
      if (query.trim()) {
@@ -99,15 +101,15 @@ export function VoiceSearchModal() {
             console.error("Could not start recognition", e);
             toast({
                 variant: "destructive",
-                title: "माइक्रोफ़ोन त्रुटि",
-                description: "माइक्रोफ़ोन पहले से ही चल रहा हो सकता है या कोई अन्य त्रुटि हुई है।",
+                title: t('VoiceSearch.micError'),
+                description: t('VoiceSearch.micStartError'),
             });
          }
      } else {
          toast({
             variant: "destructive",
-            title: "असमर्थित ब्राउज़र",
-            description: "आपका ब्राउज़र वाक् पहचान का समर्थन नहीं करता है।",
+            title: t('VoiceSearch.unsupportedBrowser'),
+            description: t('VoiceSearch.unsupportedBrowserDesc'),
         });
         closeVoiceSearch();
      }
@@ -141,9 +143,9 @@ export function VoiceSearchModal() {
     <Dialog open={isVoiceSearchOpen} onOpenChange={(open) => !open && closeModal()}>
       <DialogContent className="bg-black/80 border-none shadow-2xl backdrop-blur-sm max-w-lg w-[90vw] h-[50vh] flex flex-col items-center justify-center text-white">
         <DialogHeader className="text-center">
-          <DialogTitle className="text-2xl font-bold">मैं आपकी कैसे मदद कर सकता हूँ?</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">{t('VoiceSearch.title')}</DialogTitle>
           <DialogDescription>
-            बोलना शुरू करें, मैं सुन रहा हूँ...
+            {t('VoiceSearch.description')}
           </DialogDescription>
         </DialogHeader>
         <div 

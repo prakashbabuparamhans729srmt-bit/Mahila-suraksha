@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -17,34 +16,34 @@ export default function FundingTrackerPage() {
   const { toast } = useToast();
   const { t } = useTranslation();
 
-  const chartData = [
-    { source: t('FundingTracker.sourceGovGrant'), amount: 3000000, percentage: 40, fill: '#8884d8' },
-    { source: t('FundingTracker.sourceCorpSponsor'), amount: 2475000, percentage: 33, fill: '#82ca9d' },
-    { source: t('FundingTracker.sourcePublicDonation'), amount: 1500000, percentage: 20, fill: '#ff8042' },
-    { source: t('FundingTracker.sourceOther'), amount: 525000, percentage: 7, fill: '#ffc658' },
-  ];
+  const chartData = React.useMemo(() => [
+    { source: 'govGrant', amount: 3000000, percentage: 40, fill: 'hsl(var(--chart-1))' },
+    { source: 'corpSponsor', amount: 2475000, percentage: 33, fill: 'hsl(var(--chart-2))' },
+    { source: 'publicDonation', amount: 1500000, percentage: 20, fill: 'hsl(var(--chart-3))' },
+    { source: 'other', amount: 525000, percentage: 7, fill: 'hsl(var(--chart-4))' },
+  ], []);
 
-  const chartConfig = {
+  const chartConfig = React.useMemo(() => ({
     amount: {
       label: 'Amount',
     },
-    [t('FundingTracker.sourceGovGrant')]: {
+    govGrant: {
       label: t('FundingTracker.sourceGovGrant'),
       color: 'hsl(var(--chart-1))',
     },
-    [t('FundingTracker.sourceCorpSponsor')]: {
+    corpSponsor: {
       label: t('FundingTracker.sourceCorpSponsor'),
       color: 'hsl(var(--chart-2))',
     },
-    [t('FundingTracker.sourcePublicDonation')]: {
+    publicDonation: {
       label: t('FundingTracker.sourcePublicDonation'),
       color: 'hsl(var(--chart-3))',
     },
-    [t('FundingTracker.sourceOther')]: {
+    other: {
       label: t('FundingTracker.sourceOther'),
       color: 'hsl(var(--chart-4))',
     },
-  };
+  }), [t]);
 
   const totalAmount = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.amount, 0);
@@ -102,10 +101,9 @@ export default function FundingTrackerPage() {
                     innerRadius={60}
                     strokeWidth={5}
                   >
-                     <Cell key="cell-0" fill="var(--color-सरकारी अनुदान)" />
-                     <Cell key="cell-1" fill="var(--color-कॉर्पोरेट प्रायोजन)" />
-                     <Cell key="cell-2" fill="var(--color-सार्वजनिक दान)" />
-                     <Cell key="cell-3" fill="var(--color-अन्य)" />
+                     {chartData.map((entry) => (
+                      <Cell key={`cell-${entry.source}`} fill={`var(--color-${entry.source})`} />
+                    ))}
                   </Pie>
                 </PieChart>
               </ChartContainer>
@@ -123,7 +121,7 @@ export default function FundingTrackerPage() {
                 <li key={item.source} className="flex justify-between items-center">
                   <div className="flex items-center">
                     <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: item.fill }}></span>
-                    <span>{item.source}:</span>
+                    <span>{chartConfig[item.source as keyof typeof chartConfig]?.label}:</span>
                   </div>
                   <span className="font-semibold">{item.percentage}%</span>
                 </li>

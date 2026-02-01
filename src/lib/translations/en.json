@@ -24,7 +24,7 @@
   "Chatbot.micStartError": "Could not start microphone. Please check permissions.",
   "Chatbot.placeholder": "Write a message...",
   "Chatbot.listening": "Listening...",
-  "Chatbot.processing": "I am processing your question \"{input}\".",
+  "Chatbot.processing": "I am processing your question: \"{input}\".",
   "ChatbotFloater.title": "AI Assistant",
   "ChatbotFloater.description": "Hello! I am your AI assistant. You can ask me anything.",
   "Error": "Error",
@@ -1187,5 +1187,13 @@
   "Dashboard.utJammuKashmir": "Jammu and Kashmir",
   "Dashboard.utLadakh": "Ladakh",
   "Dashboard.utLakshadweep": "Lakshadweep",
-  "Dashboard.utPuducherry": "Puducherry"
+  "Dashboard.utPuducherry": "Puducherry",
+  "VoiceSearch.title": "How can I help you?",
+  "VoiceSearch.description": "Start speaking, I'm listening...",
+  "VoiceSearch.micError": "Microphone Error",
+  "VoiceSearch.micNotAllowed": "Microphone permission is not allowed. Please grant permission in your browser settings.",
+  "VoiceSearch.noSpeech": "No speech was detected. Please try again.",
+  "VoiceSearch.micStartError": "The microphone may already be running or another error occurred.",
+  "VoiceSearch.unsupportedBrowser": "Unsupported Browser",
+  "VoiceSearch.unsupportedBrowserDesc": "Your browser does not support speech recognition."
 }

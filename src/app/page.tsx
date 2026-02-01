@@ -143,6 +143,7 @@ export default function DashboardPage() {
     { id: 1, title: 'अर्जेंटीना में नया कानून पारित', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', likes: 1253, liked: false, commentsCount: 2, date: '2 दिन पहले' },
     { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', likes: 5812, liked: false, commentsCount: 1, date: '5 दिन पहले', highlighted: true },
   ]);
+  const [serviceContent, setServiceContent] = useState({ title: '', description: '', number: '', icon: null as React.ReactNode });
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
@@ -167,6 +168,40 @@ export default function DashboardPage() {
       router.push('/login');
     }
   }, [loading, user, router, isGuest]);
+
+  useEffect(() => {
+    if (showNoNumberDialog && selectedService) {
+        const savedAuthorities = localStorage.getItem('authorityNumbers');
+        const numbers = savedAuthorities ? JSON.parse(savedAuthorities) : { police: '', ambulance: '', firetruck: '' };
+
+        switch (selectedService) {
+            case 'police':
+                setServiceContent({
+                    title: 'पुलिस अलर्ट भेजा गया!',
+                    description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
+                    number: numbers.police || 'कोई नंबर सहेजा नहीं गया',
+                    icon: <AlertIcon />
+                });
+                break;
+            case 'ambulance':
+                setServiceContent({
+                    title: 'एम्बुलेंस अलर्ट भेजा गया!',
+                    description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
+                    number: numbers.ambulance || 'कोई नंबर सहेजा नहीं गया',
+                    icon: <AlertIcon />
+                });
+                break;
+            case 'firetruck':
+                setServiceContent({
+                    title: 'दमकल अलर्ट भेजा गया!',
+                    description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
+                    number: numbers.firetruck || 'कोई नंबर सहेजा नहीं गया',
+                    icon: <AlertIcon />
+                });
+                break;
+        }
+    }
+  }, [showNoNumberDialog, selectedService]);
 
   const handlePostLike = (postId: number) => {
     setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
@@ -297,38 +332,8 @@ export default function DashboardPage() {
   ];
 
   const handleConfirm = (service: 'police' | 'ambulance' | 'firetruck') => {
-      // For now, we assume no number is saved.
-      // In a real app, you would check localStorage or some state management.
       setSelectedService(service);
       setShowNoNumberDialog(true);
-  };
-  
-  const getServiceContent = () => {
-    switch (selectedService) {
-        case 'police':
-            return {
-                title: 'पुलिस अलर्ट भेजा गया!',
-                description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
-                number: 'कोई नंबर सहेजा नहीं गया',
-                icon: <AlertIcon />
-            };
-        case 'ambulance':
-            return {
-                title: 'एम्बुलेंस अलर्ट भेजा गया!',
-                description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
-                number: 'कोई नंबर सहेजा नहीं गया',
-                icon: <AlertIcon />
-            };
-        case 'firetruck':
-            return {
-                title: 'दमकल अलर्ट भेजा गया!',
-                description: 'कृपया नीचे दिए गए नंबर पर तुरंत कॉल करें।',
-                number: 'कोई नंबर सहेजा नहीं गया',
-                icon: <AlertIcon />
-            };
-        default:
-            return { title: '', description: '', number: '', icon: null };
-    }
   };
 
   const stateData = [
@@ -715,15 +720,15 @@ export default function DashboardPage() {
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <div className="flex justify-center">
-                        {getServiceContent().icon}
+                        {serviceContent.icon}
                     </div>
-                    <AlertDialogTitle className="text-center">{getServiceContent().title}</AlertDialogTitle>
+                    <AlertDialogTitle className="text-center">{serviceContent.title}</AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                        {getServiceContent().description}
+                        {serviceContent.description}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <div className="p-4 bg-secondary/50 rounded-md text-center font-semibold">
-                    {getServiceContent().number}
+                    {serviceContent.number}
                 </div>
                 <AlertDialogFooter>
                     <AlertDialogAction className="w-full" onClick={() => setShowNoNumberDialog(false)}>ठीक है</AlertDialogAction>

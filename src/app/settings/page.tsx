@@ -64,6 +64,24 @@ export default function SettingsPage() {
     }
   }, [localProfilePhoto]);
 
+  useEffect(() => {
+    try {
+      const savedContacts = localStorage.getItem('personalContacts');
+      if (savedContacts) {
+        const parsedContacts = JSON.parse(savedContacts);
+        if (Array.isArray(parsedContacts) && parsedContacts.length > 0) {
+           setPersonalContacts(parsedContacts);
+        }
+      }
+      const savedAuthorities = localStorage.getItem('authorityNumbers');
+      if (savedAuthorities) {
+        setAuthorityNumbers(JSON.parse(savedAuthorities));
+      }
+    } catch (error) {
+      console.error("Failed to parse settings from localStorage", error);
+    }
+  }, []);
+
   const handleAuthorityNumberChange = (service: 'police' | 'ambulance' | 'firetruck', value: string) => {
     setAuthorityNumbers(prev => ({ ...prev, [service]: value }));
   };
@@ -82,7 +100,8 @@ export default function SettingsPage() {
   };
 
   const handleSaveChanges = () => {
-    console.log({ authorityNumbers, personalContacts });
+    localStorage.setItem('authorityNumbers', JSON.stringify(authorityNumbers));
+    localStorage.setItem('personalContacts', JSON.stringify(personalContacts));
     toast({
       title: "सेटिंग्स सहेजी गईं!",
       description: "आपकी आपातकालीन संपर्क जानकारी अपडेट कर दी गई है।",

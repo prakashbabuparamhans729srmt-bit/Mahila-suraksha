@@ -180,7 +180,7 @@ export default function MessagesPage() {
                             <span className="text-xs">{comment.likes}</span>
                         </Button>
                         <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => handleUnlike(comment.id)}>
-                            <ThumbsDown className={`h-4 w-4 ${comment.unliked ? 'text-red-500' : ''}`} />
+                            <ThumbsDown className={`h-4 w-4 ${comment.unliked ? 'text-destructive' : ''}`} />
                         </Button>
                         <Button variant="ghost" size="sm" className="flex items-center gap-1 px-1 h-auto" onClick={() => {
                             setReplyingTo(replyingTo.commentId === comment.id ? { parentId: null, commentId: null } : { parentId: parentId ?? comment.id, commentId: comment.id });

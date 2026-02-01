@@ -812,7 +812,7 @@ export default function DashboardPage() {
                         <Accordion type="single" collapsible className="w-full">
                         {stateData.map((state, index) => (
                             <AccordionItem value={`item-${index}`} key={index} className="border-none">
-                                <AccordionTrigger className="p-0 hover:no-underline [&[data-state=open]>div>svg.lucide-chevron-down]:hidden [&[data-state=closed]>div>svg.lucide-chevron-down]:hidden">
+                                <AccordionTrigger className="p-0 hover:no-underline [&>svg]:hidden">
                                   <Card className='w-full bg-secondary/50 border-border mb-2'>
                                     <div className="p-4 flex justify-between w-full items-center">
                                         <span>{state.name}</span>
@@ -858,7 +858,7 @@ export default function DashboardPage() {
                         <Accordion type="single" collapsible className="w-full">
                         {unionTerritoriesData.map((state, index) => (
                             <AccordionItem value={`item-ut-${index}`} key={index} className="border-none">
-                                <AccordionTrigger className="p-0 hover:no-underline [&[data-state=open]>div>svg.lucide-chevron-down]:hidden [&[data-state=closed]>div>svg.lucide-chevron-down]:hidden">
+                                <AccordionTrigger className="p-0 hover:no-underline [&>svg]:hidden">
                                   <Card className='w-full bg-secondary/50 border-border mb-2'>
                                     <div className="p-4 flex justify-between w-full items-center">
                                         <span>{state.name}</span>

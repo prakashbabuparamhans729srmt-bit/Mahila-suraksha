@@ -303,7 +303,7 @@
   "SafeCities.womenFriendlyTransportTitle": "महिला-अनुकूल सार्वजनिक परिवहन",
   "SafeCities.comingSoon": "यह पहल जल्द ही आ रही है।",
   "SafeCities.actionInitiated": "कार्रवाई शुरू की गई",
-  "SafeCities.featureComingSoon": "{title} सुविधा जल्द ही उपलब्ध होगी।",
+  "SafeCities.featureComingSoon": "\"{title}\" सुविधा जल्द ही उपलब्ध होगी।",
   "SmartSafety.title": "स्मार्ट सुरक्षा प्रणाली",
   "SmartSafety.checkInTitle": "सुरक्षा चेक-इन",
   "SmartSafety.checkInDescription": "यदि आप एक निर्धारित समय के बाद चेक-इन नहीं करते हैं तो स्वचालित रूप से आपके आपातकालीन संपर्कों को सचेत करता है।",

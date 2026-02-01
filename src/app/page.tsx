@@ -1,6 +1,7 @@
 
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Bell, Home, BarChart2, RefreshCw, Settings, User, MapPin, Search, SlidersHorizontal, Plus, Shield, Users, GraduationCap, ArrowRight, BarChartBig, Scale, Handshake, Building2, ThumbsUp, MessageSquare, Share2, X, ChevronRight, ChevronDown, ArrowUp, ArrowDown, Send, ThumbsDown, CornerUpLeft, ListChecks, LogOut } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose, DialogDescription } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -26,6 +27,8 @@ import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useGuest } from '@/context/guest-context';
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 
 const CommunityIcon = () => (
@@ -138,6 +141,18 @@ export default function DashboardPage() {
     { id: 1, title: 'अर्जेंटीना में नया कानून पारित', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', likes: 1253, liked: false, commentsCount: 2, date: '2 दिन पहले' },
     { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', likes: 5812, liked: false, commentsCount: 1, date: '5 दिन पहले', highlighted: true },
   ]);
+
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
+
+  const bannerImages = [
+    { src: 'https://picsum.photos/seed/banner1/600/300', alt: 'Community support', hint: 'community support' },
+    { src: 'https://picsum.photos/seed/banner2/600/300', alt: 'Helping hands', hint: 'helping hands' },
+    { src: 'https://picsum.photos/seed/banner3/600/300', alt: 'Safety in the city', hint: 'safe city' },
+    { src: 'https://picsum.photos/seed/banner4/600/300', alt: 'Speaking up', hint: 'speaking up' },
+    { src: 'https://picsum.photos/seed/banner5/600/300', alt: 'Global unity', hint: 'global unity' },
+  ];
 
   useEffect(() => {
     if (!loading && !isGuest && !user) {
@@ -453,7 +468,7 @@ export default function DashboardPage() {
         <Card className="bg-secondary/50 border-border">
           <CardContent className="flex items-center justify-between p-4">
             <div className="flex items-center space-x-3">
-              <MapPin className="h-6 w-6 text-red-500" />
+              <MapPin className="h-6 w-6 text-primary" />
               <div>
                 <p className="text-sm text-muted-foreground">आपका वर्तमान स्थान</p>
                 <p className="font-semibold">Patna Junction, Patna</p>
@@ -657,6 +672,30 @@ export default function DashboardPage() {
             </SheetContent>
         </Sheet>
         
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full"
+        >
+          <CarouselContent>
+            {bannerImages.map((image, index) => (
+              <CarouselItem key={index}>
+                <Card className="bg-secondary/50 border-border overflow-hidden">
+                  <CardContent className="p-0">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      width={600}
+                      height={300}
+                      className="w-full object-cover aspect-[2/1]"
+                      data-ai-hint={image.hint}
+                    />
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+
         <AlertDialog open={showNoNumberDialog} onOpenChange={setShowNoNumberDialog}>
             <AlertDialogContent>
                 <AlertDialogHeader>

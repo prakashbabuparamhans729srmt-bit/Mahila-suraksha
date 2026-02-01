@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useTranslation } from '@/context/language-context';
 
 const MailboxIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
@@ -17,21 +18,22 @@ const MailboxIcon = () => (
 
 
 export default function NotificationsPage() {
+    const { t } = useTranslation();
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">सूचनाएं</h1>
+                <h1 className="text-xl font-bold">{t('Notifications.title')}</h1>
             </header>
 
             <main className="flex-grow flex flex-col items-center justify-center text-center p-4 space-y-4">
                 <div className="bg-secondary/50 p-6 rounded-full">
                     <MailboxIcon />
                 </div>
-                <h2 className="text-xl font-semibold">आपके पास कोई नई सूचनाएं नहीं हैं।</h2>
-                <p className="text-muted-foreground">नए अलर्ट और अपडेट यहां दिखाई देंगे।</p>
+                <h2 className="text-xl font-semibold">{t('Notifications.noNewNotifications')}</h2>
+                <p className="text-muted-foreground">{t('Notifications.alertsAppearHere')}</p>
             </main>
 
             <BottomNav />

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -8,6 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useState } from 'react';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useTranslation } from '@/context/language-context';
 
 type CommentType = {
     id: number;
@@ -70,6 +72,7 @@ const initialComments: CommentType[] = [
 ];
 
 export default function MessagesPage() {
+    const { t } = useTranslation();
     const [comments, setComments] = useState(initialComments);
     const [newComment, setNewComment] = useState('');
     const [replyingTo, setReplyingTo] = useState<{ parentId: number | null, commentId: number | null }>({ parentId: null, commentId: null });
@@ -114,10 +117,10 @@ export default function MessagesPage() {
 
         const newReply: CommentType = {
             id: Date.now(),
-            user: 'आप',
+            user: t('Messages.you'),
             avatar: 'https://picsum.photos/seed/currentUser/40/40',
             comment: replyText,
-            timestamp: 'अभी',
+            timestamp: t('Messages.now'),
             likes: 0,
             liked: false,
             unliked: false,
@@ -146,10 +149,10 @@ export default function MessagesPage() {
         if (newComment.trim()) {
             const newCommentObj: CommentType = {
                 id: Date.now(),
-                user: 'आप',
+                user: t('Messages.you'),
                 avatar: 'https://picsum.photos/seed/currentUser/40/40',
                 comment: newComment,
-                timestamp: 'अभी',
+                timestamp: t('Messages.now'),
                 likes: 0,
                 liked: false,
                 unliked: false,
@@ -187,18 +190,18 @@ export default function MessagesPage() {
                             setReplyText('');
                         }}>
                             <CornerUpLeft className="h-4 w-4" />
-                            <span className="text-xs">रिप्लाई</span>
+                            <span className="text-xs">{t('Messages.reply')}</span>
                         </Button>
                     </div>
                     {replyingTo.commentId === comment.id && (
                         <div className="flex items-center gap-2 mt-3">
                             <Avatar className="h-8 w-8">
                                 <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
-                                <AvatarFallback>आप</AvatarFallback>
+                                <AvatarFallback>{t('Messages.you').charAt(0)}</AvatarFallback>
                             </Avatar>
                             <div className="relative w-full">
                                 <Input 
-                                    placeholder="एक रिप्लाई लिखें..." 
+                                    placeholder={t('Messages.writeReply')}
                                     className="bg-secondary/50 border-input pr-10 h-9"
                                     value={replyText}
                                     onChange={(e) => setReplyText(e.target.value)}
@@ -226,7 +229,7 @@ export default function MessagesPage() {
                  <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">कमेंट्स</h1>
+                <h1 className="text-xl font-bold">{t('Messages.title')}</h1>
             </header>
 
             <ScrollArea className="flex-grow p-4">
@@ -239,11 +242,11 @@ export default function MessagesPage() {
                  <div className="flex items-center gap-2">
                     <Avatar>
                         <AvatarImage src="https://picsum.photos/seed/currentUser/40/40" />
-                        <AvatarFallback>आप</AvatarFallback>
+                        <AvatarFallback>{t('Messages.you').charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className="relative w-full">
                         <Input 
-                            placeholder="एक कमेंट लिखें..." 
+                            placeholder={t('Messages.writeComment')}
                             className="bg-secondary/50 border-input pr-10" 
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}

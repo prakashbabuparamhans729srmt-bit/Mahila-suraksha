@@ -8,8 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
+import { useTranslation } from '@/context/language-context';
+import { useToast } from '@/hooks/use-toast';
 
 export default function MaleEngagementPage() {
+    const { t } = useTranslation();
+    const { toast } = useToast();
     const [pledges, setPledges] = useState({
         respect: 125034,
         coaching: 45000,
@@ -31,7 +35,10 @@ export default function MaleEngagementPage() {
                 console.error('Error sharing:', error);
             }
         } else {
-            alert('साझा करने की सुविधा इस ब्राउज़र में समर्थित नहीं है।');
+            toast({
+                title: t('Error'),
+                description: t('MaleEngagement.sharingNotSupported'),
+            });
         }
     };
 
@@ -41,52 +48,52 @@ export default function MaleEngagementPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">पुरुष सहभागिता पहल</h1>
+                <h1 className="text-xl font-bold">{t('MaleEngagement.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <Tabs defaultValue="initiatives" className="w-full">
                     <TabsList className="grid w-full grid-cols-3 bg-secondary/50">
-                        <TabsTrigger value="initiatives">पहल</TabsTrigger>
-                        <TabsTrigger value="events">आयोजन</TabsTrigger>
-                        <TabsTrigger value="resources">संसाधन</TabsTrigger>
+                        <TabsTrigger value="initiatives">{t('MaleEngagement.tabInitiatives')}</TabsTrigger>
+                        <TabsTrigger value="events">{t('MaleEngagement.tabEvents')}</TabsTrigger>
+                        <TabsTrigger value="resources">{t('MaleEngagement.tabResources')}</TabsTrigger>
                     </TabsList>
                     <TabsContent value="initiatives" className="mt-6 space-y-6">
                         <Card className="bg-secondary/50 border-border">
                             <CardContent className="p-4 space-y-4">
-                                <h3 className="font-semibold text-lg">सम्मान के लिए प्रतिज्ञा</h3>
+                                <h3 className="font-semibold text-lg">{t('MaleEngagement.pledgeForRespectTitle')}</h3>
                                 <p className="text-muted-foreground text-sm">
-                                    एक सार्वजनिक अभियान जो पुरुषों को अपने समुदायों में सम्मान, सहमति और अहिंसा की संस्कृति को बढ़ावा देने की प्रतिज्ञा करने के लिए प्रोत्साहित करता है।
+                                    {t('MaleEngagement.pledgeForRespectDescription')}
                                 </p>
-                                <p className="text-xs text-muted-foreground">लक्षित दर्शक: सभी पुरुष और लड़के</p>
+                                <p className="text-xs text-muted-foreground">{t('MaleEngagement.targetAudienceAll')}</p>
                                 <div className="bg-background/50 rounded-lg p-3 text-center">
                                     <p className="text-3xl font-bold text-primary">{pledges.respect.toLocaleString()}</p>
-                                    <p className="text-xs text-muted-foreground">ली गई प्रतिज्ञाएँ</p>
+                                    <p className="text-xs text-muted-foreground">{t('MaleEngagement.pledgesTaken')}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => handlePledge('respect')}>प्रतिज्ञा लें</Button>
+                                    <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => handlePledge('respect')}>{t('MaleEngagement.takePledge')}</Button>
                                     <Button 
                                         className="w-full bg-blue-600 hover:bg-blue-700"
-                                        onClick={() => handleShare('सम्मान के लिए प्रतिज्ञा', 'मैंने महिलाओं और लड़कियों के खिलाफ हिंसा को समाप्त करने में मदद करने के लिए सम्मान की प्रतिज्ञा ली है। आप भी शामिल हों!')}
+                                        onClick={() => handleShare(t('MaleEngagement.pledgeForRespectTitle'), t('MaleEngagement.shareText'))}
                                     >
                                         <Share2 className="mr-2 h-4 w-4" />
-                                        साझा करें
+                                        {t('MaleEngagement.share')}
                                     </Button>
                                 </div>
                             </CardContent>
                         </Card>
                         <Card className="bg-secondary/50 border-border">
                             <CardContent className="p-4 space-y-4">
-                                <h3 className="font-semibold text-lg">लड़कों को पुरुषों में प्रशिक्षित करना</h3>
+                                <h3 className="font-semibold text-lg">{t('MaleEngagement.coachingBoysTitle')}</h3>
                                 <p className="text-muted-foreground text-sm">
-                                    एक कार्यक्रम जो एथलेटिक कोचों को अपने युवा पुरुष एथलीटों से महिलाओं का सम्मान करने के महत्व और हिंसा का मतलब ताकत नहीं है, के बारे में बात करने के लिए प्रशिक्षित करता है।
+                                    {t('MaleEngagement.coachingBoysDescription')}
                                 </p>
-                                <p className="text-xs text-muted-foreground">लक्षित दर्शक: युवा खेल कोच और एथलीट</p>
+                                <p className="text-xs text-muted-foreground">{t('MaleEngagement.targetAudienceCoaches')}</p>
                                 <div className="bg-background/50 rounded-lg p-3 text-center">
                                     <p className="text-3xl font-bold text-primary">{pledges.coaching.toLocaleString()}</p>
-                                    <p className="text-xs text-muted-foreground">ली गई प्रतिज्ञाएँ</p>
+                                    <p className="text-xs text-muted-foreground">{t('MaleEngagement.pledgesTaken')}</p>
                                 </div>
-                                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => handlePledge('coaching')}>प्रतिज्ञा लें</Button>
+                                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => handlePledge('coaching')}>{t('MaleEngagement.takePledge')}</Button>
                             </CardContent>
                         </Card>
                     </TabsContent>

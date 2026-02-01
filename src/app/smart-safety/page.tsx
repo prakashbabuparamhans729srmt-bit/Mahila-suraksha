@@ -7,13 +7,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 export default function SmartSafetyPage() {
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     const handleFeatureActivation = (featureName: string, description: string) => {
         toast({
-            title: `${featureName} सक्रिय!`,
+            title: t('SmartSafety.featureActivated', { featureName }),
             description: description,
         });
     };
@@ -24,57 +26,57 @@ export default function SmartSafetyPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">स्मार्ट सुरक्षा प्रणाली</h1>
+                <h1 className="text-xl font-bold">{t('SmartSafety.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle>सुरक्षा चेक-इन</CardTitle>
+                        <CardTitle>{t('SmartSafety.checkInTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">
-                            यदि आप एक निर्धारित समय के बाद चेक-इन नहीं करते हैं तो स्वचालित रूप से आपके आपातकालीन संपर्कों को सचेत करता है।
+                            {t('SmartSafety.checkInDescription')}
                         </p>
                         <Button 
                             className="w-full"
-                            onClick={() => handleFeatureActivation('सुरक्षा चेक-इन', '5 मिनट का चेक-इन टाइमर शुरू हो गया है।')}
+                            onClick={() => handleFeatureActivation(t('SmartSafety.checkInTitle'), t('SmartSafety.checkInToast'))}
                         >
-                            5-मिनट का चेक-इन शुरू करें
+                            {t('SmartSafety.start5MinCheckIn')}
                         </Button>
                     </CardContent>
                 </Card>
 
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle>मेरी यात्रा साझा करें</CardTitle>
+                        <CardTitle>{t('SmartSafety.shareTripTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">
-                            जब तक आप अपने गंतव्य तक सुरक्षित नहीं पहुंच जाते, तब तक अपने विश्वसनीय संपर्कों के साथ अपना लाइव स्थान साझा करें।
+                            {t('SmartSafety.shareTripDescription')}
                         </p>
                         <Button 
                             className="w-full"
-                            onClick={() => handleFeatureActivation('यात्रा साझा करना', 'आपका लाइव स्थान अब आपके आपातकालीन संपर्कों के साथ साझा किया जा रहा है।')}
+                            onClick={() => handleFeatureActivation(t('SmartSafety.shareTripTitle'), t('SmartSafety.shareTripToast'))}
                         >
-                            मेरी यात्रा साझा करें
+                            {t('SmartSafety.shareMyTrip')}
                         </Button>
                     </CardContent>
                 </Card>
 
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle>नकली कॉल</CardTitle>
+                        <CardTitle>{t('SmartSafety.fakeCallTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">
-                            एक असहज स्थिति से बाहर निकलने में आपकी मदद करने के लिए एक आने वाली फोन कॉल का अनुकरण करें।
+                            {t('SmartSafety.fakeCallDescription')}
                         </p>
                         <Button 
                             className="w-full"
-                            onClick={() => handleFeatureActivation('नकली कॉल', 'आपको 15 सेकंड में एक नकली कॉल आएगी।')}
+                            onClick={() => handleFeatureActivation(t('SmartSafety.fakeCallTitle'), t('SmartSafety.fakeCallToast'))}
                         >
-                            नकली कॉल शुरू करें
+                            {t('SmartSafety.startFakeCall')}
                         </Button>
                     </CardContent>
                 </Card>

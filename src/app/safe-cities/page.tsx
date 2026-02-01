@@ -7,14 +7,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 export default function SafeCitiesPage() {
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     const handleAction = (title: string) => {
         toast({
-            title: "कार्रवाई शुरू की गई",
-            description: `${title} सुविधा जल्द ही उपलब्ध होगी।`,
+            title: t('SafeCities.actionInitiated'),
+            description: t('SafeCities.featureComingSoon', { title }),
         });
     };
 
@@ -24,61 +26,61 @@ export default function SafeCitiesPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">सुरक्षित शहर पहल</h1>
+                <h1 className="text-xl font-bold">{t('SafeCities.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle>इंटरैक्टिव सुरक्षा मानचित्र</CardTitle>
+                        <CardTitle>{t('SafeCities.interactiveMapTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">
-                            आस-पास के सुरक्षा केंद्र, सहायता समूह और अंकेक्षित सुरक्षित क्षेत्र खोजें।
+                            {t('SafeCities.interactiveMapDescription')}
                         </p>
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => handleAction('इंटरैक्टिव सुरक्षा मानचित्र')}>
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => handleAction(t('SafeCities.interactiveMapTitle'))}>
                             <BookOpen className="mr-2 h-4 w-4" />
-                            मानचित्र खोलें
+                            {t('SafeCities.openMap')}
                         </Button>
                     </CardContent>
                 </Card>
 
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle>सामुदायिक सुरक्षा अंकेक्षण</CardTitle>
+                        <CardTitle>{t('SafeCities.communityAuditTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">
-                            सुरक्षा सुधारों की आवश्यकता वाले क्षेत्रों की पहचान करने और रिपोर्ट करने के लिए अपने पड़ोस के अंकेक्षण में भाग लें।
+                           {t('SafeCities.communityAuditDescription')}
                         </p>
-                        <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black" onClick={() => handleAction('सामुदायिक सुरक्षा अंकेक्षण')}>
+                        <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black" onClick={() => handleAction(t('SafeCities.communityAuditTitle'))}>
                             <FilePenLine className="mr-2 h-4 w-4" />
-                            एक अंकेक्षण शुरू करें
+                            {t('SafeCities.startAudit')}
                         </Button>
                     </CardContent>
                 </Card>
                 
                 <div className="space-y-4">
-                    <h2 className="text-lg font-bold px-1">स्थानीय पहल</h2>
+                    <h2 className="text-lg font-bold px-1">{t('SafeCities.localInitiatives')}</h2>
                     <Card className="bg-secondary/50 border-border">
                         <CardHeader>
-                            <CardTitle>सुरक्षित सार्वजनिक स्थान</CardTitle>
+                            <CardTitle>{t('SafeCities.safePublicSpacesTitle')}</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3">
                             <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                <li>पहचाने गए हॉटस्पॉट में बेहतर स्ट्रीट लाइटिंग।</li>
-                                <li>सुरक्षा कर्मियों की उपस्थिति में वृद्धि।</li>
-                                <li>आपातकालीन कॉल बॉक्स की स्थापना।</li>
+                                <li>{t('SafeCities.safePublicSpacesItem1')}</li>
+                                <li>{t('SafeCities.safePublicSpacesItem2')}</li>
+                                <li>{t('SafeCities.safePublicSpacesItem3')}</li>
                             </ul>
-                            <Button variant="outline" className="w-full" onClick={() => handleAction('समस्या रिपोर्ट')}>समस्या की रिपोर्ट करें</Button>
+                            <Button variant="outline" className="w-full" onClick={() => handleAction(t('SafeCities.reportProblem'))}>{t('SafeCities.reportProblem')}</Button>
                         </CardContent>
                     </Card>
                     <Card className="bg-secondary/50 border-border">
                          <CardHeader>
-                            <CardTitle>महिला-अनुकूल सार्वजनिक परिवहन</CardTitle>
+                            <CardTitle>{t('SafeCities.womenFriendlyTransportTitle')}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                             <p className="text-muted-foreground">यह पहल जल्द ही आ रही है।</p>
+                             <p className="text-muted-foreground">{t('SafeCities.comingSoon')}</p>
                         </CardContent>
                     </Card>
                 </div>

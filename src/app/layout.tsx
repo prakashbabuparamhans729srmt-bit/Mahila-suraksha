@@ -1,3 +1,4 @@
+
 'use client';
 
 import './globals.css';
@@ -11,6 +12,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetDescription } from '@/components/ui/sheet';
 import { Chatbot } from '@/components/chatbot';
 import { GuestProvider } from '@/context/guest-context';
+import { VoiceSearchProvider } from '@/context/voice-search-context';
+import { VoiceSearchModal } from '@/components/voice-search-modal';
 
 
 function ChatbotFloater() {
@@ -194,11 +197,14 @@ export default function RootLayout({
         >
           <FirebaseClientProvider>
             <AdminContentProvider>
-              <GuestProvider>
-                {children}
-                <ChatbotFloater />
-                <Toaster />
-              </GuestProvider>
+              <VoiceSearchProvider>
+                <GuestProvider>
+                  {children}
+                  <ChatbotFloater />
+                  <Toaster />
+                  <VoiceSearchModal />
+                </GuestProvider>
+              </VoiceSearchProvider>
             </AdminContentProvider>
           </FirebaseClientProvider>
         </ThemeProvider>

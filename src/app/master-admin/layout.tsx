@@ -43,6 +43,7 @@ import { BottomNav } from '@/components/layout/bottom-nav';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
+import { useVoiceSearch } from '@/context/voice-search-context';
 
 
 function AdminSidebar() {
@@ -148,13 +149,10 @@ export default function MasterAdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { toast } = useToast();
+  const { openVoiceSearch } = useVoiceSearch();
 
   const handleMicSearch = () => {
-    toast({
-        title: "सुविधा जल्द ही आ रही है",
-        description: "वॉइस सर्च सुविधा जल्द ही उपलब्ध होगी।",
-    });
+    openVoiceSearch();
   };
 
   return (

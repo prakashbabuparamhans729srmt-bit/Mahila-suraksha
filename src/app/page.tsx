@@ -29,6 +29,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useGuest } from '@/context/guest-context';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { useVoiceSearch } from '@/context/voice-search-context';
 
 
 const CommunityIcon = () => (
@@ -133,6 +134,7 @@ export default function DashboardPage() {
   const { auth } = useFirebase();
   const router = useRouter();
   const { toast } = useToast();
+  const { openVoiceSearch, searchQuery: voiceSearchQuery } = useVoiceSearch();
 
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
@@ -145,6 +147,12 @@ export default function DashboardPage() {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
+
+  useEffect(() => {
+    if (voiceSearchQuery) {
+        setSearchQuery(voiceSearchQuery);
+    }
+  }, [voiceSearchQuery]);
 
   const bannerImages = [
     { src: 'https://picsum.photos/seed/banner1/600/300', alt: 'Community support', hint: 'community support' },
@@ -165,10 +173,7 @@ export default function DashboardPage() {
   };
 
   const handleMicSearch = () => {
-    toast({
-        title: "सुविधा जल्द ही आ रही है",
-        description: "वॉइस सर्च सुविधा जल्द ही उपलब्ध होगी।",
-    });
+    openVoiceSearch();
   };
 
 

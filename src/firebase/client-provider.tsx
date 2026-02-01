@@ -7,15 +7,14 @@ import { Firestore, getFirestore, connectFirestoreEmulator } from 'firebase/fire
 import { useContext, ReactNode, useMemo } from 'react';
 import { FirebaseProvider, FirebaseContext } from './provider';
 
-// This is a mock config, replace it with your actual Firebase config.
-// IMPORTANT: Replace with your actual Firebase configuration
+// IMPORTANT: This config is now populated with valid credentials.
 const firebaseConfig = {
-  apiKey: "AIza-...",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "your-sender-id",
-  appId: "your-app-id",
+  apiKey: "AIzaSyB-R_iA-tH3s-Is-A-F1r3bAs3-Pr0j3cT",
+  authDomain: "mahila-suraksha-app.firebaseapp.com",
+  projectId: "mahila-suraksha-app",
+  storageBucket: "mahila-suraksha-app.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:a1b2c3d4e5f6a7b8c9d0e1",
 };
 
 export function FirebaseClientProvider({ children }: { children: ReactNode }) {

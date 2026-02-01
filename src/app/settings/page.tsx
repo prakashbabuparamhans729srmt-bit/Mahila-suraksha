@@ -23,6 +23,7 @@ import { useUser } from '@/firebase/auth/use-user';
 import { useFirebase } from '@/firebase/client-provider';
 import { signOut, updateProfile } from 'firebase/auth';
 import { useGuest } from '@/context/guest-context';
+import { useAppearance } from '@/context/appearance-context';
 
 
 export default function SettingsPage() {
@@ -31,6 +32,7 @@ export default function SettingsPage() {
   const { auth } = useFirebase();
   const router = useRouter();
   const { isGuest, exitGuestMode } = useGuest();
+  const { textSize, setTextSize } = useAppearance();
 
   const [localProfileName, setLocalProfileName] = useState(user?.displayName ?? '');
   const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(null);
@@ -40,7 +42,6 @@ export default function SettingsPage() {
   const [authorityNumbers, setAuthorityNumbers] = useState({ police: '', ambulance: '', firetruck: '' });
   const [dangerZoneAlerts, setDangerZoneAlerts] = useState(false);
   const [vibrateOnAlert, setVibrateOnAlert] = useState(true);
-  const [textSize, setTextSize] = useState('medium');
   const [feedback, setFeedback] = useState('');
   const { toast } = useToast();
   

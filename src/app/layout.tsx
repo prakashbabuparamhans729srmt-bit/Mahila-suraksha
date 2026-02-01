@@ -14,6 +14,8 @@ import { Chatbot } from '@/components/chatbot';
 import { GuestProvider } from '@/context/guest-context';
 import { VoiceSearchProvider } from '@/context/voice-search-context';
 import { VoiceSearchModal } from '@/components/voice-search-modal';
+import { AppearanceProvider, useAppearance } from '@/context/appearance-context';
+import { cn } from '@/lib/utils';
 
 
 function ChatbotFloater() {
@@ -157,6 +159,38 @@ function ChatbotFloater() {
   );
 }
 
+function AppProviders({ children }: { children: React.ReactNode }) {
+    const { textSize } = useAppearance();
+    const textSizeClass = {
+        small: 'text-sm',
+        medium: 'text-base',
+        large: 'text-lg',
+    }[textSize];
+    
+    return (
+        <div className={textSizeClass}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <FirebaseClientProvider>
+                <AdminContentProvider>
+                  <VoiceSearchProvider>
+                    <GuestProvider>
+                      {children}
+                      <ChatbotFloater />
+                      <Toaster />
+                      <VoiceSearchModal />
+                    </GuestProvider>
+                  </VoiceSearchProvider>
+                </AdminContentProvider>
+              </FirebaseClientProvider>
+            </ThemeProvider>
+        </div>
+    );
+}
 
 export default function RootLayout({
   children,
@@ -189,25 +223,11 @@ export default function RootLayout({
         `}</style>
       </head>
       <body className="font-body antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <FirebaseClientProvider>
-            <AdminContentProvider>
-              <VoiceSearchProvider>
-                <GuestProvider>
-                  {children}
-                  <ChatbotFloater />
-                  <Toaster />
-                  <VoiceSearchModal />
-                </GuestProvider>
-              </VoiceSearchProvider>
-            </AdminContentProvider>
-          </FirebaseClientProvider>
-        </ThemeProvider>
+        <AppearanceProvider>
+          <AppProviders>
+            {children}
+          </AppProviders>
+        </AppearanceProvider>
       </body>
     </html>
   );

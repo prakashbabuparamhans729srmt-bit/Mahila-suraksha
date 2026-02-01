@@ -25,6 +25,7 @@ import { useFirebase } from '@/firebase/client-provider';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+import { useGuest } from '@/context/guest-context';
 
 
 const CommunityIcon = () => (
@@ -125,6 +126,7 @@ const AlertIcon = () => (
 
 export default function DashboardPage() {
   const { user, loading } = useUser();
+  const { isGuest, exitGuestMode } = useGuest();
   const { auth } = useFirebase();
   const router = useRouter();
   const { toast } = useToast();
@@ -138,10 +140,10 @@ export default function DashboardPage() {
   ]);
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !isGuest && !user) {
       router.push('/login');
     }
-  }, [loading, user, router]);
+  }, [loading, user, router, isGuest]);
 
   const handlePostLike = (postId: number) => {
     setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
@@ -385,6 +387,15 @@ export default function DashboardPage() {
   };
 
   const handleLogout = async () => {
+    if (isGuest) {
+      exitGuestMode();
+      router.push('/login');
+      toast({
+        title: "लॉग आउट किया गया",
+        description: "आप अतिथि मोड से लॉग आउट हो गए हैं।",
+      });
+      return;
+    }
     if (!auth) return;
     await signOut(auth);
     toast({
@@ -394,8 +405,12 @@ export default function DashboardPage() {
     router.push('/login');
   };
 
-  if (loading || !user) {
+  if (loading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+  
+  if (!user) {
+    return null;
   }
 
 

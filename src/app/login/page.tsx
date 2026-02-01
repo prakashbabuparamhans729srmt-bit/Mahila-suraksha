@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, User as UserIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useFirebase } from '@/firebase/client-provider';
+import { useGuest } from '@/context/guest-context';
 
 // Google Icon Component
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -36,6 +37,7 @@ export default function LoginPage() {
   const { toast } = useToast();
   const { auth } = useFirebase();
   const router = useRouter();
+  const { enterGuestMode } = useGuest();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,6 +88,11 @@ export default function LoginPage() {
               description: error.message || `साइन इन करने में विफल।`,
           });
       }
+  };
+
+  const handleGuestLogin = () => {
+    enterGuestMode();
+    router.push('/');
   };
 
   return (
@@ -145,14 +152,20 @@ export default function LoginPage() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" onClick={() => handleSocialLogin('google')}>
-                    <GoogleIcon className="mr-2 h-4 w-4"/>
-                    Google
-                </Button>
-                <Button variant="outline" onClick={() => handleSocialLogin('facebook')}>
-                    <FacebookIcon className="mr-2 h-4 w-4"/>
-                    Facebook
+            <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <Button variant="outline" onClick={() => handleSocialLogin('google')}>
+                        <GoogleIcon className="mr-2 h-4 w-4"/>
+                        Google
+                    </Button>
+                    <Button variant="outline" onClick={() => handleSocialLogin('facebook')}>
+                        <FacebookIcon className="mr-2 h-4 w-4"/>
+                        Facebook
+                    </Button>
+                </div>
+                <Button variant="outline" className="w-full" onClick={handleGuestLogin}>
+                    <UserIcon className="mr-2 h-4 w-4"/>
+                    अतिथि के रूप में जारी रखें
                 </Button>
             </div>
 

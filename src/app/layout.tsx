@@ -10,6 +10,7 @@ import { MessageCircle, X } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetDescription } from '@/components/ui/sheet';
 import { Chatbot } from '@/components/chatbot';
+import { GuestProvider } from '@/context/guest-context';
 
 
 function ChatbotFloater() {
@@ -193,9 +194,11 @@ export default function RootLayout({
         >
           <FirebaseClientProvider>
             <AdminContentProvider>
-              {children}
-              <ChatbotFloater />
-              <Toaster />
+              <GuestProvider>
+                {children}
+                <ChatbotFloater />
+                <Toaster />
+              </GuestProvider>
             </AdminContentProvider>
           </FirebaseClientProvider>
         </ThemeProvider>

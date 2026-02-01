@@ -22,6 +22,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useUser } from '@/firebase/auth/use-user';
 import { useFirebase } from '@/firebase/client-provider';
 import { signOut, updateProfile } from 'firebase/auth';
+import { useGuest } from '@/context/guest-context';
 
 
 export default function SettingsPage() {
@@ -29,6 +30,7 @@ export default function SettingsPage() {
   const { user, loading } = useUser();
   const { auth } = useFirebase();
   const router = useRouter();
+  const { isGuest, exitGuestMode } = useGuest();
 
   const [localProfileName, setLocalProfileName] = useState(user?.displayName ?? '');
   const [localProfilePhoto, setLocalProfilePhoto] = useState<File | null>(null);
@@ -46,10 +48,10 @@ export default function SettingsPage() {
     if (!loading && user) {
       setLocalProfileName(user.displayName ?? '');
       setPhotoPreview(user.photoURL ?? null);
-    } else if (!loading && !user) {
+    } else if (!loading && !isGuest && !user) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, isGuest]);
 
   useEffect(() => {
     if (localProfilePhoto) {
@@ -128,6 +130,15 @@ export default function SettingsPage() {
   };
   
   const handleLogout = async () => {
+    if (isGuest) {
+      exitGuestMode();
+      router.push('/login');
+      toast({
+          title: "लॉग आउट किया गया",
+          description: "आप अतिथि मोड से लॉग आउट हो गए हैं।",
+      });
+      return;
+    }
     if (!auth) return;
     await signOut(auth);
     toast({
@@ -142,7 +153,7 @@ export default function SettingsPage() {
     return null;
   }
 
-  const isAdmin = user?.email === 'admin@example.com';
+  const isAdmin = !isGuest && user?.email === 'admin@example.com';
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">

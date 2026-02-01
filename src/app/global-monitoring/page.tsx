@@ -6,25 +6,27 @@ import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings, BookOpen } from 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useTranslation } from '@/context/language-context';
 
 export default function GlobalMonitoringPage() {
+    const { t } = useTranslation();
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">वैश्विक निगरानी</h1>
+                <h1 className="text-xl font-bold">{t('GlobalMonitoring.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle className="text-lg">वैश्विक सुरक्षा हीटमैप</CardTitle>
+                        <CardTitle className="text-lg">{t('GlobalMonitoring.heatmapTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4 text-sm">
-                            किसी देश के सुरक्षा स्कोर, प्रमुख आँकड़ों और हाल के कानूनी सुधारों का पता लगाने के लिए उस पर क्लिक करें।
+                            {t('GlobalMonitoring.heatmapDescription')}
                         </p>
                         <div className="relative bg-background/30 h-64 rounded-md flex items-center justify-center">
                             {/* Placeholder for map */}
@@ -70,15 +72,15 @@ export default function GlobalMonitoringPage() {
 
                 <Card className="bg-secondary/50 border-border">
                     <CardHeader>
-                        <CardTitle className="text-lg">वार्षिक वैश्विक रिपोर्ट</CardTitle>
+                        <CardTitle className="text-lg">{t('GlobalMonitoring.annualReportTitle')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4 text-sm">
-                            गहन विश्लेषण और देश-विशिष्ट अंतर्दृष्टि के लिए हमारी व्यापक वार्षिक रिपोर्ट डाउनलोड करें।
+                            {t('GlobalMonitoring.annualReportDescription')}
                         </p>
                         <Button className="w-full">
                             <BookOpen className="mr-2 h-4 w-4" />
-                            रिपोर्ट खोलें
+                            {t('GlobalMonitoring.openReport')}
                         </Button>
                     </CardContent>
                 </Card>

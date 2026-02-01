@@ -9,8 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useAdminContent } from '@/context/admin-content-context'; // Import context
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 export default function CommunityEmpowermentPage() {
+    const { t } = useTranslation();
     const { publishedContent } = useAdminContent(); // Get content from context
     const { toast } = useToast();
 
@@ -18,8 +20,8 @@ export default function CommunityEmpowermentPage() {
 
     const handleLearnMore = (title: string) => {
         toast({
-            title: "जल्द आ रहा है",
-            description: `"${title}" के बारे में विस्तृत जानकारी जल्द ही उपलब्ध होगी।`,
+            title: t('CommunityEmpowerment.comingSoon'),
+            description: t('CommunityEmpowerment.comingSoonDescription', { title }),
         });
     };
 
@@ -29,7 +31,7 @@ export default function CommunityEmpowermentPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">सामुदायिक सशक्तिकरण</h1>
+                <h1 className="text-xl font-bold">{t('CommunityEmpowerment.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
@@ -38,26 +40,26 @@ export default function CommunityEmpowermentPage() {
                         <div>
                             <Users className="h-8 w-8 mx-auto text-primary mb-2" />
                             <p className="text-lg font-bold">12 लाख+</p>
-                            <p className="text-xs text-muted-foreground">सक्रिय सदस्य</p>
+                            <p className="text-xs text-muted-foreground">{t('CommunityEmpowerment.activeMembers')}</p>
                         </div>
                         <div>
                             <Calendar className="h-8 w-8 mx-auto text-primary mb-2" />
                             <p className="text-lg font-bold">5,800+</p>
-                            <p className="text-xs text-muted-foreground">आयोजित कार्यक्रम</p>
+                            <p className="text-xs text-muted-foreground">{t('CommunityEmpowerment.eventsHeld')}</p>
                         </div>
                         <div>
                             <Handshake className="h-8 w-8 mx-auto text-primary mb-2" />
                             <p className="text-lg font-bold">75 हजार+</p>
-                            <p className="text-xs text-muted-foreground">संलग्न स्वयंसेवक</p>
+                            <p className="text-xs text-muted-foreground">{t('CommunityEmpowerment.volunteersEngaged')}</p>
                         </div>
                     </CardContent>
                 </Card>
 
                 <Tabs defaultValue="program" className="w-full">
                     <TabsList className="grid w-full grid-cols-3 bg-secondary/50">
-                        <TabsTrigger value="program">कार्यक्रम</TabsTrigger>
-                        <TabsTrigger value="event">आयोजन</TabsTrigger>
-                        <TabsTrigger value="forum">मंच</TabsTrigger>
+                        <TabsTrigger value="program">{t('CommunityEmpowerment.tabProgram')}</TabsTrigger>
+                        <TabsTrigger value="event">{t('CommunityEmpowerment.tabEvent')}</TabsTrigger>
+                        <TabsTrigger value="forum">{t('CommunityEmpowerment.tabForum')}</TabsTrigger>
                     </TabsList>
                     <TabsContent value="program" className="mt-6 space-y-6">
                         {initiatives.length > 0 ? initiatives.map(item => (
@@ -67,15 +69,15 @@ export default function CommunityEmpowermentPage() {
                                     <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
                                         <li>{item.description}</li>
                                         {item.kpi && <li>KPI: {item.kpi}</li>}
-                                        {item.targetAudience && <li>लक्षित दर्शक: {item.targetAudience}</li>}
+                                        {item.targetAudience && <li>{t('CommunityEmpowerment.targetAudience')}: {item.targetAudience}</li>}
                                     </ul>
-                                    <Button className="w-full mt-2" onClick={() => handleLearnMore(item.title)}>और जानें</Button>
+                                    <Button className="w-full mt-2" onClick={() => handleLearnMore(item.title)}>{t('CommunityEmpowerment.learnMore')}</Button>
                                 </CardContent>
                             </Card>
                         )) : (
                             <Card className="bg-secondary/50 border-border">
                                 <CardContent className="p-6 text-center text-muted-foreground">
-                                    <p>अभी तक कोई कार्यक्रम नहीं है।</p>
+                                    <p>{t('CommunityEmpowerment.noPrograms')}</p>
                                 </CardContent>
                             </Card>
                         )}
@@ -83,14 +85,14 @@ export default function CommunityEmpowermentPage() {
                     <TabsContent value="event">
                         <Card className="bg-secondary/50 border-border">
                             <CardContent className="p-6 text-center text-muted-foreground">
-                                <p>आयोजन की सुविधा जल्द ही आ रही है।</p>
+                                <p>{t('CommunityEmpowerment.eventsComingSoon')}</p>
                             </CardContent>
                         </Card>
                     </TabsContent>
                     <TabsContent value="forum">
                         <Card className="bg-secondary/50 border-border">
                             <CardContent className="p-6 text-center text-muted-foreground">
-                                <p>मंच की सुविधा जल्द ही आ रही है।</p>
+                                <p>{t('CommunityEmpowerment.forumComingSoon')}</p>
                             </CardContent>
                         </Card>
                     </TabsContent>

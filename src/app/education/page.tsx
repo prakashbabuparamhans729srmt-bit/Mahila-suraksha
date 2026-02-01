@@ -7,8 +7,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useAdminContent } from '@/context/admin-content-context';
+import { useTranslation } from '@/context/language-context';
 
 export default function EducationPage() {
+    const { t } = useTranslation();
     const { publishedContent } = useAdminContent();
 
     const articles = publishedContent.filter(item => item.type === 'article');
@@ -41,7 +43,7 @@ export default function EducationPage() {
                            ) : (
                                 <>
                                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                                 <p className="text-sm text-primary mt-1">5 मिनट पढ़ें</p>
+                                 <p className="text-sm text-primary mt-1">{t('Education.readTime')}</p>
                                 </>
                            )}
                        </div>
@@ -55,7 +57,7 @@ export default function EducationPage() {
     const renderEmptyState = (type: string) => (
         <Card className="bg-secondary/50 border-border">
             <CardContent className="p-6 text-center text-muted-foreground">
-                <p>अभी तक कोई {type} नहीं है।</p>
+                <p>{t('Education.emptyState', { type })}</p>
             </CardContent>
         </Card>
     );
@@ -66,36 +68,36 @@ export default function EducationPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">शिक्षा और जागरूकता</h1>
+                <h1 className="text-xl font-bold">{t('Education.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <Tabs defaultValue="articles" className="w-full">
                     <TabsList className="grid w-full grid-cols-4 bg-secondary/50">
                         <TabsTrigger value="articles" className="flex items-center gap-2">
-                            <FileText className="h-4 w-4" /> लेख
+                            <FileText className="h-4 w-4" /> {t('Education.tabArticles')}
                         </TabsTrigger>
                         <TabsTrigger value="videos" className="flex items-center gap-2">
-                            <Video className="h-4 w-4" /> वीडियो
+                            <Video className="h-4 w-4" /> {t('Education.tabVideos')}
                         </TabsTrigger>
                         <TabsTrigger value="quizzes" className="flex items-center gap-2">
-                            <Brain className="h-4 w-4" /> प्रश्नोत्तरी
+                            <Brain className="h-4 w-4" /> {t('Education.tabQuizzes')}
                         </TabsTrigger>
                         <TabsTrigger value="resources" className="flex items-center gap-2">
-                            <Link2 className="h-4 w-4" /> संसाधन
+                            <Link2 className="h-4 w-4" /> {t('Education.tabResources')}
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="articles" className="mt-6 space-y-6">
-                        {articles.length > 0 ? articles.map(renderContentItem) : renderEmptyState('लेख')}
+                        {articles.length > 0 ? articles.map(renderContentItem) : renderEmptyState(t('Education.tabArticles'))}
                     </TabsContent>
                     <TabsContent value="videos" className="mt-6 space-y-6">
-                       {videos.length > 0 ? videos.map(renderContentItem) : renderEmptyState('वीडियो')}
+                       {videos.length > 0 ? videos.map(renderContentItem) : renderEmptyState(t('Education.tabVideos'))}
                     </TabsContent>
                     <TabsContent value="quizzes" className="mt-6 space-y-6">
-                        {quizzes.length > 0 ? quizzes.map(renderContentItem) : renderEmptyState('प्रश्नोत्तरी')}
+                        {quizzes.length > 0 ? quizzes.map(renderContentItem) : renderEmptyState(t('Education.tabQuizzes'))}
                     </TabsContent>
                     <TabsContent value="resources" className="mt-6 space-y-6">
-                        {resources.length > 0 ? resources.map(renderContentItem) : renderEmptyState('संसाधन')}
+                        {resources.length > 0 ? resources.map(renderContentItem) : renderEmptyState(t('Education.tabResources'))}
                     </TabsContent>
                 </Tabs>
             </main>

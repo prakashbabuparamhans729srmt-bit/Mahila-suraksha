@@ -15,11 +15,13 @@ import { GuestProvider } from '@/context/guest-context';
 import { VoiceSearchProvider } from '@/context/voice-search-context';
 import { VoiceSearchModal } from '@/components/voice-search-modal';
 import { AppearanceProvider, useAppearance } from '@/context/appearance-context';
+import { LanguageProvider, useTranslation } from '@/context/language-context';
 import { cn } from '@/lib/utils';
 
 
 function ChatbotFloater() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const { t } = useTranslation();
 
   const getInitialPosition = () => {
     if (typeof window === 'undefined') return { x: 0, y: 0 };
@@ -141,7 +143,7 @@ function ChatbotFloater() {
         <SheetContent side="bottom" className="h-[90vh] p-0 border-t flex flex-col">
            <SheetHeader className="p-4 border-b">
                <div className="flex justify-between items-center">
-                <SheetTitle>AI सहायक</SheetTitle>
+                <SheetTitle>{t('ChatbotFloater.title')}</SheetTitle>
                 <SheetClose asChild>
                     <Button variant="ghost" size="icon">
                         <X className="h-6 w-6" />
@@ -149,7 +151,7 @@ function ChatbotFloater() {
                 </SheetClose>
                </div>
                <SheetDescription>
-                नमस्ते! मैं आपका AI सहायक हूँ। आप मुझसे कुछ भी पूछ सकते हैं।
+                {t('ChatbotFloater.description')}
                </SheetDescription>
            </SheetHeader>
            <Chatbot />
@@ -157,6 +159,17 @@ function ChatbotFloater() {
       </Sheet>
     </>
   );
+}
+
+function AppWithProviders({ children }: { children: React.ReactNode }) {
+    return (
+        <LanguageProvider>
+            {children}
+            <ChatbotFloater />
+            <Toaster />
+            <VoiceSearchModal />
+        </LanguageProvider>
+    )
 }
 
 function AppProviders({ children }: { children: React.ReactNode }) {
@@ -179,10 +192,9 @@ function AppProviders({ children }: { children: React.ReactNode }) {
                 <AdminContentProvider>
                   <VoiceSearchProvider>
                     <GuestProvider>
-                      {children}
-                      <ChatbotFloater />
-                      <Toaster />
-                      <VoiceSearchModal />
+                        <AppWithProviders>
+                            {children}
+                        </AppWithProviders>
                     </GuestProvider>
                   </VoiceSearchProvider>
                 </AdminContentProvider>

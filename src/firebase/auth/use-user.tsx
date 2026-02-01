@@ -5,10 +5,10 @@ import { useState, useEffect, useContext } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { FirebaseContext } from '../provider';
 import { useGuest } from '@/context/guest-context';
+import { useTranslation } from '@/context/language-context';
 
-const guestUser = {
+const guestUserBase = {
   uid: 'guest',
-  displayName: 'अतिथि उपयोगकर्ता',
   email: 'guest@example.com',
   photoURL: 'https://picsum.photos/seed/guest/40/40',
   emailVerified: true,
@@ -28,11 +28,16 @@ const guestUser = {
 export function useUser() {
   const { auth } = useContext(FirebaseContext);
   const { isGuest } = useGuest();
+  const { t } = useTranslation();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isGuest) {
+      const guestUser = {
+        ...guestUserBase,
+        displayName: t('Dashboard.guestUser'),
+      };
       setUser(guestUser);
       setLoading(false);
       return;
@@ -52,7 +57,7 @@ export function useUser() {
     });
 
     return () => unsubscribe();
-  }, [auth, isGuest]);
+  }, [auth, isGuest, t]);
 
   return { user, loading };
 }

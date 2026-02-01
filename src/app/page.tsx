@@ -30,6 +30,7 @@ import { useGuest } from '@/context/guest-context';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useVoiceSearch } from '@/context/voice-search-context';
+import { useTranslation } from '@/context/language-context';
 
 
 const CommunityIcon = () => (
@@ -135,6 +136,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const { toast } = useToast();
   const { openVoiceSearch, searchQuery: voiceSearchQuery, setSearchQuery: setGlobalSearchQuery } = useVoiceSearch();
+  const { t } = useTranslation();
 
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
@@ -463,7 +465,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
-        <h1 className="text-2xl font-bold">डैशबोर्ड</h1>
+        <h1 className="text-2xl font-bold">{t('Dashboard.title')}</h1>
         <div className="flex items-center space-x-4">
           <Link href="/notifications">
             <Bell className="h-6 w-6" />
@@ -501,12 +503,12 @@ export default function DashboardPage() {
             <div className="flex items-center space-x-3">
               <MapPin className="h-6 w-6 text-primary" />
               <div>
-                <p className="text-sm text-muted-foreground">आपका वर्तमान स्थान</p>
+                <p className="text-sm text-muted-foreground">{t('Dashboard.currentLocation')}</p>
                 <p className="font-semibold">Patna Junction, Patna</p>
               </div>
             </div>
             <Link href="/location-settings">
-              <Button variant="link" className="text-primary">बदलें</Button>
+              <Button variant="link" className="text-primary">{t('Dashboard.change')}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -515,7 +517,7 @@ export default function DashboardPage() {
           <div className="relative flex-grow">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
-              placeholder="किसी सुविधा के लिए खोजें..."
+              placeholder={t('Dashboard.searchPlaceholder')}
               className="pl-10 bg-secondary/50 border-border"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -587,7 +589,7 @@ export default function DashboardPage() {
                         <div className="border-2 border-white p-2 mb-2">
                         <span className="text-lg font-bold">SOS</span>
                         </div>
-                        <h2 className="text-2xl font-bold">आपातकालीन एसओएस</h2>
+                        <h2 className="text-2xl font-bold">{t('Dashboard.sosButton')}</h2>
                     </CardContent>
                 </Card>
             </SheetTrigger>
@@ -754,11 +756,11 @@ export default function DashboardPage() {
             <DialogTrigger asChild>
                 <Card className="bg-secondary/50 border-border cursor-pointer">
                 <CardContent className="p-4">
-                    <h3 className="font-semibold">वापसी पर स्वागत है, {user.displayName || 'उपयोगकर्ता'}!</h3>
+                    <h3 className="font-semibold">{t('Dashboard.welcomeMessage', { name: user.displayName || 'उपयोगकर्ता' })}</h3>
                     <p className="text-muted-foreground">
-                    आपका वर्तमान वैश्विक सुरक्षा स्कोर है <span className="text-white font-bold">76/100</span>
+                    {t('Dashboard.globalSafetyScore', { score: '76/100' })}
                     </p>
-                    <p className="text-green-400 text-sm">पिछले सप्ताह से 2 अंक ऊपर</p>
+                    <p className="text-green-400 text-sm">{t('Dashboard.scoreTrend', { points: 2 })}</p>
                 </CardContent>
                 </Card>
             </DialogTrigger>

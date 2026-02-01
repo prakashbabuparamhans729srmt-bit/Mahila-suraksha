@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -8,6 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 // Define the type for the SpeechRecognition API
 declare global {
@@ -24,14 +26,19 @@ type Message = {
 };
 
 export function Chatbot() {
-  const [messages, setMessages] = useState<Message[]>([
-    { text: 'नमस्ते! मैं आपका AI सहायक हूँ। आप मुझसे कुछ भी पूछ सकते हैं।', sender: 'bot', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
-  ]);
+  const { t, locale } = useTranslation();
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    setMessages([
+      { text: t('Chatbot.welcomeMessage'), sender: 'bot', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+    ]);
+  }, [t]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -46,8 +53,8 @@ export function Chatbot() {
     if (!SpeechRecognition) {
       toast({
         variant: "destructive",
-        title: "असमर्थित ब्राउज़र",
-        description: "आपका ब्राउज़र वाक् पहचान का समर्थन नहीं करता है।",
+        title: t('Chatbot.unsupportedBrowser'),
+        description: t('Chatbot.unsupportedBrowserDescription'),
       });
       return;
     }
@@ -55,7 +62,7 @@ export function Chatbot() {
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.lang = 'hi-IN';
+    recognition.lang = locale;
 
     recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
@@ -67,15 +74,15 @@ export function Chatbot() {
 
     recognition.onerror = (event: any) => {
       console.error('Speech recognition error:', event.error);
-      let errorMessage = 'एक अज्ञात त्रुटि हुई।';
+      let errorMessage = t('Chatbot.unknownError');
       if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-        errorMessage = "माइक्रोफ़ोन की अनुमति नहीं दी गई है। कृपया ब्राउज़र सेटिंग्स में अनुमति दें।";
+        errorMessage = t('Chatbot.micNotAllowed');
       } else if (event.error === 'no-speech') {
-        errorMessage = "कोई आवाज़ नहीं मिली। कृपया फिर से प्रयास करें।";
+        errorMessage = t('Chatbot.noSpeech');
       }
       toast({
         variant: "destructive",
-        title: "माइक्रोफ़ोन त्रुटि",
+        title: t('Chatbot.micError'),
         description: errorMessage,
       });
       setIsListening(false);
@@ -86,7 +93,7 @@ export function Chatbot() {
     };
     
     recognitionRef.current = recognition;
-  }, [toast]);
+  }, [toast, t, locale]);
   
 
   const handleMicClick = () => {
@@ -103,8 +110,8 @@ export function Chatbot() {
         console.error("Could not start recognition", e);
         toast({
             variant: "destructive",
-            title: "माइक्रोफ़ोन त्रुटि",
-            description: "माइक्रोफ़ोन शुरू नहीं किया जा सका। कृपया अनुमति जांचें।",
+            title: t('Chatbot.micError'),
+            description: t('Chatbot.micStartError'),
         });
       }
     }
@@ -118,7 +125,7 @@ export function Chatbot() {
     
     // Simulate bot response
     setTimeout(() => {
-      const botMessage: Message = { text: `मैं आपके प्रश्न "${input}" को प्रोसेस कर रहा हूँ।`, sender: 'bot', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
+      const botMessage: Message = { text: t('Chatbot.processing', { input }), sender: 'bot', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
       setMessages((prev) => [...prev, botMessage]);
     }, 1000);
 
@@ -165,7 +172,7 @@ export function Chatbot() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="bg-secondary px-4 py-2 rounded-lg text-sm text-muted-foreground animate-pulse">
-                    सुन रहा हूँ...
+                    {t('Chatbot.listening')}
                 </div>
               </div>
             )}
@@ -175,7 +182,7 @@ export function Chatbot() {
       <div className="p-4 border-t border-border">
         <div className="flex items-center gap-2">
           <Input
-            placeholder="एक संदेश लिखें..."
+            placeholder={t('Chatbot.placeholder')}
             className="bg-secondary/50 border-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}

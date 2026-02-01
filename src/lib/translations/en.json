@@ -1195,5 +1195,15 @@
   "VoiceSearch.noSpeech": "No speech was detected. Please try again.",
   "VoiceSearch.micStartError": "The microphone may already be running or another error occurred.",
   "VoiceSearch.unsupportedBrowser": "Unsupported Browser",
-  "VoiceSearch.unsupportedBrowserDesc": "Your browser does not support speech recognition."
+  "VoiceSearch.unsupportedBrowserDesc": "Your browser does not support speech recognition.",
+  "role.user": "User",
+  "role.admin": "Admin",
+  "role.moderator": "Moderator",
+  "contentType.incident_report": "Incident Report",
+  "contentType.update": "Update",
+  "contentType.initiative": "Initiative",
+  "contentType.article": "Article",
+  "contentType.video": "Video",
+  "contentType.quiz": "Quiz",
+  "contentType.resource": "Resource"
 }

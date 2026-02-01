@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
-import { useAdminContent } from '@/context/admin-content-context';
+import { useAdminContent, UserRole } from '@/context/admin-content-context';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -17,7 +17,7 @@ export default function UsersPage() {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { users, addUser, deleteUser } = useAdminContent();
-  const [newUser, setNewUser] = useState({ email: '', role: 'उपयोगकर्ता' as 'उपयोगकर्ता' | 'एडमिन' | 'मॉडरेटर' });
+  const [newUser, setNewUser] = useState({ email: '', role: 'user' as UserRole });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleEdit = (userId: string) => {
@@ -43,7 +43,7 @@ export default function UsersPage() {
             title: t('Admin.userAdded'),
             description: t('Admin.userAddedDesc', { email: newUser.email })
         });
-        setNewUser({email: '', role: 'उपयोगकर्ता'});
+        setNewUser({email: '', role: 'user'});
         setIsDialogOpen(false);
     } else {
         toast({
@@ -84,15 +84,15 @@ export default function UsersPage() {
                             <Label htmlFor="role">{t('Admin.role')}</Label>
                              <Select 
                                 value={newUser.role} 
-                                onValueChange={(value: 'उपयोगकर्ता' | 'एडमिन' | 'मॉडरेटर') => setNewUser({...newUser, role: value})}
+                                onValueChange={(value: UserRole) => setNewUser({...newUser, role: value})}
                              >
                                 <SelectTrigger id="role">
                                 <SelectValue placeholder={t('Admin.selectRole')} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                <SelectItem value="उपयोगकर्ता">{t('Admin.roleUser')}</SelectItem>
-                                <SelectItem value="मॉडरेटर">{t('Admin.roleModerator')}</SelectItem>
-                                <SelectItem value="एडमिन">{t('Admin.roleAdmin')}</SelectItem>
+                                <SelectItem value="user">{t('Admin.roleUser')}</SelectItem>
+                                <SelectItem value="moderator">{t('Admin.roleModerator')}</SelectItem>
+                                <SelectItem value="admin">{t('Admin.roleAdmin')}</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -124,7 +124,7 @@ export default function UsersPage() {
                 <TableRow key={user.id}>
                     <TableCell>{user.id}</TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.role}</TableCell>
+                    <TableCell>{t(`role.${user.role}`)}</TableCell>
                     <TableCell>{user.joined}</TableCell>
                     <TableCell className="space-x-2 text-right">
                     <Button variant="outline" size="sm" onClick={() => handleEdit(user.id)}>{t('Admin.edit')}</Button>

@@ -33,7 +33,7 @@ export default function UpdatesFeedPage() {
     const { t } = useTranslation();
     
     const initialPostsData = publishedContent
-        .filter(item => item.type === 'अपडेट')
+        .filter(item => item.type === 'update')
         .map((item, index) => ({
             id: item.id,
             title: item.title,

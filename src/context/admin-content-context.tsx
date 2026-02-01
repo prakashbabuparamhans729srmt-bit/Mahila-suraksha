@@ -3,10 +3,13 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+export type ContentType = 'incident_report' | 'update' | 'initiative' | 'article' | 'video' | 'quiz' | 'resource';
+export type UserRole = 'user' | 'admin' | 'moderator';
+
 export type ContentItem = {
   id: number;
   title: string;
-  type: string;
+  type: ContentType | string;
   user: string;
   date: string;
   status: 'pending' | 'approved' | 'rejected';
@@ -21,7 +24,7 @@ export type ContentItem = {
 export type User = {
   id: string;
   email: string;
-  role: 'उपयोगकर्ता' | 'एडमिन' | 'मॉडरेटर';
+  role: UserRole;
   joined: string;
 };
 
@@ -44,22 +47,22 @@ type AdminContentContextType = {
 const AdminContentContext = createContext<AdminContentContextType | undefined>(undefined);
 
 const initialUsers: User[] = [
-    { id: 'user123', email: 'user@example.com', role: 'उपयोगकर्ता', joined: '2024-07-20' },
-    { id: 'admin456', email: 'admin@example.com', role: 'एडमिन', joined: '2024-07-15' },
-    { id: 'user456', email: 'user456@example.com', role: 'उपयोगकर्ता', joined: '2024-07-24' },
+    { id: 'user123', email: 'user@example.com', role: 'user', joined: '2024-07-20' },
+    { id: 'admin456', email: 'admin@example.com', role: 'admin', joined: '2024-07-15' },
+    { id: 'user456', email: 'user456@example.com', role: 'user', joined: '2024-07-24' },
 ];
 
 const initialPublishedContent: ContentItem[] = [
-    { id: 1, title: 'अर्जेंटीना में नया कानून पारित', type: 'अपडेट', user: 'admin456', date: '2024-07-22', status: 'approved', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', photo: null },
-    { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', type: 'अपडेट', user: 'admin456', date: '2024-07-20', status: 'approved', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', photo: null },
+    { id: 1, title: 'अर्जेंटीना में नया कानून पारित', type: 'update', user: 'admin456', date: '2024-07-22', status: 'approved', description: 'अर्जेंटीना की कांग्रेस ने उत्पीड़न के खिलाफ कार्यस्थल सुरक्षा का विस्तार करने वाला एक नया विधेयक पारित किया।', photo: null },
+    { id: 2, title: 'वैश्विक धन उगाहने वाले की शुरूआत', type: 'update', user: 'admin456', date: '2024-07-20', status: 'approved', description: 'हमारा वार्षिक वैश्विक धन उगाहने वाला शुरू हो गया है, जिसका लक्ष्य उत्तरजीवी सहायता कार्यक्रमों के लिए $10M जुटाना है।', photo: null },
     { id: 3, title: 'सहमति को समझना', type: 'article', user: 'admin456', date: '2024-07-19', status: 'approved', description: 'स्वस्थ संबंधों की आधारशिला।', url: '/education/consent-article' },
-    { id: 4, title: 'स्थानीय सुरक्षा और सहायता केंद्र', type: 'पहल', user: 'admin456', date: '2024-07-18', status: 'approved', description: 'मुफ्त परामर्श और कानूनी सहायता प्रदान करना।', targetAudience: 'सभी', kpi: '1000 लोगों की सहायता' },
+    { id: 4, title: 'स्थानीय सुरक्षा और सहायता केंद्र', type: 'initiative', user: 'admin456', date: '2024-07-18', status: 'approved', description: 'मुफ्त परामर्श और कानूनी सहायता प्रदान करना।', targetAudience: 'सभी', kpi: '1000 लोगों की सहायता' },
 ];
 
 
 export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
   const [pendingContent, setPendingContent] = useState<ContentItem[]>([
-    { id: 101, title: 'पार्क में असुरक्षित प्रकाश व्यवस्था', type: 'घटना रिपोर्ट', user: 'user123', date: '2024-07-25', status: 'pending' },
+    { id: 101, title: 'पार्क में असुरक्षित प्रकाश व्यवस्था', type: 'incident_report', user: 'user123', date: '2024-07-25', status: 'pending' },
     { id: 102, title: 'नया जागरूकता लेख', type: 'article', user: 'user456', date: '2024-07-24', status: 'pending', description: 'डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।' },
   ]);
   
@@ -109,8 +112,8 @@ export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
   
   const stats = {
       totalUsers: users.length,
-      reportedIncidents: pendingContent.filter(c => c.type === 'घटना रिपोर्ट').length,
-      activeInitiatives: publishedContent.filter(c => c.type === 'पहल').length + pendingContent.filter(c => c.type === 'पहल').length,
+      reportedIncidents: pendingContent.filter(c => c.type === 'incident_report').length,
+      activeInitiatives: publishedContent.filter(c => c.type === 'initiative').length + pendingContent.filter(c => c.type === 'initiative').length,
       totalContent: pendingContent.length,
   };
 

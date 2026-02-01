@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -41,7 +42,7 @@ export default function AddInitiativePage() {
     
     addContent({
       title: formData.title,
-      type: 'पहल',
+      type: 'initiative',
       description: formData.description,
       targetAudience: formData.targetAudience,
       kpi: formData.kpi,

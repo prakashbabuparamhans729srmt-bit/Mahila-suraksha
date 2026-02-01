@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -46,7 +47,7 @@ export default function AddUpdatePage() {
     
     addContent({
       title: formData.title,
-      type: 'अपडेट',
+      type: 'update',
       description: formData.content,
       photo: formData.photo,
     });

@@ -16,7 +16,7 @@ export default function CommunityEmpowermentPage() {
     const { publishedContent } = useAdminContent(); // Get content from context
     const { toast } = useToast();
 
-    const initiatives = publishedContent.filter(item => item.type === 'पहल');
+    const initiatives = publishedContent.filter(item => item.type === 'initiative');
 
     const handleLearnMore = (title: string) => {
         toast({

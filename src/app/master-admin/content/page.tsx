@@ -59,7 +59,7 @@ export default function ContentPage() {
               {pendingContent.length > 0 ? pendingContent.map(item => (
                 <TableRow key={item.id}>
                   <TableCell>{item.title}</TableCell>
-                  <TableCell>{item.type}</TableCell>
+                  <TableCell>{t(`contentType.${item.type}`)}</TableCell>
                   <TableCell>{item.user}</TableCell>
                   <TableCell>{item.date}</TableCell>
                   <TableCell className="space-x-2">

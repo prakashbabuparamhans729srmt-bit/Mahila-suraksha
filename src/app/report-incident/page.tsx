@@ -48,7 +48,7 @@ export default function ReportIncidentPage() {
     
     addContent({
       title: formData.title,
-      type: 'घटना रिपोर्ट',
+      type: 'incident_report',
       description: formData.description,
       location: formData.location,
       photo: formData.photo,

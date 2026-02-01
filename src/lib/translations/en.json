@@ -1102,6 +1102,8 @@
   "Dashboard.applyFilters": "Apply Filters",
   "Dashboard.post1Title": "New Law Passed in Argentina",
   "Dashboard.post1Desc": "Argentina's congress passed a new bill expanding workplace protections against harassment.",
+  "Dashboard.post2Title": "Global Fundraiser Launched",
+  "Dashboard.post2Desc": "Our annual global fundraiser has kicked off, aiming to raise $10M for survivor support programs.",
   "Dashboard.sharingNotSupported": "Sharing is not supported in this browser.",
   "Dashboard.shareSafetyUpdate": "Share {state} Safety Update",
   "Dashboard.shareSafetyUpdateText": "Check out the latest safety update: {details}",

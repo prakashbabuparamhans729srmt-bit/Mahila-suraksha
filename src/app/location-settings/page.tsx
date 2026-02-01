@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -9,8 +8,10 @@ import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 export default function LocationSettingsPage() {
+  const { t } = useTranslation();
   const [location, setLocation] = useState('Patna Junction, Patna');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,24 +27,24 @@ export default function LocationSettingsPage() {
           // In a real app, you would use a reverse geocoding service
           // to get the address from coordinates.
           // For now, we'll just update the state to show it's fetched.
-          setLocation(`अक्षांश: ${latitude.toFixed(4)}, देशांतर: ${longitude.toFixed(4)}`);
+          setLocation(t('LocationSettings.latLon', { lat: latitude.toFixed(4), lon: longitude.toFixed(4) }));
           setLoading(false);
         },
         (err) => {
-          setError('स्थान का पता नहीं लगाया जा सका। कृपया सुनिश्चित करें कि आपने अनुमति दी है।');
+          setError(t('LocationSettings.errorDetect'));
           setLoading(false);
         }
       );
     } else {
-      setError('आपके ब्राउज़र में जियोलोकेशन समर्थित नहीं है।');
+      setError(t('LocationSettings.errorGeolocation'));
       setLoading(false);
     }
   };
 
   const handleSaveLocation = () => {
     toast({
-        title: 'सेटिंग्स सहेजी गईं',
-        description: 'आपका स्थान सफलतापूर्वक सहेजा गया है।',
+        title: t('LocationSettings.toastSavedTitle'),
+        description: t('LocationSettings.toastSavedDescription'),
     });
   };
 
@@ -53,57 +54,57 @@ export default function LocationSettingsPage() {
         <Link href="/settings" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
-        <h1 className="text-xl font-bold">स्थान सेटिंग्स</h1>
+        <h1 className="text-xl font-bold">{t('LocationSettings.title')}</h1>
       </header>
 
       <main className="p-4 space-y-6">
         <p className="text-muted-foreground px-2">
-        अधिक प्रासंगिक स्थानीय जानकारी प्राप्त करने और एसओएस सटीकता में सुधार करने के लिए अपना स्थान निर्धारित करें। आप इसे स्वचालित रूप से पता लगा सकते हैं या इसे मैन्युअल रूप से दर्ज कर सकते हैं।
+          {t('LocationSettings.description')}
         </p>
 
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-4 space-y-2">
-            <h3 className="font-semibold">आपका वर्तमान स्थान</h3>
+            <h3 className="font-semibold">{t('LocationSettings.yourCurrentLocation')}</h3>
             <div className="flex items-center space-x-3">
               <MapPin className="h-5 w-5 text-primary" />
-              <p>{loading ? 'पता लगाया जा रहा है...' : error ? error : location}</p>
+              <p>{loading ? t('LocationSettings.detecting') : error ? error : location}</p>
             </div>
           </CardContent>
         </Card>
 
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-4 space-y-3">
-            <h3 className="font-semibold">स्थान सटीकता</h3>
+            <h3 className="font-semibold">{t('LocationSettings.locationAccuracy')}</h3>
             <div className="grid grid-cols-3 gap-2">
-              <Button variant="outline">उच्च</Button>
-              <Button>मध्यम</Button>
-              <Button variant="outline">कम</Button>
+              <Button variant="outline">{t('LocationSettings.high')}</Button>
+              <Button>{t('LocationSettings.medium')}</Button>
+              <Button variant="outline">{t('LocationSettings.low')}</Button>
             </div>
             <p className="text-sm text-muted-foreground">
-            उच्च सटीकता अधिक सटीक है लेकिन अधिक बैटरी का उपयोग करती है। कम सटीकता बैटरी जीवन बचाती है।
+              {t('LocationSettings.accuracyDescription')}
             </p>
           </CardContent>
         </Card>
 
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-4 space-y-4">
-            <h3 className="font-semibold">अपना स्थान अपडेट करें</h3>
+            <h3 className="font-semibold">{t('LocationSettings.updateYourLocation')}</h3>
             <Button className="w-full" onClick={handleDetectLocation} disabled={loading}>
               <LocateFixed className="mr-2 h-5 w-5" />
-              {loading ? 'पता लगाया जा रहा है...' : 'मेरा स्थान पता लगाएँ'}
+              {loading ? t('LocationSettings.detecting') : t('LocationSettings.detectMyLocation')}
             </Button>
             
             <div className="flex items-center space-x-2">
               <div className="flex-grow border-t border-border"></div>
-              <span className="text-muted-foreground text-sm">या</span>
+              <span className="text-muted-foreground text-sm">{t('LocationSettings.or')}</span>
               <div className="flex-grow border-t border-border"></div>
             </div>
 
             <div className="space-y-2">
-                <label htmlFor="manual-location" className="text-sm font-medium">स्थान मैन्युअल रूप से दर्ज करें</label>
+                <label htmlFor="manual-location" className="text-sm font-medium">{t('LocationSettings.enterManuallyLabel')}</label>
                 <Input 
                   id="manual-location" 
-                  placeholder="जैसे, पटना जंक्शन, पटना" 
+                  placeholder={t('LocationSettings.enterManuallyPlaceholder')} 
                   className="bg-background border-border"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -114,7 +115,7 @@ export default function LocationSettingsPage() {
         </Card>
 
         <Button className="w-full text-lg h-12" onClick={handleSaveLocation}>
-            स्थान सहेजें
+            {t('LocationSettings.saveLocation')}
         </Button>
 
       </main>

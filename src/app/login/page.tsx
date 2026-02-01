@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -12,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useFirebase } from '@/firebase/client-provider';
 import { useGuest } from '@/context/guest-context';
+import { useTranslation } from '@/context/language-context';
 
 // Google Icon Component
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -32,6 +32,7 @@ const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
@@ -46,16 +47,16 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast({
-        title: "लॉग इन किया गया!",
-        description: "वापसी पर स्वागत है!",
+        title: t('Login.toastLoggedInTitle'),
+        description: t('Login.toastLoggedInDescription'),
       });
       router.push('/');
     } catch (error: any) {
       console.error(error);
       toast({
         variant: 'destructive',
-        title: "त्रुटि",
-        description: error.message || "लॉग इन करने में विफल।",
+        title: t('Error'),
+        description: error.message || t('Login.toastLoginFailed'),
       });
     }
   };
@@ -67,8 +68,8 @@ export default function LoginPage() {
       if (!authProvider) {
           toast({
               variant: 'destructive',
-              title: "जल्द आ रहा है",
-              description: "फेसबुक लॉगिन अभी उपलब्ध नहीं है।",
+              title: t('CommunityEmpowerment.comingSoon'),
+              description: t('Login.facebookComingSoon'),
           });
           return;
       }
@@ -76,16 +77,16 @@ export default function LoginPage() {
       try {
           await signInWithPopup(auth, authProvider);
           toast({
-              title: "लॉग इन किया गया!",
-              description: "वापसी पर स्वागत है!",
+              title: t('Login.toastLoggedInTitle'),
+              description: t('Login.toastLoggedInDescription'),
           });
           router.push('/');
       } catch (error: any) {
           console.error(error);
           toast({
               variant: 'destructive',
-              title: "त्रुटि",
-              description: error.message || `साइन इन करने में विफल।`,
+              title: t('Error'),
+              description: error.message || t('Login.toastSignInFailed'),
           });
       }
   };
@@ -101,21 +102,21 @@ export default function LoginPage() {
         <Link href="/" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
-        <h1 className="text-xl font-bold">लॉग इन करें</h1>
+        <h1 className="text-xl font-bold">{t('Login.title')}</h1>
       </header>
 
       <main className="p-4 flex items-center justify-center">
         <Card className="w-full max-w-sm bg-secondary/50 border-border">
           <CardContent className="p-8 space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold">वापसी पर स्वागत है!</h2>
-              <p className="text-muted-foreground">अपने डैशबोर्ड पर जाने के लिए साइन इन करें</p>
+              <h2 className="text-2xl font-bold">{t('Login.welcomeBack')}</h2>
+              <p className="text-muted-foreground">{t('Login.signInToDashboard')}</p>
             </div>
             
             <form onSubmit={handleLogin} className="space-y-4">
               <Input 
                 type="email" 
-                placeholder="ईमेल पता" 
+                placeholder={t('Login.emailPlaceholder')}
                 className="bg-background border-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -123,7 +124,7 @@ export default function LoginPage() {
               />
               <Input 
                 type="password" 
-                placeholder="पासवर्ड"
+                placeholder={t('Login.passwordPlaceholder')}
                 className="bg-background border-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -132,12 +133,12 @@ export default function LoginPage() {
             
               <div className="text-sm">
                   <Link href="/reset-password" className="text-primary hover:underline">
-                      पासवर्ड भूल गए?
+                      {t('Login.forgotPassword')}
                   </Link>
               </div>
 
               <Button type="submit" className="w-full font-bold text-lg h-12">
-                साइन इन करें
+                {t('Login.signInButton')}
               </Button>
             </form>
             
@@ -147,7 +148,7 @@ export default function LoginPage() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-secondary/50 px-2 text-muted-foreground">
-                    या जारी रखें
+                    {t('Login.continueWith')}
                     </span>
                 </div>
             </div>
@@ -165,14 +166,14 @@ export default function LoginPage() {
                 </div>
                 <Button variant="outline" className="w-full" onClick={handleGuestLogin}>
                     <UserIcon className="mr-2 h-4 w-4"/>
-                    अतिथि के रूप में जारी रखें
+                    {t('Login.continueAsGuest')}
                 </Button>
             </div>
 
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">खाता नहीं है? </span>
+              <span className="text-muted-foreground">{t('Login.noAccount')}</span>
               <Link href="/signup" className="text-primary hover:underline">
-                साइन अप करें
+                {t('Login.signUpLink')}
               </Link>
             </div>
           </CardContent>

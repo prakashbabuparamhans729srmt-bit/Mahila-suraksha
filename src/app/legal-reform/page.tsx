@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -10,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/context/language-context';
 
 const reformData = {
     india: [
@@ -27,13 +27,14 @@ const reformData = {
 type Country = keyof typeof reformData;
 
 export default function LegalReformPage() {
+    const { t } = useTranslation();
     const [country, setCountry] = useState<Country>('india');
     const { toast } = useToast();
 
     const handleReadMore = () => {
         toast({
-            title: "जल्द आ रहा है",
-            description: "विस्तृत जानकारी जल्द ही उपलब्ध होगी।"
+            title: t('LegalReform.comingSoon'),
+            description: t('LegalReform.comingSoonDescription')
         });
     };
 
@@ -43,20 +44,20 @@ export default function LegalReformPage() {
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">कानूनी सुधार ट्रैकिंग</h1>
+                <h1 className="text-xl font-bold">{t('LegalReform.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <div className='space-y-2'>
-                    <label className="text-sm text-muted-foreground px-1">देश के अनुसार फ़िल्टर करें</label>
+                    <label className="text-sm text-muted-foreground px-1">{t('LegalReform.filterByCountry')}</label>
                     <Select defaultValue={country} onValueChange={(value: Country) => setCountry(value)}>
                         <SelectTrigger className="w-full bg-secondary/50 border-input">
-                            <SelectValue placeholder="देश" />
+                            <SelectValue placeholder={t('LegalReform.country')} />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="india">भारत</SelectItem>
-                            <SelectItem value="usa">संयुक्त राज्य अमेरिका</SelectItem>
-                            <SelectItem value="uk">यूनाइटेड किंगडम</SelectItem>
+                            <SelectItem value="india">{t('LegalReform.india')}</SelectItem>
+                            <SelectItem value="usa">{t('LegalReform.usa')}</SelectItem>
+                            <SelectItem value="uk">{t('LegalReform.uk')}</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -72,7 +73,7 @@ export default function LegalReformPage() {
                                 {reform.description}
                             </p>
                             <Button variant="link" className="p-0 h-auto text-primary" onClick={handleReadMore}>
-                                और पढ़ें
+                                {t('LegalReform.readMore')}
                             </Button>
                         </CardContent>
                     </Card>

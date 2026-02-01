@@ -7,14 +7,12 @@ import { AdminContentProvider } from '@/context/admin-content-context';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, X } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetDescription } from '@/components/ui/sheet';
 import { Chatbot } from '@/components/chatbot';
 
 
 function ChatbotFloater() {
-  const { toast } = useToast();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const getInitialPosition = () => {

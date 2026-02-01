@@ -8,11 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function LocationSettingsPage() {
   const [location, setLocation] = useState('Patna Junction, Patna');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleDetectLocation = () => {
     setLoading(true);
@@ -38,6 +40,13 @@ export default function LocationSettingsPage() {
     }
   };
 
+  const handleSaveLocation = () => {
+    toast({
+        title: 'सेटिंग्स सहेजी गईं',
+        description: 'आपका स्थान सफलतापूर्वक सहेजा गया है।',
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center p-4">
@@ -56,7 +65,7 @@ export default function LocationSettingsPage() {
           <CardContent className="p-4 space-y-2">
             <h3 className="font-semibold">आपका वर्तमान स्थान</h3>
             <div className="flex items-center space-x-3">
-              <MapPin className="h-5 w-5 text-red-500" />
+              <MapPin className="h-5 w-5 text-primary" />
               <p>{loading ? 'पता लगाया जा रहा है...' : error ? error : location}</p>
             </div>
           </CardContent>
@@ -104,7 +113,7 @@ export default function LocationSettingsPage() {
           </CardContent>
         </Card>
 
-        <Button className="w-full text-lg h-12">
+        <Button className="w-full text-lg h-12" onClick={handleSaveLocation}>
             स्थान सहेजें
         </Button>
 

@@ -8,11 +8,20 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useAdminContent } from '@/context/admin-content-context'; // Import context
+import { useToast } from '@/hooks/use-toast';
 
 export default function CommunityEmpowermentPage() {
     const { publishedContent } = useAdminContent(); // Get content from context
+    const { toast } = useToast();
 
     const initiatives = publishedContent.filter(item => item.type === 'पहल');
+
+    const handleLearnMore = (title: string) => {
+        toast({
+            title: "जल्द आ रहा है",
+            description: `"${title}" के बारे में विस्तृत जानकारी जल्द ही उपलब्ध होगी।`,
+        });
+    };
 
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
@@ -60,7 +69,7 @@ export default function CommunityEmpowermentPage() {
                                         {item.kpi && <li>KPI: {item.kpi}</li>}
                                         {item.targetAudience && <li>लक्षित दर्शक: {item.targetAudience}</li>}
                                     </ul>
-                                    <Button className="w-full mt-2">और जानें</Button>
+                                    <Button className="w-full mt-2" onClick={() => handleLearnMore(item.title)}>और जानें</Button>
                                 </CardContent>
                             </Card>
                         )) : (

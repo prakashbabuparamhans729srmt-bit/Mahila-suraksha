@@ -11,47 +11,49 @@ import { Pie, PieChart, Cell } from 'recharts';
 import React from 'react';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useToast } from '@/hooks/use-toast';
-
-
-const chartData = [
-  { source: 'सरकारी अनुदान', amount: 3000000, percentage: 40, fill: '#8884d8' },
-  { source: 'कॉर्पोरेट प्रायोजन', amount: 2475000, percentage: 33, fill: '#82ca9d' },
-  { source: 'सार्वजनिक दान', amount: 1500000, percentage: 20, fill: '#ff8042' },
-  { source: 'अन्य', amount: 525000, percentage: 7, fill: '#ffc658' },
-];
-
-const chartConfig = {
-  amount: {
-    label: 'Amount',
-  },
-  'सरकारी अनुदान': {
-    label: 'सरकारी अनुदान',
-    color: 'hsl(var(--chart-1))',
-  },
-  'कॉर्पोरेट प्रायोजन': {
-    label: 'कॉर्पोरेट प्रायोजन',
-    color: 'hsl(var(--chart-2))',
-  },
-  'सार्वजनिक दान': {
-    label: 'सार्वजनिक दान',
-    color: 'hsl(var(--chart-3))',
-  },
-  'अन्य': {
-    label: 'अन्य',
-    color: 'hsl(var(--chart-4))',
-  },
-};
+import { useTranslation } from '@/context/language-context';
 
 export default function FundingTrackerPage() {
   const { toast } = useToast();
+  const { t } = useTranslation();
+
+  const chartData = [
+    { source: t('FundingTracker.sourceGovGrant'), amount: 3000000, percentage: 40, fill: '#8884d8' },
+    { source: t('FundingTracker.sourceCorpSponsor'), amount: 2475000, percentage: 33, fill: '#82ca9d' },
+    { source: t('FundingTracker.sourcePublicDonation'), amount: 1500000, percentage: 20, fill: '#ff8042' },
+    { source: t('FundingTracker.sourceOther'), amount: 525000, percentage: 7, fill: '#ffc658' },
+  ];
+
+  const chartConfig = {
+    amount: {
+      label: 'Amount',
+    },
+    [t('FundingTracker.sourceGovGrant')]: {
+      label: t('FundingTracker.sourceGovGrant'),
+      color: 'hsl(var(--chart-1))',
+    },
+    [t('FundingTracker.sourceCorpSponsor')]: {
+      label: t('FundingTracker.sourceCorpSponsor'),
+      color: 'hsl(var(--chart-2))',
+    },
+    [t('FundingTracker.sourcePublicDonation')]: {
+      label: t('FundingTracker.sourcePublicDonation'),
+      color: 'hsl(var(--chart-3))',
+    },
+    [t('FundingTracker.sourceOther')]: {
+      label: t('FundingTracker.sourceOther'),
+      color: 'hsl(var(--chart-4))',
+    },
+  };
+
   const totalAmount = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.amount, 0);
-  }, []);
+  }, [chartData]);
 
   const handleDonate = () => {
     toast({
-        title: "दान पृष्ठ पर रीडायरेक्ट किया जा रहा है...",
-        description: "आपके समर्थन के लिए धन्यवाद!",
+        title: t('FundingTracker.redirectingToast'),
+        description: t('FundingTracker.thankYouToast'),
     });
     // In a real app, you would redirect to a payment gateway.
     // window.location.href = '/donate';
@@ -63,29 +65,29 @@ export default function FundingTrackerPage() {
         <Link href="/" className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </Link>
-        <h1 className="text-xl font-bold">फंडिंग ट्रैकर</h1>
+        <h1 className="text-xl font-bold">{t('FundingTracker.title')}</h1>
       </header>
 
       <main className="flex-grow p-4 space-y-6">
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-center font-semibold text-muted-foreground">धन उगाहने की प्रगति</h2>
+            <h2 className="text-center font-semibold text-muted-foreground">{t('FundingTracker.progressTitle')}</h2>
             <p className="text-center text-5xl font-bold">$7.5M</p>
             <div className="space-y-2">
               <Progress value={75} className="h-3 bg-background [&>div]:bg-primary" />
               <div className="flex justify-between text-xs text-muted-foreground">
                 <span>0%</span>
-                <span>लक्ष्य: $10M</span>
+                <span>{t('FundingTracker.target')}</span>
                 <span>100%</span>
               </div>
             </div>
-            <Button className="w-full text-lg h-12" onClick={handleDonate}>अभी दान करें</Button>
+            <Button className="w-full text-lg h-12" onClick={handleDonate}>{t('FundingTracker.donateNow')}</Button>
           </CardContent>
         </Card>
 
         <Card className="bg-secondary/50 border-border">
           <CardContent className="p-6 space-y-4">
-            <h2 className="font-bold text-lg">वित्त पोषण के स्रोत</h2>
+            <h2 className="font-bold text-lg">{t('FundingTracker.sourcesTitle')}</h2>
             <div className="h-[250px] w-full">
               <ChartContainer config={chartConfig} className="mx-auto aspect-square h-full">
                 <PieChart>
@@ -110,7 +112,7 @@ export default function FundingTrackerPage() {
             </div>
              <div className="flex items-center justify-center -mt-8">
                 <div className="text-center text-lg font-bold">
-                    Total
+                    {t('FundingTracker.total')}
                     <p className="text-foreground">
                         ${(totalAmount / 1000000).toFixed(1)}M
                     </p>

@@ -2,83 +2,85 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Home, BarChart2, Plus, RefreshCw, Settings } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { useTranslation } from '@/context/language-context';
 
 export default function ImplementationTrackerPage() {
+    const { t } = useTranslation();
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <header className="flex items-center p-4">
                 <Link href="/" className="mr-4">
                     <ArrowLeft className="h-6 w-6" />
                 </Link>
-                <h1 className="text-xl font-bold">कार्यान्वयन ट्रैकर</h1>
+                <h1 className="text-xl font-bold">{t('ImplementationTracker.title')}</h1>
             </header>
 
             <main className="flex-grow p-4 space-y-6">
                 <div className='space-y-2'>
-                    <label className="text-sm text-muted-foreground px-1">देखने के लिए एक परियोजना चुनें</label>
+                    <label className="text-sm text-muted-foreground px-1">{t('ImplementationTracker.selectProjectLabel')}</label>
                     <Select defaultValue="global-helpline">
                         <SelectTrigger className="w-full bg-secondary/50 border-input">
-                            <SelectValue placeholder="एक परियोजना चुनें" />
+                            <SelectValue placeholder={t('ImplementationTracker.selectProjectPlaceholder')} />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="global-helpline">वैश्विक हेल्पलाइन नेटवर्क विस्तार</SelectItem>
+                            <SelectItem value="global-helpline">{t('ImplementationTracker.projectName')}</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
                 <Card className="bg-secondary/50 border-border">
                     <CardContent className="p-4 space-y-4">
-                        <h2 className="font-bold text-lg">वैश्विक हेल्पलाइन नेटवर्क विस्तार</h2>
+                        <h2 className="font-bold text-lg">{t('ImplementationTracker.projectName')}</h2>
                         <p className="text-sm text-muted-foreground">
-                            चरण 1 का उद्देश्य कम सेवा वाले क्षेत्रों में 100 नई 24/7, बहुभाषी हेल्पलाइन स्थापित करना है, जो उत्तरजीवियों के लिए तत्काल संकट सहायता और संसाधन कनेक्शन प्रदान करता है।
+                            {t('ImplementationTracker.projectDescription')}
                         </p>
 
                         <div className="space-y-4">
                             <div>
-                                <p className="font-semibold">50 उच्च-प्राथमिकता वाले क्षेत्रों की पहचान करें <span className="text-muted-foreground text-sm">(अनुसंधान दल)</span></p>
+                                <p className="font-semibold">{t('ImplementationTracker.task1')} <span className="text-muted-foreground text-sm">{t('ImplementationTracker.teamResearch')}</span></p>
                                 <div className="mt-2 bg-background p-2 rounded-md flex items-center">
                                     <div className="w-full bg-green-500 h-2 rounded-md"></div>
                                 </div>
                                 <div className="text-right mt-1">
-                                    <Badge className="bg-green-500 text-black">Done</Badge>
+                                    <Badge className="bg-green-500 text-black">{t('ImplementationTracker.statusDone')}</Badge>
                                 </div>
                             </div>
 
                              <div>
-                                <p className="font-semibold">200 सलाहकारों की भर्ती और प्रशिक्षण <span className="text-muted-foreground text-sm">(मानव संसाधन और प्रशिक्षण)</span></p>
+                                <p className="font-semibold">{t('ImplementationTracker.task2')} <span className="text-muted-foreground text-sm">{t('ImplementationTracker.teamHR')}</span></p>
                                 <div className="mt-2 bg-background p-2 rounded-md flex items-center">
                                     <div className="w-2/3 bg-yellow-500 h-2 rounded-l-md"></div>
                                     <div className="w-1/3 bg-gray-600 h-2 rounded-r-md"></div>
                                 </div>
                                 <div className="text-right mt-1">
-                                    <Badge className="bg-yellow-500 text-black">In Progress</Badge>
+                                    <Badge className="bg-yellow-500 text-black">{t('ImplementationTracker.statusInProgress')}</Badge>
                                 </div>
                             </div>
 
                             <div>
-                                <p className="font-semibold">तकनीकी अवसंरचना स्थापित करें <span className="text-muted-foreground text-sm">(आईटी विभाग)</span></p>
+                                <p className="font-semibold">{t('ImplementationTracker.task3')} <span className="text-muted-foreground text-sm">{t('ImplementationTracker.teamIT')}</span></p>
                                  <div className="mt-2 bg-background p-2 rounded-md flex items-center">
                                     <div className="w-1/2 bg-yellow-500 h-2 rounded-l-md"></div>
                                     <div className="w-1/2 bg-gray-600 h-2 rounded-r-md"></div>
                                 </div>
                                 <div className="text-right mt-1">
-                                    <Badge className="bg-yellow-500 text-black">In Progress</Badge>
+                                    <Badge className="bg-yellow-500 text-black">{t('ImplementationTracker.statusInProgress')}</Badge>
                                 </div>
                             </div>
                             
                             <div>
-                                <p className="font-semibold">पहली 50 हेल्पलाइन शुरू करें <span className="text-muted-foreground text-sm">(संचालन)</span></p>
+                                <p className="font-semibold">{t('ImplementationTracker.task4')} <span className="text-muted-foreground text-sm">{t('ImplementationTracker.teamOps')}</span></p>
                                 <div className="mt-2 bg-background p-2 rounded-md flex items-center">
                                     <div className="w-full bg-gray-600 h-2 rounded-md"></div>
                                 </div>
                                 <div className="text-right mt-1">
-                                     <Badge variant="secondary" className="bg-gray-700 text-white">To Do</Badge>
+                                     <Badge variant="secondary" className="bg-gray-700 text-white">{t('ImplementationTracker.statusToDo')}</Badge>
                                 </div>
                             </div>
                         </div>

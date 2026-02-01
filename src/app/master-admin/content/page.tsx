@@ -50,7 +50,7 @@ export default function ContentPage() {
                 <TableHead>प्रकार</TableHead>
                 <TableHead>उपयोगकर्ता</TableHead>
                 <TableHead>तिथि</TableHead>
-                <TableHead>Acciones</TableHead>
+                <TableHead>कार्रवाई</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

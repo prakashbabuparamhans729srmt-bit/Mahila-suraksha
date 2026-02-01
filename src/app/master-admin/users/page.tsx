@@ -114,7 +114,7 @@ export default function UsersPage() {
                 <TableHead>ईमेल</TableHead>
                 <TableHead>भूमिका</TableHead>
                 <TableHead>शामिल हुए</TableHead>
-                <TableHead className="text-right">Acciones</TableHead>
+                <TableHead className="text-right">कार्रवाई</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

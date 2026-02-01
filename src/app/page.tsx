@@ -134,7 +134,7 @@ export default function DashboardPage() {
   const { auth } = useFirebase();
   const router = useRouter();
   const { toast } = useToast();
-  const { openVoiceSearch, searchQuery: voiceSearchQuery } = useVoiceSearch();
+  const { openVoiceSearch, searchQuery: voiceSearchQuery, setSearchQuery: setGlobalSearchQuery } = useVoiceSearch();
 
   const [showNoNumberDialog, setShowNoNumberDialog] = useState(false);
   const [selectedService, setSelectedService] = useState<'police' | 'ambulance' | 'firetruck' | null>(null);
@@ -152,8 +152,10 @@ export default function DashboardPage() {
   useEffect(() => {
     if (voiceSearchQuery) {
         setSearchQuery(voiceSearchQuery);
+        // Clear the global query after using it so it doesn't persist across pages
+        setGlobalSearchQuery('');
     }
-  }, [voiceSearchQuery]);
+  }, [voiceSearchQuery, setGlobalSearchQuery]);
 
   const bannerImages = [
     { src: 'https://picsum.photos/seed/banner1/600/300', alt: 'Community support', hint: 'community support' },

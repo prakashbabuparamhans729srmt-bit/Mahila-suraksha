@@ -45,12 +45,13 @@ import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { useVoiceSearch } from '@/context/voice-search-context';
+import { useState, useMemo, useEffect } from 'react';
 
 
-function AdminSidebar() {
+function AdminSidebar({ searchQuery }: { searchQuery: string }) {
     const pathname = usePathname();
     
-    const pageManagementItems = [
+    const pageManagementItems = useMemo(() => [
       { title: 'होम पेज', href: '/master-admin/pages/home', icon: Home },
       { title: 'शिक्षा पेज', href: '/master-admin/pages/education', icon: GraduationCap },
       { title: 'वैश्विक निगरानी', href: '/master-admin/pages/global-monitoring', icon: BarChart2 },
@@ -63,7 +64,15 @@ function AdminSidebar() {
       { title: 'कार्यान्वयन ट्रैकर', href: '/master-admin/pages/implementation-tracker', icon: Target },
       { title: 'सफलता संकेतक', href: '/master-admin/pages/success-indicators', icon: LineChart },
       { title: 'सामुदायिक सशक्तिकरण', href: '/master-admin/pages/community-empowerment', icon: HeartHandshake },
-    ];
+    ], []);
+
+    const filteredPageManagementItems = useMemo(() => {
+        if (!searchQuery) return pageManagementItems;
+        return pageManagementItems.filter(item =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [searchQuery, pageManagementItems]);
+
 
     return (
         <Sidebar
@@ -98,7 +107,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/content" passHref>
-                      <SidebarMenuButton isActive={pathname === '/master-admin/content'}>
+                      <SidebarMenuButton isActive={pathname.startsWith('/master-admin/content')}>
                         <FileText />
                         <span>सामग्री</span>
                       </SidebarMenuButton>
@@ -106,7 +115,7 @@ function AdminSidebar() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <Link href="/master-admin/analytics" passHref>
-                      <SidebarMenuButton isActive={pathname === '/master-admin/analytics'}>
+                      <SidebarMenuButton isActive={pathname.startsWith('/master-admin/analytics')}>
                         <BarChart2 />
                         <span>एनालिटिक्स</span>
                       </SidebarMenuButton>
@@ -118,7 +127,7 @@ function AdminSidebar() {
                   <SidebarMenuItem className="mt-4">
                     <span className="text-xs text-muted-foreground px-2">पेज प्रबंधन</span>
                   </SidebarMenuItem>
-                  {pageManagementItems.map((item) => (
+                  {filteredPageManagementItems.map((item) => (
                      <SidebarMenuItem key={item.title}>
                         <Link href={item.href} passHref>
                           <SidebarMenuButton isActive={pathname === item.href}>
@@ -128,12 +137,17 @@ function AdminSidebar() {
                         </Link>
                      </SidebarMenuItem>
                   ))}
+                   {filteredPageManagementItems.length === 0 && (
+                        <SidebarMenuItem>
+                            <span className="text-sm text-muted-foreground px-2 py-4 text-center block">कोई परिणाम नहीं मिला।</span>
+                        </SidebarMenuItem>
+                    )}
                 </SidebarMenu>
 
                 <SidebarMenu className="mt-auto">
                     <SidebarMenuItem>
                         <Link href="/master-admin/settings" passHref>
-                          <SidebarMenuButton isActive={pathname === '/master-admin/settings'}>
+                          <SidebarMenuButton isActive={pathname.startsWith('/master-admin/settings')}>
                             <Settings />
                             <span>सेटिंग्स</span>
                           </SidebarMenuButton>
@@ -150,7 +164,16 @@ export default function MasterAdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { openVoiceSearch } = useVoiceSearch();
+  const { openVoiceSearch, searchQuery: voiceSearchQuery, setSearchQuery: setGlobalSearchQuery } = useVoiceSearch();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (voiceSearchQuery) {
+        setSearchQuery(voiceSearchQuery);
+        // Clear the global query after using it
+        setGlobalSearchQuery('');
+    }
+  }, [voiceSearchQuery, setGlobalSearchQuery]);
 
   const handleMicSearch = () => {
     openVoiceSearch();
@@ -171,7 +194,12 @@ export default function MasterAdminLayout({
                 <div className="flex items-center gap-4">
                     <div className="relative hidden md:block">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                        <Input placeholder="खोजें..." className="pl-10 bg-secondary/50 border-input w-64" />
+                        <Input 
+                            placeholder="पेज खोजें..." 
+                            className="pl-10 bg-secondary/50 border-input w-64"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
                     </div>
                     <Button variant="ghost" size="icon" className="hidden md:flex" onClick={handleMicSearch}>
                         <Mic className="h-5 w-5" />
@@ -186,7 +214,7 @@ export default function MasterAdminLayout({
                 </div>
             </header>
             <div className="flex flex-1">
-                <AdminSidebar />
+                <AdminSidebar searchQuery={searchQuery} />
                 <SidebarInset>
                     <main className="flex-grow p-4 space-y-6 overflow-auto">
                         {children}

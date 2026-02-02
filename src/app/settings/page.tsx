@@ -276,9 +276,25 @@ export default function SettingsPage() {
                            <div className="flex justify-between items-center">
                              <label className="text-sm font-medium">{t('Settings.contact', { number: index + 1})}</label>
                              {personalContacts.length > 1 && (
-                               <Button variant="ghost" size="icon" onClick={() => removeContact(contact.id)} className="text-muted-foreground hover:text-destructive">
-                                 <Trash2 className="h-5 w-5" />
-                               </Button>
+                               <AlertDialog>
+                                 <AlertDialogTrigger asChild>
+                                   <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
+                                     <Trash2 className="h-5 w-5" />
+                                   </Button>
+                                 </AlertDialogTrigger>
+                                 <AlertDialogContent>
+                                   <AlertDialogHeader>
+                                     <AlertDialogTitle>{t('Settings.deleteContactConfirmTitle')}</AlertDialogTitle>
+                                     <AlertDialogDescription>
+                                       {t('Settings.deleteContactConfirmDesc')}
+                                     </AlertDialogDescription>
+                                   </AlertDialogHeader>
+                                   <AlertDialogFooter>
+                                     <AlertDialogCancel>{t('Settings.cancel')}</AlertDialogCancel>
+                                     <AlertDialogAction onClick={() => removeContact(contact.id)}>{t('Admin.delete')}</AlertDialogAction>
+                                   </AlertDialogFooter>
+                                 </AlertDialogContent>
+                               </AlertDialog>
                              )}
                            </div>
                           <Input className="bg-background border-border" placeholder={t('Settings.contactName')} value={contact.name} onChange={(e) => handleContactChange(contact.id, 'name', e.target.value)} />

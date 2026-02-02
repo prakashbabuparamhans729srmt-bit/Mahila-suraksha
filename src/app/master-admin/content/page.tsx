@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useToast } from '@/hooks/use-toast';
 import { useAdminContent } from '@/context/admin-content-context';
 import { useTranslation } from '@/context/language-context';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 export default function ContentPage() {
   const { pendingContent, moderateContent } = useAdminContent();
@@ -65,7 +66,23 @@ export default function ContentPage() {
                   <TableCell className="space-x-2">
                     <Button variant="outline" size="sm" onClick={() => handleView(item.title)}>{t('Admin.view')}</Button>
                     <Button variant="default" size="sm" onClick={() => handleApprove(item.id)}>{t('Admin.approve')}</Button>
-                    <Button variant="destructive" size="sm" onClick={() => handleReject(item.id)}>{t('Admin.reject')}</Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" size="sm">{t('Admin.reject')}</Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                          <AlertDialogHeader>
+                              <AlertDialogTitle>{t('Admin.rejectConfirmTitle')}</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                  {t('Admin.rejectConfirmDesc')}
+                              </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                              <AlertDialogCancel>{t('Admin.cancel')}</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleReject(item.id)}>{t('Admin.reject')}</AlertDialogAction>
+                          </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               )) : (

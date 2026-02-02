@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ChevronRight, X, Trash2, UserCog, Image as ImageIcon, LogOut, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronRight, X, Trash2, UserCog, Image as ImageIcon, LogOut, Plus, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -219,106 +219,123 @@ export default function SettingsPage() {
 
         <div>
           <h2 className="text-sm font-semibold text-muted-foreground mb-2 px-2">{t('Settings.securityAndEmergency')}</h2>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Card className="bg-secondary/50 border-border cursor-pointer">
-                <CardContent className="p-4 flex items-center justify-between">
-                  <div>
-                    <h3 className="font-semibold">{t('Settings.emergencySettings')}</h3>
-                    <p className="text-sm text-muted-foreground">{t('Settings.emergencySettingsDesc')}</p>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </CardContent>
-              </Card>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="bg-background text-foreground rounded-t-lg h-[90vh] flex flex-col">
-              <SheetHeader className="text-left p-4">
-                <div className="flex justify-between items-center">
-                  <SheetTitle className="text-xl font-bold">{t('Settings.emergencySettingsTitle')}</SheetTitle>
-                  <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <X className="h-6 w-6" />
-                    </Button>
-                  </SheetTrigger>
-                </div>
-              </SheetHeader>
-              <div className="overflow-y-auto px-4 pb-4 flex-grow">
-                <p className="text-muted-foreground mb-6">
-                  {t('Settings.emergencySettingsInfo')}
-                </p>
-
-                <div className="space-y-6">
-                  <Card className="bg-secondary/50 border-border">
-                    <CardContent className="p-4 space-y-4">
-                      <h3 className="font-semibold text-lg">{t('Settings.localAuthorities')}</h3>
-                      <div className="space-y-4">
-                        <div>
-                          <label className="text-sm font-medium flex items-center">{t('Settings.police')}</label>
-                          <Input className="mt-1 bg-background border-border" placeholder={t('Settings.enterPoliceNumber')} value={authorityNumbers.police} onChange={(e) => handleAuthorityNumberChange('police', e.target.value)} />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium flex items-center">{t('Settings.ambulance')}</label>
-                          <Input className="mt-1 bg-background border-border" placeholder={t('Settings.enterAmbulanceNumber')} value={authorityNumbers.ambulance} onChange={(e) => handleAuthorityNumberChange('ambulance', e.target.value)} />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium flex items-center">{t('Settings.firetruck')}</label>
-                          <Input className="mt-1 bg-background border-border" placeholder={t('Settings.enterFiretruckNumber')} value={authorityNumbers.firetruck} onChange={(e) => handleAuthorityNumberChange('firetruck', e.target.value)} />
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-secondary/50 border-border">
-                    <CardContent className="p-4 space-y-4">
-                      <h3 className="font-semibold text-lg">{t('Settings.personalContacts')}</h3>
-                      {personalContacts.map((contact, index) => (
-                        <div key={contact.id} className="space-y-3">
-                           <div className="flex justify-between items-center">
-                             <label className="text-sm font-medium">{t('Settings.contact', { number: index + 1})}</label>
-                             {personalContacts.length > 1 && (
-                               <AlertDialog>
-                                 <AlertDialogTrigger asChild>
-                                   <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
-                                     <Trash2 className="h-5 w-5" />
-                                   </Button>
-                                 </AlertDialogTrigger>
-                                 <AlertDialogContent>
-                                   <AlertDialogHeader>
-                                     <AlertDialogTitle>{t('Settings.deleteContactConfirmTitle')}</AlertDialogTitle>
-                                     <AlertDialogDescription>
-                                       {t('Settings.deleteContactConfirmDesc')}
-                                     </AlertDialogDescription>
-                                   </AlertDialogHeader>
-                                   <AlertDialogFooter>
-                                     <AlertDialogCancel>{t('Settings.cancel')}</AlertDialogCancel>
-                                     <AlertDialogAction onClick={() => removeContact(contact.id)}>{t('Admin.delete')}</AlertDialogAction>
-                                   </AlertDialogFooter>
-                                 </AlertDialogContent>
-                               </AlertDialog>
-                             )}
-                           </div>
-                          <Input className="bg-background border-border" placeholder={t('Settings.contactName')} value={contact.name} onChange={(e) => handleContactChange(contact.id, 'name', e.target.value)} />
-                          <Input className="bg-background border-border" placeholder={t('Settings.contactPhone')} type="tel" value={contact.phone} onChange={(e) => handleContactChange(contact.id, 'phone', e.target.value)} />
-                          {index < personalContacts.length -1 && <Separator className="my-4" />}
-                        </div>
-                      ))}
-                      
-                      <Button variant="outline" className="w-full" onClick={addContact}>
-                        <Plus className="mr-2 h-4 w-4" />
-                        {t('Settings.addAnotherContact')}
+          <div className="space-y-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Card className="bg-secondary/50 border-border cursor-pointer">
+                  <CardContent className="p-4 flex items-center justify-between">
+                    <div>
+                      <h3 className="font-semibold">{t('Settings.emergencySettings')}</h3>
+                      <p className="text-sm text-muted-foreground">{t('Settings.emergencySettingsDesc')}</p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+              </SheetTrigger>
+              <SheetContent side="bottom" className="bg-background text-foreground rounded-t-lg h-[90vh] flex flex-col">
+                <SheetHeader className="text-left p-4">
+                  <div className="flex justify-between items-center">
+                    <SheetTitle className="text-xl font-bold">{t('Settings.emergencySettingsTitle')}</SheetTitle>
+                    <SheetTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <X className="h-6 w-6" />
                       </Button>
+                    </SheetTrigger>
+                  </div>
+                </SheetHeader>
+                <div className="overflow-y-auto px-4 pb-4 flex-grow">
+                  <p className="text-muted-foreground mb-6">
+                    {t('Settings.emergencySettingsInfo')}
+                  </p>
 
-                    </CardContent>
-                  </Card>
+                  <div className="space-y-6">
+                    <Card className="bg-secondary/50 border-border">
+                      <CardContent className="p-4 space-y-4">
+                        <h3 className="font-semibold text-lg">{t('Settings.localAuthorities')}</h3>
+                        <div className="space-y-4">
+                          <div>
+                            <label className="text-sm font-medium flex items-center">{t('Settings.police')}</label>
+                            <Input className="mt-1 bg-background border-border" placeholder={t('Settings.enterPoliceNumber')} value={authorityNumbers.police} onChange={(e) => handleAuthorityNumberChange('police', e.target.value)} />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium flex items-center">{t('Settings.ambulance')}</label>
+                            <Input className="mt-1 bg-background border-border" placeholder={t('Settings.enterAmbulanceNumber')} value={authorityNumbers.ambulance} onChange={(e) => handleAuthorityNumberChange('ambulance', e.target.value)} />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium flex items-center">{t('Settings.firetruck')}</label>
+                            <Input className="mt-1 bg-background border-border" placeholder={t('Settings.enterFiretruckNumber')} value={authorityNumbers.firetruck} onChange={(e) => handleAuthorityNumberChange('firetruck', e.target.value)} />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="bg-secondary/50 border-border">
+                      <CardContent className="p-4 space-y-4">
+                        <h3 className="font-semibold text-lg">{t('Settings.personalContacts')}</h3>
+                        {personalContacts.map((contact, index) => (
+                          <div key={contact.id} className="space-y-3">
+                             <div className="flex justify-between items-center">
+                               <label className="text-sm font-medium">{t('Settings.contact', { number: index + 1})}</label>
+                               {personalContacts.length > 1 && (
+                                 <AlertDialog>
+                                   <AlertDialogTrigger asChild>
+                                     <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
+                                       <Trash2 className="h-5 w-5" />
+                                     </Button>
+                                   </AlertDialogTrigger>
+                                   <AlertDialogContent>
+                                     <AlertDialogHeader>
+                                       <AlertDialogTitle>{t('Settings.deleteContactConfirmTitle')}</AlertDialogTitle>
+                                       <AlertDialogDescription>
+                                         {t('Settings.deleteContactConfirmDesc')}
+                                       </AlertDialogDescription>
+                                     </AlertDialogHeader>
+                                     <AlertDialogFooter>
+                                       <AlertDialogCancel>{t('Settings.cancel')}</AlertDialogCancel>
+                                       <AlertDialogAction onClick={() => removeContact(contact.id)}>{t('Admin.delete')}</AlertDialogAction>
+                                     </AlertDialogFooter>
+                                   </AlertDialogContent>
+                                 </AlertDialog>
+                               )}
+                             </div>
+                            <Input className="bg-background border-border" placeholder={t('Settings.contactName')} value={contact.name} onChange={(e) => handleContactChange(contact.id, 'name', e.target.value)} />
+                            <Input className="bg-background border-border" placeholder={t('Settings.contactPhone')} type="tel" value={contact.phone} onChange={(e) => handleContactChange(contact.id, 'phone', e.target.value)} />
+                            {index < personalContacts.length -1 && <Separator className="my-4" />}
+                          </div>
+                        ))}
+                        
+                        <Button variant="outline" className="w-full" onClick={addContact}>
+                          <Plus className="mr-2 h-4 w-4" />
+                          {t('Settings.addAnotherContact')}
+                        </Button>
+
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
-              </div>
-              <div className="p-4 mt-auto">
-                <Button className="w-full font-bold text-lg h-12" onClick={handleSaveChanges}>
-                  {t('Settings.saveContacts')}
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+                <div className="p-4 mt-auto">
+                  <Button className="w-full font-bold text-lg h-12" onClick={handleSaveChanges}>
+                    {t('Settings.saveContacts')}
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            <Link href="/privacy-settings" className="block">
+                <Card className="bg-secondary/50 border-border cursor-pointer">
+                  <CardContent className="p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                       <Shield className="h-6 w-6 text-primary" />
+                      <div>
+                        <h3 className="font-semibold">{t('Settings.advancedPrivacy')}</h3>
+                        <p className="text-sm text-muted-foreground">{t('Settings.advancedPrivacyDesc')}</p>
+                      </div>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+            </Link>
+          </div>
         </div>
 
         <div>
@@ -537,5 +554,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    

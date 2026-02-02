@@ -38,20 +38,19 @@ function ChatbotFloater() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { t } = useTranslation();
 
-  const getInitialPosition = () => {
-    // This function now only runs on the client
-    return {
-      x: window.innerWidth - 80,
-      y: window.innerHeight - 160,
-    };
-  };
-
   const [position, setPosition] = useState<{x: number; y: number} | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const offset = useRef({ x: 0, y: 0 });
   const floaterRef = useRef<HTMLDivElement>(null);
   const hasDragged = useRef(false);
   const returnTimer = useRef<NodeJS.Timeout | null>(null);
+  
+  const getInitialPosition = () => {
+    return {
+      x: window.innerWidth - 80,
+      y: window.innerHeight - 160,
+    };
+  };
 
   const resetPosition = () => {
     if(floaterRef.current) {
@@ -73,7 +72,6 @@ function ChatbotFloater() {
   };
 
   useEffect(() => {
-    // Set position only on the client, after mount
     setPosition(getInitialPosition());
   }, []);
 

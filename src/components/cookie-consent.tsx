@@ -7,19 +7,19 @@ import { useTranslation } from '@/context/language-context';
 import { cn } from '@/lib/utils';
 
 export function CookieConsent() {
-  const [showConsent, setShowConsent] = useState(false);
+  const [consentGiven, setConsentGiven] = useState(true); // Default to true to avoid SSR/initial render flash
   const { t } = useTranslation();
 
   useEffect(() => {
+    // This effect runs only on the client
     try {
       const consent = localStorage.getItem('cookie_consent');
       if (consent !== 'true') {
-        setShowConsent(true);
+        setConsentGiven(false);
       }
     } catch (e) {
-      // localStorage may not be available (e.g. in server-side rendering or private browsing)
-      // We can default to showing it.
-      setShowConsent(true);
+      // If localStorage is not available, we might need to show it.
+      setConsentGiven(false);
     }
   }, []);
 
@@ -29,18 +29,14 @@ export function CookieConsent() {
     } catch (e) {
         // localStorage may not be available
     }
-    setShowConsent(false);
+    setConsentGiven(true);
   };
-
-  if (!showConsent) {
-    return null;
-  }
 
   return (
     <div 
       className={cn(
         "fixed bottom-0 left-0 right-0 z-[200] p-4 bg-secondary/90 backdrop-blur-sm border-t border-border transition-transform duration-500",
-        showConsent ? "translate-y-0" : "translate-y-full"
+        consentGiven ? "translate-y-full" : "translate-y-0"
       )}
     >
       <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">

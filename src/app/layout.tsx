@@ -46,7 +46,7 @@ function ChatbotFloater() {
     };
   };
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState<{x: number; y: number} | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const offset = useRef({ x: 0, y: 0 });
   const floaterRef = useRef<HTMLDivElement>(null);
@@ -134,6 +134,10 @@ function ChatbotFloater() {
     };
   }, [isDragging]);
 
+  if (!position) {
+    return null;
+  }
+
   return (
     <>
       <div
@@ -179,13 +183,13 @@ function ChatbotFloater() {
 function AppWithProviders({ children }: { children: React.ReactNode }) {
     return (
         <LanguageProvider>
-          <AdminContentProvider>
-              <TranslatedMetadata />
+            <TranslatedMetadata />
+            <AdminContentProvider>
               {children}
               <ChatbotFloater />
               <Toaster />
               <VoiceSearchModal />
-          </AdminContentProvider>
+            </AdminContentProvider>
         </LanguageProvider>
     )
 }

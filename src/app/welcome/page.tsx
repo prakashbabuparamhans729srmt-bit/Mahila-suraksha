@@ -16,12 +16,12 @@ import { useTranslation } from '@/context/language-context';
 import { Loader } from '@/components/loader';
 
 const welcomeImages = [
-    { src: 'https://picsum.photos/seed/women-support/800/1200', alt: 'A group of women supporting each other', hint: 'women support' },
-    { src: 'https://picsum.photos/seed/safe-street-night/800/1200', alt: 'A well-lit city street at night, symbolizing safety', hint: 'safe street' },
-    { src: 'https://picsum.photos/seed/confident-walk/800/1200', alt: 'A woman walking confidently and safely', hint: 'confident woman' },
-    { src: 'https://picsum.photos/seed/unity-hands/800/1200', alt: 'Close-up of hands held together in unity and support', hint: 'unity hands' },
-    { src: 'https://picsum.photos/seed/hope-sunrise/800/1200', alt: 'A woman silhouetted against a hopeful sunrise', hint: 'hope sunrise' },
-    { src: 'https://picsum.photos/seed/digital-safety/800/1200', alt: 'A person using a smartphone to connect with a support network', hint: 'digital safety' },
+    { src: 'https://picsum.photos/seed/women-safety-1/800/1200', alt: 'A diverse group of empowered women standing together', hint: 'women empowerment' },
+    { src: 'https://picsum.photos/seed/safe-night-walk/800/1200', alt: 'A city skyline at dusk with glowing lights, symbolizing a safe environment', hint: 'safe city' },
+    { src: 'https://picsum.photos/seed/support-group/800/1200', alt: 'One person offering a helping hand to another, symbolizing support', hint: 'helping hand' },
+    { src: 'https://picsum.photos/seed/community-solidarity/800/1200', alt: 'A circle of people holding hands, showing unity and community', hint: 'unity community' },
+    { src: 'https://picsum.photos/seed/new-dawn/800/1200', alt: 'A woman looking towards a hopeful sunrise, representing a new beginning', hint: 'hope sunrise' },
+    { src: 'https://picsum.photos/seed/digital-haven/800/1200', alt: 'A representation of a secure digital network connecting people safely', hint: 'secure connection' },
 ];
 
 export default function WelcomePage() {

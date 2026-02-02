@@ -31,6 +31,7 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import Autoplay from "embla-carousel-autoplay";
 import { useVoiceSearch } from '@/context/voice-search-context';
 import { useTranslation } from '@/context/language-context';
+import { Loader } from '@/components/loader';
 
 
 const CommunityIcon = () => (
@@ -480,7 +481,7 @@ export default function DashboardPage() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">{t('Dashboard.loading')}</div>;
+    return <div className="flex items-center justify-center min-h-screen"><Loader className="h-8 w-8" /></div>;
   }
   
   if (!user) {

@@ -1,10 +1,8 @@
-
 'use client';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, User as UserIcon } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { User as UserIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
@@ -13,6 +11,7 @@ import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 
 import { useFirebase } from '@/firebase/client-provider';
 import { useGuest } from '@/context/guest-context';
 import { useTranslation } from '@/context/language-context';
+import { BananaLogo } from '@/components/banana-logo';
 
 // Google Icon Component
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -99,87 +98,91 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <header className="flex items-center p-4">
-        <Link href="/" className="mr-4">
-          <ArrowLeft className="h-6 w-6" />
-        </Link>
-        <h1 className="text-xl font-bold">{t('Login.title')}</h1>
-      </header>
-
-      <main className="p-4 flex items-center justify-center">
-        <Card className="w-full max-w-sm bg-secondary/50 border-border">
-          <CardContent className="p-8 space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold">{t('Login.welcomeBack')}</h2>
-              <p className="text-muted-foreground">{t('Login.signInToDashboard')}</p>
-            </div>
-            
-            <form onSubmit={handleLogin} className="space-y-4">
-              <Input 
-                type="email" 
-                placeholder={t('Login.emailPlaceholder')}
-                className="bg-background border-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <Input 
-                type="password" 
-                placeholder={t('Login.passwordPlaceholder')}
-                className="bg-background border-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            
-              <div className="text-sm">
-                  <Link href="/reset-password" className="text-primary hover:underline">
-                      {t('Login.forgotPassword')}
-                  </Link>
-              </div>
-
-              <Button type="submit" className="w-full font-bold text-lg h-12">
-                {t('Login.signInButton')}
-              </Button>
-            </form>
-            
-            <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+            <div className="hidden lg:flex flex-col justify-center items-center p-12 bg-gradient-to-br from-gray-900 to-black text-white text-center">
+                <div className="flex items-center gap-4 mb-8">
+                    <BananaLogo className="h-12 w-12 text-white" />
+                    <h1 className="text-3xl font-bold">Mahila Suraksha</h1>
                 </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-secondary/50 px-2 text-muted-foreground">
-                    {t('Login.continueWith')}
-                    </span>
-                </div>
+                <h2 className="text-4xl font-bold mb-4">Welcome Back!</h2>
+                <p className="text-lg text-gray-300 max-w-md">
+                    Your safety is our priority. Sign in to access your dashboard, connect with the community, and use our safety tools.
+                </p>
             </div>
 
-            <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                    <Button variant="outline" onClick={() => handleSocialLogin('google')}>
-                        <GoogleIcon className="mr-2 h-4 w-4"/>
-                        {t('Login.google')}
-                    </Button>
-                    <Button variant="outline" onClick={() => handleSocialLogin('facebook')}>
-                        <FacebookIcon className="mr-2 h-4 w-4"/>
-                        {t('Login.facebook')}
-                    </Button>
-                </div>
-                <Button variant="outline" className="w-full" onClick={handleGuestLogin}>
-                    <UserIcon className="mr-2 h-4 w-4"/>
-                    {t('Login.continueAsGuest')}
-                </Button>
-            </div>
+            <main className="p-4 sm:p-8 flex items-center justify-center bg-background">
+                <div className="w-full max-w-sm space-y-6">
+                    <div className="text-center">
+                        <h2 className="text-2xl font-bold">{t('Login.welcomeBack')}</h2>
+                        <p className="text-muted-foreground">{t('Login.signInToDashboard')}</p>
+                    </div>
+                    
+                    <form onSubmit={handleLogin} className="space-y-4">
+                        <Input 
+                            type="email" 
+                            placeholder={t('Login.emailPlaceholder')}
+                            className="bg-secondary/50 border-input"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <Input 
+                            type="password" 
+                            placeholder={t('Login.passwordPlaceholder')}
+                            className="bg-secondary/50 border-input"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    
+                        <div className="text-sm">
+                            <Link href="/reset-password" className="text-primary hover:underline">
+                                {t('Login.forgotPassword')}
+                            </Link>
+                        </div>
 
-            <div className="text-center text-sm">
-              <span className="text-muted-foreground">{t('Login.noAccount')}</span>
-              <Link href="/signup" className="text-primary hover:underline">
-                {t('Login.signUpLink')}
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </main>
+                        <Button type="submit" className="w-full font-bold text-lg h-12">
+                        {t('Login.signInButton')}
+                        </Button>
+                    </form>
+                    
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                            <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                            <span className="bg-background px-2 text-muted-foreground">
+                            {t('Login.continueWith')}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <Button variant="outline" onClick={() => handleSocialLogin('google')}>
+                                <GoogleIcon className="mr-2 h-4 w-4"/>
+                                {t('Login.google')}
+                            </Button>
+                            <Button variant="outline" onClick={() => handleSocialLogin('facebook')}>
+                                <FacebookIcon className="mr-2 h-4 w-4"/>
+                                {t('Login.facebook')}
+                            </Button>
+                        </div>
+                        <Button variant="outline" className="w-full" onClick={handleGuestLogin}>
+                            <UserIcon className="mr-2 h-4 w-4"/>
+                            {t('Login.continueAsGuest')}
+                        </Button>
+                    </div>
+
+                    <div className="text-center text-sm">
+                        <span className="text-muted-foreground">{t('Login.noAccount')}</span>
+                        <Link href="/signup" className="text-primary hover:underline">
+                            {t('Login.signUpLink')}
+                        </Link>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
   );
 }

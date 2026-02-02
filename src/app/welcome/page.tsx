@@ -16,12 +16,12 @@ import { useTranslation } from '@/context/language-context';
 import { Loader } from '@/components/loader';
 
 const welcomeImages = [
-    { src: 'https://picsum.photos/seed/women-unite/800/1200', alt: 'Women empowerment', hint: 'women empowerment' },
-    { src: 'https://picsum.photos/seed/helping-hand/800/1200', alt: 'Community support', hint: 'community support' },
-    { src: 'https://picsum.photos/seed/city-lights/800/1200', alt: 'Safe city at night', hint: 'safe city' },
-    { src: 'https://picsum.photos/seed/speaking-out/800/1200', alt: 'A woman speaking at a rally', hint: 'speaking up' },
-    { src: 'https://picsum.photos/seed/strength-in-unity/800/1200', alt: 'Women standing together in unity', hint: 'women unity' },
-    { src: 'https://picsum.photos/seed/education-for-all/800/1200', alt: 'Girls studying in a classroom', hint: 'women education' },
+    { src: 'https://picsum.photos/seed/women-support/800/1200', alt: 'A group of women supporting each other', hint: 'women support' },
+    { src: 'https://picsum.photos/seed/safe-street-night/800/1200', alt: 'A well-lit city street at night, symbolizing safety', hint: 'safe street' },
+    { src: 'https://picsum.photos/seed/confident-walk/800/1200', alt: 'A woman walking confidently and safely', hint: 'confident woman' },
+    { src: 'https://picsum.photos/seed/unity-hands/800/1200', alt: 'Close-up of hands held together in unity and support', hint: 'unity hands' },
+    { src: 'https://picsum.photos/seed/hope-sunrise/800/1200', alt: 'A woman silhouetted against a hopeful sunrise', hint: 'hope sunrise' },
+    { src: 'https://picsum.photos/seed/digital-safety/800/1200', alt: 'A person using a smartphone to connect with a support network', hint: 'digital safety' },
 ];
 
 export default function WelcomePage() {

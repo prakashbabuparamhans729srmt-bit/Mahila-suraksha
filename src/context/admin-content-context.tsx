@@ -75,8 +75,36 @@ export const AdminContentProvider = ({ children }: { children: ReactNode }) => {
 
   // Sync state with translations when language changes
   React.useEffect(() => {
-    setPublishedContent(initialPublishedContent);
-    setPendingContent(initialPendingContent);
+    const allInitialItems = [...initialPublishedContent, ...initialPendingContent];
+    const initialContentMap = new Map(allInitialItems.map(item => [item.id, item]));
+
+    setPublishedContent(currentContent => currentContent.map(item => {
+        const initialItem = initialContentMap.get(item.id);
+        if (initialItem) {
+          return {
+            ...item, // Preserve existing state like 'status'
+            title: initialItem.title,
+            description: initialItem.description,
+            targetAudience: initialItem.targetAudience,
+            kpi: initialItem.kpi,
+          };
+        }
+        return item; // Keep user-added items
+      })
+    );
+
+    setPendingContent(currentContent => currentContent.map(item => {
+        const initialItem = initialContentMap.get(item.id);
+        if (initialItem) {
+          return {
+            ...item, // Preserve existing state
+            title: initialItem.title,
+            description: initialItem.description,
+          };
+        }
+        return item; // Keep user-added items
+      })
+    );
   }, [initialPublishedContent, initialPendingContent]);
 
 

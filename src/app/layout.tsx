@@ -37,6 +37,7 @@ function TranslatedMetadata() {
 function ChatbotFloater() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { t } = useTranslation();
+  const [isClient, setIsClient] = useState(false);
 
   const [position, setPosition] = useState<{x: number; y: number} | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -44,6 +45,10 @@ function ChatbotFloater() {
   const floaterRef = useRef<HTMLDivElement>(null);
   const hasDragged = useRef(false);
   const returnTimer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   const getInitialPosition = () => {
     return {
@@ -72,8 +77,10 @@ function ChatbotFloater() {
   };
 
   useEffect(() => {
-    setPosition(getInitialPosition());
-  }, []);
+    if (isClient) {
+      setPosition(getInitialPosition());
+    }
+  }, [isClient]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if(floaterRef.current) {
@@ -133,7 +140,7 @@ function ChatbotFloater() {
     };
   }, [isDragging, position]);
 
-  if (!position) {
+  if (!isClient) {
     return null;
   }
 
@@ -179,48 +186,26 @@ function ChatbotFloater() {
   );
 }
 
-function AppWithProviders({ children }: { children: React.ReactNode }) {
-    return (
-        <LanguageProvider>
-            <TranslatedMetadata />
-            <AdminContentProvider>
-              {children}
-              <ChatbotFloater />
-              <Toaster />
-              <VoiceSearchModal />
-            </AdminContentProvider>
-        </LanguageProvider>
-    )
-}
 
-function AppProviders({ children }: { children: React.ReactNode }) {
-    const { textSize } = useAppearance();
-    const textSizeClass = {
-        small: 'text-sm',
-        medium: 'text-base',
-        large: 'text-lg',
-    }[textSize];
-    
-    return (
-        <div className={textSizeClass}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <FirebaseClientProvider>
-                  <VoiceSearchProvider>
-                    <GuestProvider>
-                        <AppWithProviders>
-                            {children}
-                        </AppWithProviders>
-                    </GuestProvider>
-                  </VoiceSearchProvider>
-              </FirebaseClientProvider>
-            </ThemeProvider>
-        </div>
-    );
+function AppBody({ children }: { children: React.ReactNode }) {
+  const { textSize } = useAppearance();
+  const textSizeClass = {
+      small: 'text-sm',
+      medium: 'text-base',
+      large: 'text-lg',
+  }[textSize];
+
+  return (
+      <div className={textSizeClass}>
+          <AdminContentProvider>
+            <TranslatedMetadata />
+            {children}
+            <ChatbotFloater />
+            <Toaster />
+            <VoiceSearchModal />
+          </AdminContentProvider>
+      </div>
+  );
 }
 
 export default function RootLayout({
@@ -253,11 +238,26 @@ export default function RootLayout({
         `}</style>
       </head>
       <body className="font-body antialiased">
-        <AppearanceProvider>
-          <AppProviders>
-            {children}
-          </AppProviders>
-        </AppearanceProvider>
+        <LanguageProvider>
+          <AppearanceProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <FirebaseClientProvider>
+                  <VoiceSearchProvider>
+                    <GuestProvider>
+                      <AppBody>
+                        {children}
+                      </AppBody>
+                    </GuestProvider>
+                  </VoiceSearchProvider>
+              </FirebaseClientProvider>
+            </ThemeProvider>
+          </AppearanceProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

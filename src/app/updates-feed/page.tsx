@@ -33,36 +33,41 @@ export default function UpdatesFeedPage() {
     const { publishedContent } = useAdminContent();
     const { t } = useTranslation();
     const { toast } = useToast();
-    
-    const initialPostsData = publishedContent
-        .filter(item => item.type === 'update')
-        .map((item, index) => ({
-            id: item.id,
-            title: item.title,
-            description: item.description,
-            likes: 0,
-            liked: false,
-            commentsCount: 0,
-            date: item.date,
-            photo: item.photo,
-            image: `https://picsum.photos/seed/${item.id}/600/400`, 
-            imageHint: 'news update'
-        }));
 
-    const [posts, setPosts] = useState<Post[]>(initialPostsData);
+    const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
-        setPosts(currentPosts =>
-            currentPosts.map(post => ({
-                ...post,
-                likes: post.likes === 0 ? Math.floor(Math.random() * 5000) + 50 : post.likes,
-                commentsCount: post.commentsCount === 0 ? Math.floor(Math.random() * 50) + 1 : post.commentsCount,
-            }))
-        );
-    }, []);
+        const newPostsFromContext = publishedContent
+            .filter(item => item.type === 'update')
+            .map(item => ({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                likes: 0,
+                liked: false,
+                commentsCount: 0,
+                date: item.date,
+                photo: item.photo,
+                image: `https://picsum.photos/seed/${item.id}/600/400`,
+                imageHint: 'news update'
+            }));
+
+        const currentPostsMap = new Map(posts.map(p => [p.id, p]));
+
+        setPosts(newPostsFromContext.map(newPost => {
+            const existingPost = currentPostsMap.get(newPost.id);
+            return existingPost ? { ...newPost, liked: existingPost.liked, likes: existingPost.likes, commentsCount: existingPost.commentsCount } : newPost;
+        }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [publishedContent, t]);
 
     const handlePostLike = (postId: number) => {
-        setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked } : p));
+        setPosts(posts.map(p => {
+            if (p.id === postId) {
+                return { ...p, likes: p.liked ? p.likes - 1 : p.likes + 1, liked: !p.liked };
+            }
+            return p;
+        }));
     };
 
     const handleShare = async (title: string, text: string) => {
@@ -154,5 +159,3 @@ export default function UpdatesFeedPage() {
         </div>
     );
 }
-
-    

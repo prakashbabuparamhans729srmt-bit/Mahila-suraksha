@@ -80,7 +80,31 @@ export const CommentSection = () => {
     const [replyText, setReplyText] = useState('');
 
     useEffect(() => {
-        setComments(initialComments);
+        const initialMap = new Map<number, { comment: string, timestamp: string }>();
+        const buildMap = (commentsToMap: CommentType[]) => {
+            commentsToMap.forEach(c => {
+                initialMap.set(c.id, { comment: c.comment, timestamp: c.timestamp });
+                if (c.replies) {
+                    buildMap(c.replies);
+                }
+            });
+        };
+        buildMap(initialComments);
+
+        const updateStateRecursively = (currentComments: CommentType[]): CommentType[] => {
+            if (!currentComments) return [];
+            return currentComments.map(c => {
+                const initialData = initialMap.get(c.id);
+                return {
+                    ...c,
+                    comment: initialData ? initialData.comment : c.comment,
+                    timestamp: initialData ? initialData.timestamp : c.timestamp,
+                    replies: c.replies ? updateStateRecursively(c.replies) : []
+                };
+            });
+        };
+        
+        setComments(currentComments => updateStateRecursively(currentComments));
     }, [initialComments]);
 
     const findCommentAndUpdate = (

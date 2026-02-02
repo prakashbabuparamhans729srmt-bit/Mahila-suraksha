@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
@@ -14,7 +13,7 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocale] = useState(defaultLocale);
+  const [locale, setLocaleState] = useState(defaultLocale);
   const [messages, setMessages] = useState<Record<string, string>>(initialMessages);
 
   useEffect(() => {
@@ -31,6 +30,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
         // Fallback to default locale if messages for the selected one are not found
         const defaultMsgs = await import(`@/lib/translations/${defaultLocale}.json`);
         setMessages(defaultMsgs.default);
+        setLocaleState(defaultLocale);
       }
     };
     loadMessages();
@@ -45,6 +45,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
     return message;
   }, [messages]);
+  
+  const setLocale = useCallback((newLocale: string) => {
+    setLocaleState(newLocale);
+  }, []);
+
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale, t }}>

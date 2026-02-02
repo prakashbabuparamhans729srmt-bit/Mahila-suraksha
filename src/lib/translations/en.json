@@ -233,6 +233,11 @@
   "Signup.joinMovement": "Join the Movement",
   "Signup.createAccount": "Create an account to get started",
   "Signup.fullName": "Full Name",
+  "Signup.firstName": "First Name",
+  "Signup.lastName": "Last Name",
+  "Signup.phone": "Phone Number (Optional)",
+  "Signup.passwordHint": "Must be at least 8 characters.",
+  "Signup.github": "GitHub",
   "Signup.email": "Email address",
   "Signup.password": "Password",
   "Signup.country": "Country",
@@ -1222,3 +1227,5 @@
   "AdminContent.pending.2.title": "New awareness article",
   "AdminContent.pending.2.description": "Digital safety and how to avoid online harassment."
 }
+
+    

@@ -17,6 +17,7 @@ import { VoiceSearchModal } from '@/components/voice-search-modal';
 import { AppearanceProvider, useAppearance } from '@/context/appearance-context';
 import { LanguageProvider, useTranslation } from '@/context/language-context';
 import { cn } from '@/lib/utils';
+import { CookieConsent } from '@/components/cookie-consent';
 
 
 function TranslatedMetadata() {
@@ -51,6 +52,7 @@ function ChatbotFloater() {
   }, []);
   
   const getInitialPosition = () => {
+    if (typeof window === 'undefined') return null;
     return {
       x: window.innerWidth - 80,
       y: window.innerHeight - 160,
@@ -203,6 +205,7 @@ function AppBody({ children }: { children: React.ReactNode }) {
             <ChatbotFloater />
             <Toaster />
             <VoiceSearchModal />
+            <CookieConsent />
           </AdminContentProvider>
       </div>
   );

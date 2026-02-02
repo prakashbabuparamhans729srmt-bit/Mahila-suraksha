@@ -580,7 +580,7 @@
   "StartupChecklist.legal.2.text": "कंपनी/फर्म पंजीकरण",
   "StartupChecklist.legal.2.details": "कंपनी को कॉर्पोरेट मामलों के मंत्रालय (MCA) के साथ पंजीकृत करना।",
   "StartupChecklist.legal.3.text": "ट्रेडमार्क पंजीकरण",
-  "StartupChecklist.legal.3.details": "\"महिला सुरक्षा\" नाम और लोगो के लिए ट्रेडमार्क के लिए आवेदन करना।",
+  "StartupChecklist.legal.3.details": "नाम \"महिला सुरक्षा\" और लोगो के लिए ट्रेडमार्क के लिए आवेदन करना।",
   "StartupChecklist.legal.4.text": "उद्योग पंजीकरण",
   "StartupChecklist.legal.4.details": "एक एमएसएमई के रूप में लाभ प्राप्त करने के लिए उद्योग पोर्टल पर पंजीकरण।",
   "StartupChecklist.legal.5.text": "कर पंजीकरण (जीएसटी, पैन, टैन)",
@@ -1231,7 +1231,9 @@
   "AdminContent.pending.2.description": "डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।",
   "Welcome.signUp": "साइन अप करें",
   "Welcome.alreadyHaveAccount": "पहले से एक खाता मौजूद है?",
-  "Welcome.logIn": "लॉग इन करें"
+  "Welcome.logIn": "लॉग इन करें",
+  "CookieConsent.message": "हम आपके अनुभव को बेहतर बनाने के लिए कुकीज़ का उपयोग करते हैं। इस साइट पर जाकर आप कुकीज़ के हमारे उपयोग के लिए सहमत हैं।",
+  "CookieConsent.accept": "स्वीकार करें"
 }
 
     

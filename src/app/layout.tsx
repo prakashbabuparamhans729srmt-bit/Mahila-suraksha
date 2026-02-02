@@ -8,7 +8,7 @@ import { AdminContentProvider } from '@/context/admin-content-context';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, X } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetDescription } from '@/components/ui/sheet';
 import { Chatbot } from '@/components/chatbot';
 import { GuestProvider } from '@/context/guest-context';
@@ -18,6 +18,7 @@ import { AppearanceProvider, useAppearance } from '@/context/appearance-context'
 import { LanguageProvider, useTranslation } from '@/context/language-context';
 import { cn } from '@/lib/utils';
 import { CookieConsent } from '@/components/cookie-consent';
+import { Loader } from '@/components/loader';
 
 
 function TranslatedMetadata() {
@@ -201,7 +202,9 @@ function AppBody({ children }: { children: React.ReactNode }) {
       <div className={textSizeClass}>
           <AdminContentProvider>
             <TranslatedMetadata />
-            {children}
+            <Suspense fallback={<div className="flex h-screen w-full items-center justify-center"><Loader className="h-12 w-12" /></div>}>
+              {children}
+            </Suspense>
             <ChatbotFloater />
             <Toaster />
             <VoiceSearchModal />

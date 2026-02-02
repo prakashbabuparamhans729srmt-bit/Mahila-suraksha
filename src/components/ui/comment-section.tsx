@@ -6,7 +6,7 @@ import { ThumbsUp, ThumbsDown, CornerUpLeft, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTranslation } from '@/context/language-context';
 
@@ -253,7 +253,7 @@ export const CommentSection = () => {
     };
 
     return (
-        <DialogContent className="bg-background text-foreground max-w-md w-full h-[90vh] flex flex-col p-0">
+        <>
             <DialogHeader className="p-4 border-b border-border">
                 <DialogTitle className="text-xl">
                     {t('Messages.title')}
@@ -287,6 +287,6 @@ export const CommentSection = () => {
                     </div>
                 </div>
             </div>
-        </DialogContent>
+        </>
     );
 };

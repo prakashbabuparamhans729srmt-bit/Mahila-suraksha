@@ -46,7 +46,7 @@ function ChatbotFloater() {
   const offset = useRef({ x: 0, y: 0 });
   const floaterRef = useRef<HTMLDivElement>(null);
   const hasDragged = useRef(false);
-  const returnTimer = useRef<NodeJS.Timeout | null>(null);
+  const returnTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setIsClient(true);

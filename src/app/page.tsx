@@ -1051,7 +1051,9 @@ export default function DashboardPage() {
                                   <MessageSquare className="h-4 w-4" /> {t('Dashboard.comment')}
                               </Button>
                           </DialogTrigger>
-                          <CommentSection />
+                          <DialogContent className="bg-background text-foreground max-w-md w-full h-[90vh] flex flex-col p-0">
+                            <CommentSection />
+                          </DialogContent>
                       </Dialog>
                       <Button 
                           variant="ghost" 
@@ -1074,11 +1076,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
-
-    
-
-    
-
-

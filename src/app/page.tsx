@@ -32,6 +32,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { useVoiceSearch } from '@/context/voice-search-context';
 import { useTranslation } from '@/context/language-context';
 import { Loader } from '@/components/loader';
+import { BananaLogo } from '@/components/banana-logo';
 
 
 const CommunityIcon = () => (
@@ -492,7 +493,10 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
-        <h1 className="text-2xl font-bold">{t('Dashboard.title')}</h1>
+        <div className="flex items-center gap-3">
+          <BananaLogo className="h-8 w-8" />
+          <h1 className="text-2xl font-bold">{t('Dashboard.title')}</h1>
+        </div>
         <div className="flex items-center space-x-4">
           <Link href="/notifications">
             <Bell className="h-6 w-6" />
@@ -1074,3 +1078,4 @@ export default function DashboardPage() {
     
 
     
+

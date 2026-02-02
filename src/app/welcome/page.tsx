@@ -94,14 +94,12 @@ export default function WelcomePage() {
                     ))}
                 </div>
                 
-                <Link href="/signup" passHref legacyBehavior>
-                    <Button asChild className="w-full text-lg font-bold h-14 rounded-full">
-                        <a>
-                            <UserPlus className="mr-2 h-6 w-6" />
-                            {t('Welcome.signUp')}
-                        </a>
-                    </Button>
-                </Link>
+                <Button asChild className="w-full text-lg font-bold h-14 rounded-full">
+                    <Link href="/signup">
+                        <UserPlus className="mr-2 h-6 w-6" />
+                        {t('Welcome.signUp')}
+                    </Link>
+                </Button>
                 <div className="text-center mt-4">
                     <span className="text-muted-foreground text-sm">
                         {t('Welcome.alreadyHaveAccount')}{' '}

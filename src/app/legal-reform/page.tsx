@@ -22,14 +22,14 @@ export default function LegalReformPage() {
 
     const reformData = {
         india: [
-            { title: t('LegalReform.india.0.title'), status: 'Implemented', description: t('LegalReform.india.0.description') },
-            { title: t('LegalReform.india.1.title'), status: 'Implemented', description: t('LegalReform.india.1.description') },
+            { title: t('LegalReform.india.0.title'), status: 'implemented', description: t('LegalReform.india.0.description') },
+            { title: t('LegalReform.india.1.title'), status: 'implemented', description: t('LegalReform.india.1.description') },
         ],
         usa: [
-            { title: t('LegalReform.usa.0.title'), status: 'Implemented', description: t('LegalReform.usa.0.description') },
+            { title: t('LegalReform.usa.0.title'), status: 'implemented', description: t('LegalReform.usa.0.description') },
         ],
         uk: [
-            { title: t('LegalReform.uk.0.title'), status: 'Implemented', description: t('LegalReform.uk.0.description') },
+            { title: t('LegalReform.uk.0.title'), status: 'implemented', description: t('LegalReform.uk.0.description') },
         ]
     };
 
@@ -69,7 +69,7 @@ export default function LegalReformPage() {
                         <CardContent className="p-4 space-y-3">
                             <div className="flex justify-between items-start">
                                 <h3 className="font-bold text-lg leading-tight">{reform.title}</h3>
-                                <Badge className={reform.status === 'Implemented' ? 'bg-green-500 text-black' : 'bg-yellow-500 text-black'}>{reform.status}</Badge>
+                                <Badge className={reform.status === 'implemented' ? 'bg-green-500 text-black' : 'bg-yellow-500 text-black'}>{t('LegalReform.statusImplemented')}</Badge>
                             </div>
                             <p className="text-sm text-muted-foreground">
                                 {reform.description}

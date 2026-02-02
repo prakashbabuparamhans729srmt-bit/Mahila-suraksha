@@ -39,7 +39,7 @@ function ChatbotFloater() {
   const { t } = useTranslation();
 
   const getInitialPosition = () => {
-    if (typeof window === 'undefined') return { x: 0, y: 0 };
+    // This function now only runs on the client
     return {
       x: window.innerWidth - 80,
       y: window.innerHeight - 160,
@@ -73,6 +73,7 @@ function ChatbotFloater() {
   };
 
   useEffect(() => {
+    // Set position only on the client, after mount
     setPosition(getInitialPosition());
   }, []);
 
@@ -101,7 +102,7 @@ function ChatbotFloater() {
 
   useEffect(() => {
     const handleWindowMouseMove = (e: MouseEvent) => {
-      if (!isDragging || !floaterRef.current) return;
+      if (!isDragging || !floaterRef.current || !position) return;
       
       if (!hasDragged.current) {
           hasDragged.current = true;
@@ -132,7 +133,7 @@ function ChatbotFloater() {
       window.removeEventListener('mousemove', handleWindowMouseMove);
       window.removeEventListener('mouseup', handleWindowMouseUp);
     };
-  }, [isDragging]);
+  }, [isDragging, position]);
 
   if (!position) {
     return null;

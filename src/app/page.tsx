@@ -494,7 +494,9 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
-          <BananaLogo className="h-8 w-8" />
+          <button onClick={() => window.location.reload()} className="p-0 border-none bg-transparent cursor-pointer rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-label="Refresh page">
+            <BananaLogo className="h-8 w-8" />
+          </button>
           <h1 className="text-2xl font-bold">{t('Dashboard.title')}</h1>
         </div>
         <div className="flex items-center space-x-4">
@@ -1078,4 +1080,5 @@ export default function DashboardPage() {
     
 
     
+
 

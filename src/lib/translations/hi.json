@@ -270,7 +270,10 @@
   "AdminContent.published.4.kpi": "1000 लोगों की सहायता",
   "AdminContent.pending.1.title": "पार्क में असुरक्षित प्रकाश व्यवस्था",
   "AdminContent.pending.2.title": "नया जागरूकता लेख",
-  "AdminContent.pending.2.description": "डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।"
+  "AdminContent.pending.2.description": "डिजिटल सुरक्षा और ऑनलाइन उत्पीड़न से कैसे बचें।",
+  "Welcome.signUp": "साइन अप करें",
+  "Welcome.alreadyHaveAccount": "पहले से एक खाता मौजूद है?",
+  "Welcome.logIn": "लॉग इन करें"
 }
 
     

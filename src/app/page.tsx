@@ -197,7 +197,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!loading && !isGuest && !user) {
-      router.push('/login');
+      router.push('/welcome');
     }
   }, [loading, user, router, isGuest]);
 

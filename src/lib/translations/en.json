@@ -490,7 +490,6 @@
   "Admin.roleUser": "User",
   "Admin.roleModerator": "Moderator",
   "Admin.roleAdmin": "Admin",
-  "Admin.cancel": "Cancel",
   "Admin.addUser": "Add User",
   "Admin.error": "Error",
   "Admin.fillAllFields": "Please fill all fields.",
@@ -1229,7 +1228,10 @@
   "AdminContent.published.4.kpi": "Assisting 1000 people",
   "AdminContent.pending.1.title": "Unsafe lighting in the park",
   "AdminContent.pending.2.title": "New awareness article",
-  "AdminContent.pending.2.description": "Digital safety and how to avoid online harassment."
+  "AdminContent.pending.2.description": "Digital safety and how to avoid online harassment.",
+  "Welcome.signUp": "Sign Up",
+  "Welcome.alreadyHaveAccount": "Already have an account?",
+  "Welcome.logIn": "Log In"
 }
 
     

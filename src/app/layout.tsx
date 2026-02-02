@@ -140,7 +140,7 @@ function ChatbotFloater() {
     };
   }, [isDragging, position]);
 
-  if (!isClient) {
+  if (!isClient || !position) {
     return null;
   }
 
